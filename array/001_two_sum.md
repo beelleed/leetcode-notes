@@ -72,11 +72,37 @@ class Solution:
                 return [hashmap[complement], i]
             hashmap[num] = i
 ```
+
+解法說明（逐行解析）
+hashmap = {}
+建立一個空的字典來儲存「我們已經看過的數字」和它對應的 index。
+
+for i, num in enumerate(nums):
+同時取得每個元素的 index（i）和數值（num）。
+
+complement = target - num
+想要找的另一個數字（配對數）是 target - num。
+
+if complement in hashmap:
+如果配對數在 hashmap 裡，代表之前出現過，那麼你就找到答案了！
+
+return [hashmap[complement], i]
+回傳先前那個數字的 index 和現在這個的 index。
+
+hashmap[num] = i
+如果還沒找到，就把目前的數字和它的 index 記進 hashmap，讓下一輪用得到。
+
 時間複雜度：O(n)
 每個元素只看一次，用 hashmap 加速查找。
 
 空間複雜度：O(n)
 用一個 dict 儲存數字與索引對應關係。
+
+學習心得
+
+Hash Map 是解這種「查找配對」類題目的利器。
+
+*if target - num in hashmap:* 幾乎是模板。
 
 ---
 
