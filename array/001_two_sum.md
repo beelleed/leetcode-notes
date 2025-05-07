@@ -2,6 +2,22 @@
 
 [題目連結](https://leetcode.com/problems/two-sum/)
 
+---
+
+## ✅ English Summary
+
+**Problem:** Given an array of integers `nums` and a target value, return indices of the two numbers such that they add up to the target.  
+**Approach:**  
+- Iterate through `nums`, and for each element, calculate `target - num`
+- Check if the complement exists in a hash map
+- If yes, return the index of the complement and the current index
+- Otherwise, store the current number with its index in the hash map
+
+**Time Complexity:** O(n)  
+**Space Complexity:** O(n)
+
+---
+
 ## 題目描述
 
 給定一個整數陣列 `nums` 和一個整數目標值 `target`，請回傳陣列中「兩個不同元素的索引」，使得這兩個元素的和等於 `target`。每個輸入只會有一組解答。
