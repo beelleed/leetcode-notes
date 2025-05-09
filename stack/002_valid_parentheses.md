@@ -42,7 +42,7 @@ class Solution:
         return not stack
 ```
 🔍 錯誤點說明：
-1.用了「右括號進 stack」，其實應該是「左括號進 stack」
+1.這邊你是定義「左括號 → 右括號」的映射，代表用了「右括號進 stack」，其實應該是「左括號進 stack」
 2.對映檢查方向錯誤：mapping[stack[-1]] 才會對照到對應的右括號
 
 ❗ Wrong logic: pushing closing brackets into stack and comparing with expected opening — direction is flipped.
