@@ -35,7 +35,7 @@ class Solution:
             if i in mapping.values():  # ❌ 錯：應該是右括號才需要比對，這邊卻加進 stack
                 stack.append(i)
             elif i in mapping:
-                if not stack or stack[-1] != mapping[i]:  # ❌ 錯：這裡 mapping[i] 是右括號，但你 stack 放的是右括號
+                if not stack or stack[-1] != mapping[i]:  # ❌ 錯：這裡 mapping[i] 是右括號，但stack 放的是右括號
                     return False
                 else:
                     stack.pop()
