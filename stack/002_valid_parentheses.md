@@ -35,14 +35,14 @@ class Solution:
             if i in mapping.values():  # ❌ 錯：應該是右括號才需要比對，這邊卻加進 stack
                 stack.append(i)
             elif i in mapping:
-                if not stack or stack[-1] != mapping[i]:  # ❌ 錯：這裡 mapping[i] 是右括號，但你 stack 放的是右括號
+                if not stack or stack[-1] != mapping[i]:  # ❌ 錯：這裡 mapping[i] 是右括號，但stack 放的是右括號
                     return False
                 else:
                     stack.pop()
         return not stack
 ```
 🔍 錯誤點說明：
-1.用了「右括號進 stack」，其實應該是「左括號進 stack」
+1.這邊你是定義「左括號 → 右括號」的映射，代表用了「右括號進 stack」，其實應該是「左括號進 stack」
 2.對映檢查方向錯誤：mapping[stack[-1]] 才會對照到對應的右括號
 
 ❗ Wrong logic: pushing closing brackets into stack and comparing with expected opening — direction is flipped.
@@ -136,6 +136,15 @@ stack 必須不為空
 stack[-1]（最上層）必須是對應的左括號
 
 若符合就 pop()，表示這對括號成功配對
+
+```python
+return not stack
+```
+
+最後檢查 stack 是否為空：
+	•	是空 → 所有括號都成功配對 → return True
+	•	不空 → 還有左括號沒被關閉 → return False
+
 
 ✅ 優點
 這種寫法比較容易判斷「右括號錯配或提早出現」的錯誤
