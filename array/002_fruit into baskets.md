@@ -20,43 +20,43 @@ from typing import List
 ```python
 class Solution:
     def totalFruit(self, fruits: List[int]) -> int:
-        count, i = {}, 0               # 🇨🇳 初始化計數字典與左指標 i（滑動視窗的起點）
-                                       # 🇺🇸 Initialize count map and left pointer i (start of sliding window)
+        count, i = {}, 0               # 初始化計數字典與左指標 i（滑動視窗的起點）
+                                       # Initialize count map and left pointer i (start of sliding window)
 
-        max_len = 0                    # 🇨🇳 記錄目前為止最大視窗長度
-                                       # 🇺🇸 Track the maximum window size found
+        max_len = 0                    # 記錄目前為止最大視窗長度
+                                       # Track the maximum window size found
 
-        for j, v in enumerate(fruits): # 🇨🇳 使用 j 為右指標，v 為當前水果類型
-                                       # 🇺🇸 j is the right pointer, v is the fruit type at position j
+        for j, v in enumerate(fruits): # 使用 j 為右指標，v 為當前水果類型
+                                       # j is the right pointer, v is the fruit type at position j
 
             count[v] = count.get(v, 0) + 1
-            # 🇨🇳 把當前水果加入計數字典中，如果之前沒看過則從 0 開始加
-            # 🇺🇸 Increment the count of current fruit type; start from 0 if unseen
+            # 把當前水果加入計數字典中，如果之前沒看過則從 0 開始加
+            # Increment the count of current fruit type; start from 0 if unseen
 
             while len(count) > 2:
-                # 🇨🇳 如果視窗中水果種類超過 2 種，開始縮小左邊界
-                # 🇺🇸 If more than 2 types in window, shrink the window from the left
+                # 如果視窗中水果種類超過 2 種，開始縮小左邊界
+                # If more than 2 types in window, shrink the window from the left
 
                 count[fruits[i]] -= 1
-                # 🇨🇳 減少左邊水果的數量
-                # 🇺🇸 Decrease count of the leftmost fruit
+                # 減少左邊水果的數量
+                # Decrease count of the leftmost fruit
 
                 if count[fruits[i]] == 0:
                     del count[fruits[i]]
-                    # 🇨🇳 如果某水果數量歸 0，從字典中移除
-                    # 🇺🇸 Remove the fruit from the map if its count drops to 0
+                    # 如果某水果數量歸 0，從字典中移除
+                    # Remove the fruit from the map if its count drops to 0
 
                 i += 1
-                # 🇨🇳 左指標右移一格
-                # 🇺🇸 Move the left pointer one step to the right
+                # 左指標右移一格
+                # Move the left pointer one step to the right
 
             max_len = max(max_len, j - i + 1)
-            # 🇨🇳 更新目前為止最大視窗長度（j - i + 1 為當前視窗長度）
-            # 🇺🇸 Update max length if current window is longer
+            # 更新目前為止最大視窗長度（j - i + 1 為當前視窗長度）
+            # Update max length if current window is longer
 
         return max_len
-        # 🇨🇳 回傳結果：最大視窗長度
-        # 🇺🇸 Return the maximum window length
+        # 回傳結果：最大視窗長度
+        # Return the maximum window length
 
 ```
 ⏱️ 時間與空間複雜度（Time & Space Complexity）
