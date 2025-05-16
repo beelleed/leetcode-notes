@@ -76,7 +76,7 @@ dict.get(k, 0)：取出 key 值，如果不存在則回傳 0
 
 j - i + 1：表示當前視窗長度（從 i 到 j）
 
-📌 額外筆記建議（Extra Notes）
+📌 額外筆記（Extra Notes）
 ✅ 雙指標定義說明：
 i: 左指標 → 視窗的起始位置（window left boundary）
 
