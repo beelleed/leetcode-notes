@@ -1,5 +1,5 @@
 ## 003. Longest Substring Without Repeating Characters
-LeetCode Link
+LeetCode Link: https://leetcode.com/problems/longest-substring-without-repeating-characters/
 
 🧩 題目描述 | Problem Description
 中文：給定一個字串 s，請找出不包含重複字元的「最長子字串」的長度。
@@ -7,7 +7,6 @@ LeetCode Link
 EN：Given a string s, find the length of the longest substring without repeating characters.
 
 ## ❌ 錯誤版本與問題分析 | Wrong Approach and Explanation
----
 
 ``` python
 class Solution:
