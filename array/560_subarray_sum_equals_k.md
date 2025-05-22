@@ -185,9 +185,8 @@ print(d[100])  # KeyError，因為 100 不存在
 	•	defaultdict(int) 是用來簡化程式邏輯的，讓你可以放心地對不存在的 key 做加法、不用先檢查。
 	•	在這題中，它讓這行程式變得簡潔
 
-```python
-sum_freq[prefix_sum] += 1  # 不需要先 if prefix_sum in sum_freq
-```
+    •	sum_freq[prefix_sum] += 1  
+
 小結：
 
 | 寫法                                             | 初始效果一樣 | 訪問不存在 key  | 適用情境            |
