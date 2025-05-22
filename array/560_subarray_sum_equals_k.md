@@ -25,7 +25,7 @@
 ---
 
 ## 💻 程式碼 | Python Code
-
+answer 1.
 ```python
 from collections import defaultdict
 
@@ -138,6 +138,60 @@ sum_freq = {0: 1}  # 前綴和為 0，出現過一次（處理從開頭開始的
 	2.	[6, 4]
 
 	3.	[10]
+
+answer 2.
+```python
+def subarraySum(nums, k):
+    count = 0
+    prefix_sum = 0
+    prefix_sums = {0: 1}  # 初始化，表示前綴和為0出現過一次
+
+    for num in nums:
+        prefix_sum += num
+        # 檢查是否存在一個之前的 prefix_sum 使得 prefix_sum - k 存在
+        if prefix_sum - k in prefix_sums:
+            count += prefix_sums[prefix_sum - k]
+        # 更新當前 prefix_sum 出現的次數
+        prefix_sums[prefix_sum] = prefix_sums.get(prefix_sum, 0) + 1
+
+    return count
+```
+
+sum_freq = defaultdict(int) 並設定 sum_freq[0] = 1
+跟 sum_freq = {0: 1}
+在初始化結果上是一樣的，但行為上有差別。
+
+⸻
+
+差別說明：
+
+1. defaultdict(int) 的行為：
+
+這是 Python 提供的一種「自動初始化」的字典，當你訪問一個不存在的 key時，它會自動建立該 key，並預設值為 0（因為 int() 預設為 0）。
+```python
+from collections import defaultdict
+
+d = defaultdict(int)
+print(d[100])  # 會輸出 0，不會報錯
+```
+2. 一般 dict：
+```python
+d = {0: 1}
+print(d[100])  # KeyError，因為 100 不存在
+```
+
+所以：
+
+	•	defaultdict(int) 是用來簡化程式邏輯的，讓你可以放心地對不存在的 key 做加法、不用先檢查。
+
+	•	在這題中，它讓這行程式變得簡潔：
+
+```python
+sum_freq[prefix_sum] += 1  # 不需要先 if prefix_sum in sum_freq
+```
+小結：
+
+可以想成：defaultdict 只是幫你偷懶，自動補上初始值。
 
 ## ⏱️ 時間與空間複雜度 | Complexity
 類別	複雜度
