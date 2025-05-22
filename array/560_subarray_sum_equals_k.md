@@ -55,53 +55,54 @@ sum_freq = {0: 1}  # 前綴和為 0，出現過一次（處理從開頭開始的
 步驟逐一分析
 
 第 1 步：num = 2
-	•	prefix_sum = 2
-	•	prefix_sum - k = -8 → 不在 sum_freq 中
-	•	更新 sum_freq: {0:1, 2:1}
-	•	count = 0
+
+	- prefix_sum = 2
+	- prefix_sum - k = -8 → 不在 sum_freq 中
+	- 更新 sum_freq: {0:1, 2:1}
+	- count = 0
 
 ⸻
 
 第 2 步：num = 3
-	•	prefix_sum = 5
-	•	prefix_sum - k = -5 → 不在 sum_freq 中
-	•	更新 sum_freq: {0:1, 2:1, 5:1}
-	•	count = 0
+	- prefix_sum = 5
+	- prefix_sum - k = -5 → 不在 sum_freq 中
+	- 更新 sum_freq: {0:1, 2:1, 5:1}
+	- count = 0
 
 ⸻
 
 第 3 步：num = 5
-	•	prefix_sum = 10
-	•	prefix_sum - k = 0 → 在 sum_freq 中，出現過 1 次
-	•	count += 1 → count = 1 ✅
-	•	更新 sum_freq: {0:1, 2:1, 5:1, 10:1}
-	•	對應子陣列：[2, 3, 5]
+	- prefix_sum = 10
+	- prefix_sum - k = 0 → 在 sum_freq 中，出現過 1 次
+	- count += 1 → count = 1 ✅
+	- 更新 sum_freq: {0:1, 2:1, 5:1, 10:1}
+	- 對應子陣列：[2, 3, 5]
 
 ⸻
 
 第 4 步：num = 6
-	•	prefix_sum = 16
-	•	prefix_sum - k = 6 → 不在 sum_freq 中
-	•	更新 sum_freq: {... , 16:1}
-	•	count = 1
+	- prefix_sum = 16
+	- prefix_sum - k = 6 → 不在 sum_freq 中
+	- 更新 sum_freq: {... , 16:1}
+	- count = 1
 
 ⸻
 
 第 5 步：num = 4
-	•	prefix_sum = 20
-	•	prefix_sum - k = 10 → 在 sum_freq 中，出現過 1 次
-	•	count += 1 → count = 2 ✅
-	•	更新 sum_freq: {... , 20:1}
-	•	對應子陣列：[6, 4]
+	- prefix_sum = 20
+	- prefix_sum - k = 10 → 在 sum_freq 中，出現過 1 次
+	- count += 1 → count = 2 ✅
+	- 更新 sum_freq: {... , 20:1}
+	- 對應子陣列：[6, 4]
 
 ⸻
 
 第 6 步：num = 10
-	•	prefix_sum = 30
-	•	prefix_sum - k = 20 → 在 sum_freq 中，出現過 1 次
-	•	count += 1 → count = 3 ✅
-	•	更新 sum_freq: {... , 30:1}
-	•	對應子陣列：[10]
+	- prefix_sum = 30
+	- prefix_sum - k = 20 → 在 sum_freq 中，出現過 1 次
+	- count += 1 → count = 3 ✅
+	- 更新 sum_freq: {... , 30:1}
+	- 對應子陣列：[10]
 最終答案：count = 3
 
 符合條件的子陣列：
