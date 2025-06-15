@@ -1,4 +1,5 @@
 # Leetcode 167 - Two Sum II (Input Array Is Sorted)
+https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/
 
 ## 題目說明 | Problem Description
 - 中文: 給定一個已排序（遞增）的整數陣列 `numbers`，找出兩個數，使它們的總和為 `target`，回傳這兩個數字的index（從 1 開始）。
