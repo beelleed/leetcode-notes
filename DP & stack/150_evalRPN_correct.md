@@ -29,16 +29,16 @@ Valid operators are `+`, `-`, `*`, and `/`. Each operator applies to the two mos
 ## 🧠 思路流程圖（文字版）
 
 start
-    ↳ for each token in tokens:
-    ↳ is token a number?
-    ↳ YES → convert to int and push to stack
-    ↳ NO (it's an operator):
-    ↳ pop b (right operand)
-    ↳ pop a (left operand)
-    ↳ compute result = a op b
-    ↳ push result back to stack
+    - ↳ for each token in tokens:
+    - ↳ is token a number?
+    - ↳ YES → convert to int and push to stack
+    - ↳ NO (it's an operator):
+    - ↳ pop b (right operand)
+    - ↳ pop a (left operand)
+    - ↳ compute result = a op b
+    - ↳ push result back to stack
 end loop
-    ↳ return the single element in stack
+    - ↳ return the single element in stack
 
 ---
 ## 🧠 範例 + 遞進流程
