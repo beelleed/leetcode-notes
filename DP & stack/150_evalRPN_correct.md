@@ -29,16 +29,16 @@ Valid operators are `+`, `-`, `*`, and `/`. Each operator applies to the two mos
 ## 🧠 思路流程圖（文字版）
 
 start
-↳ for each token in tokens:
-↳ is token a number?
-↳ YES → convert to int and push to stack
-↳ NO (it's an operator):
-↳ pop b (right operand)
-↳ pop a (left operand)
-↳ compute result = a op b
-↳ push result back to stack
+    ↳ for each token in tokens:
+    ↳ is token a number?
+    ↳ YES → convert to int and push to stack
+    ↳ NO (it's an operator):
+    ↳ pop b (right operand)
+    ↳ pop a (left operand)
+    ↳ compute result = a op b
+    ↳ push result back to stack
 end loop
-↳ return the single element in stack
+    ↳ return the single element in stack
 
 ---
 ## 🧠 範例 + 遞進流程
@@ -78,7 +78,7 @@ class Solution:
                 stack.append(val)
             else:
                 stack.append(int(token))
-        return stack[-1]
+        return stack[-1] # 最後一個元素
 ```
 ## 🧠 核心學習重點 Key Takeaways
 - Stack LIFO 原理：最後 push 的先 pop → 運算使用的順序是右值先出。
