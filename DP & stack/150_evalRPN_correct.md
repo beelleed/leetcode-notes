@@ -37,7 +37,7 @@ Valid operators are `+`, `-`, `*`, and `/`. Each operator applies to the two mos
     - ↳ pop a (left operand)
     - ↳ compute result = a op b
     - ↳ push result back to stack
-end loop
+    end loop
     - ↳ return the single element in stack
 
 ---
