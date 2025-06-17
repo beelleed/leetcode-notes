@@ -16,4 +16,4 @@ class Solution:
             else:
                 stack.append(int(token))
         else:
-            return stack[-1]
+            return stack[-1]  # 返回最後一个元素，即结果
