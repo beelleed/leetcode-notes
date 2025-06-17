@@ -15,10 +15,10 @@ Given an array of strings strs, return the longest common prefix among them. If 
 
 ### 💡 解題想法 Idea
 
-**中文**
+**中文**: 
 假設第一個字串為共同前綴的開始點，逐字元比對每個字元位置是否與所有其他字串一致。若有不一致，立即回傳已累積的前綴。
 
-**English**
+**English**: 
 Assume the first string is the starting point of the common prefix. Compare each character position against every other string; if a mismatch occurs, return the prefix built so far.
 ```python
 class Solution:
@@ -75,10 +75,10 @@ class Solution:
 
 ### 💡 解題想法 Idea
 
-**中文**
+**中文**: 
 因為共同前綴不會超過最短字串長度，所以先找最短字串作為基準。依位置比對所有字串的字元，第一個不匹配的位置即為前綴結束點。
 
-**English**
+**English**: 
 The common prefix can't exceed the length of the shortest string. So we find the shortest string first, then compare each position across all strings. The first mismatch determines the end of the prefix.
 ```python
 class Solution:
@@ -135,10 +135,8 @@ class Solution:
 | 程式碼簡潔度   | 中等                      | ✅ 簡潔且乾淨       |
 
 ## ✅ 學到什麼（Takeaways）
-共同前綴不可超過最短字串：這是最穩定的前提。
+- 共同前綴必定不長於最短字串。
 
-逐字比較 + 當下即回傳：當你遇到第一個 mismatch，就不用再累積。
+- 逐字比較並遇到第一個不匹配即中止，是尋找共同前綴的核心邏輯。
 
-程式設計哲學：避免後設檢查（如 i >= len(word)），讓程式碼更單純、更穩健。
-
-採用 Pythonic 方法：min(strs, key=len)、enumerate 是強化邏輯的好工具。
+- 方法二更專注在安全與程式可讀性上，適合面試與實務使用。
