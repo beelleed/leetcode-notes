@@ -117,8 +117,40 @@ class Solution:
     - 內迴圈：遍歷 strs 中其他每條字串
 
     - 若不等於 ch → 回傳 shortest[:i]，即當前比對成績。
+        - other 就是每一個字串，包括最短的字串本身
+
+        - if other[i] != ch: 這裡比對的是：
+
+            - ch：目前在最短字串中的第 i 個字元
+
+            - other[i]：在其他字串的第 i 個字元
 
     - 若整個 shortest 都比對過，代表共同前綴即為 shortest，直接回傳。
+
+假設你有以下字串：
+
+```python
+strs = ["flower", "flow", "flight"]
+shortest = "flow"
+```
+程式會做：
+
+```python
+i=0, ch='f'
+    - "flower"[0] == 'f'
+    - "flow"[0] == 'f'
+    - "flight"[0] == 'f' ✅
+
+i=1, ch='l'
+    - "flower"[1] == 'l'
+    - "flow"[1] == 'l'
+    - "flight"[1] == 'l' ✅
+
+i=2, ch='o'
+    - "flower"[2] == 'o'
+    - "flow"[2] == 'o'
+    - "flight"[2] == 'i' ❌ → 回傳 shortest[:2] → "fl"
+```
 
 ## ✅ 優勢比較
 - 自然避開越界問題：不用再做長度檢查。
