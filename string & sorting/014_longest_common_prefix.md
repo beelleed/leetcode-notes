@@ -3,10 +3,12 @@
 
 ## 🧩 題目描述 Description
 
-**中文**
+**中文**: 
+
 給定一組字串陣列 strs，找出其中所有字串的最長共同前綴。如果不存在共同前綴，回傳空字串 ""。
 
-**English**
+**English**: 
+
 Given an array of strings strs, return the longest common prefix among them. If no common prefix exists, return an empty string.
 
 ---
@@ -16,9 +18,11 @@ Given an array of strings strs, return the longest common prefix among them. If 
 ### 💡 解題想法 Idea
 
 **中文**: 
+
 假設第一個字串為共同前綴的開始點，逐字元比對每個字元位置是否與所有其他字串一致。若有不一致，立即回傳已累積的前綴。
 
 **English**: 
+
 Assume the first string is the starting point of the common prefix. Compare each character position against every other string; if a mismatch occurs, return the prefix built so far.
 ```python
 class Solution:
@@ -76,9 +80,11 @@ class Solution:
 ### 💡 解題想法 Idea
 
 **中文**: 
+
 因為共同前綴不會超過最短字串長度，所以先找最短字串作為基準。依位置比對所有字串的字元，第一個不匹配的位置即為前綴結束點。
 
 **English**: 
+
 The common prefix can't exceed the length of the shortest string. So we find the shortest string first, then compare each position across all strings. The first mismatch determines the end of the prefix.
 ```python
 class Solution:
