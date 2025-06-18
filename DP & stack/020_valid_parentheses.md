@@ -1,4 +1,4 @@
-# 002. Valid Parentheses
+# 020. Valid Parentheses
 
 [題目連結](https://leetcode.com/problems/valid-parentheses/)
 
