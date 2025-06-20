@@ -1,6 +1,6 @@
 # LeetCode 88: Merge Sorted Array – Solution
 ## 🔗 題目連結 / Problem Link  
-- [LeetCode #88 - Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/)
+[LeetCode #88 - Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/)
 
 ---
 
@@ -68,7 +68,6 @@ class Solution:
 ### 方法二：簡單排序合併（非 in-place）
 - 先把 nums1 有效部分和 nums2 合併成一個新列表，再排序。
 - 最後更新回 nums1。
-- 雖然直觀簡單，但不是 in-place，面試時要注意。
 
 #### 程式碼與解釋
 ```python
@@ -82,7 +81,7 @@ class Solution:
 
 ---
 
-## ⏱️ Time & Space Complexity 時間與空間複雜度
+## ⏱️ 時間與空間複雜度 |Time & Space Complexity 
 
 ### 方法一
 - **Time Complexity:** O(m + n)
