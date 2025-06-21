@@ -1,4 +1,4 @@
-# LeetCode 88: Merge Sorted Array – Solution
+# LeetCode 88: Merge Sorted Array
 ## 🔗 題目連結 / Problem Link  
 [LeetCode #88 - Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/)
 
