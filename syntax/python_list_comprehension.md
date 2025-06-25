@@ -1,4 +1,4 @@
-# 🐍 Python List Comprehension 筆記：`item for item` 教學
+# 🐍 Python List Comprehension：`item for item` 
 
 ---
 
@@ -79,8 +79,8 @@ first_column = [x for x, _ in pairs]
 ## 📚 延伸閱讀
 - LeetCode 常見應用題：
 
-    347. Top K Frequent Elements
+    - 347.Top K Frequent Elements
 
-    451. Sort Characters by Frequency
+    - 451.Sort Characters by Frequency
 
-    692. Top K Frequent Word
+    - 692.Top K Frequent Word
