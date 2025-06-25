@@ -65,7 +65,7 @@ class Solution:
 
     - 說明要根據「value（出現次數）」來做排序
 
-    heapq.nlargest(k, ...)
+4. heapq.nlargest(k, ...)
 
     - 幫你選出出現次數最多的前 k 個 (num, freq) 組合
 
@@ -79,7 +79,7 @@ class Solution:
 
     - 時間複雜度： O(n log k)
 
-4. [item for item, _ in ...]
+5. [item for item, _ in ...]
 
     - 說明：
 
@@ -88,6 +88,29 @@ class Solution:
     - 結果：
 
         - [1, 2]
+
+6. key=lambda x: x[1]
+    - 「排序（或選擇）時，根據**每個元素的第 1 個索引（也就是第二個值）來排序」
+    - 範例
+        - 假設有這樣的資料：
+        ```python
+        data = [(1, 5), (2, 3), (3, 10)]
+        ```
+        想根據第二個數字（也就是 5、3、10）來排序
+        - 用 key=lambda x: x[1]
+        ```python
+        sorted(data, key=lambda x: x[1])
+        # ➜ [(2, 3), (1, 5), (3, 10)]
+        ```
+        - 這表示：
+
+            - 把每個 tuple 當作 x
+
+            - 拿 x[1]（也就是第二個值）來排序
+    | 表達方式                 | 意義                         |
+| -------------------- | -------------------------- |
+| `lambda x: x[1]`     | 對每個元素取出第 1 個 index 的值（第二欄） |
+| `key=lambda x: x[1]` | 用第 2 欄的值當排序或挑選依據           |
 
 ### 📘 範例說明 | Examples
 ```python
@@ -129,24 +152,25 @@ class Solution:
                 heapq.heappop(heap)
         return [num for freq, num in heap]
 ```
+
 ```python
-heap = []   # 2️⃣ 建立一個空的最小堆
+heap = []   # 建立一個空的最小堆
 ```
 - 這個 heap 用來儲存「前 k 多的數字」
 
 - 裡面存的是 (次數, 數字)，排序會根據次數（預設 min-heap）
 
 ```python
-        for num, freq in count.items():
-            heapq.heappush(heap, (freq, num))  # 3️⃣ 把 (頻率, 數字) 放入 heap
+for num, freq in count.items():
+    heapq.heappush(heap, (freq, num))  # 把 (頻率, 數字) 放入 heap
 
 ```
 - 每個 (num, freq) 都被放入 heap
 
 - 若 heap 長度超過 k，就移除最小的（出現次數最少的）
 ```python
-            if len(heap) > k:
-                heapq.heappop(heap)  # 4️⃣ 超過 k 時移除最小頻率的元素
+if len(heap) > k:
+    heapq.heappop(heap)  # 超過 k 時移除最小頻率的元素
 ```
 - heapq.heappop 會彈出最小的 (freq, num)
 
@@ -155,7 +179,7 @@ heap = []   # 2️⃣ 建立一個空的最小堆
 - 時間複雜度： 每次 push/pop 是 O(log k)，共 n 次 → O(n log k)
 
 ```python
-        return [num for freq, num in heap]  # 5️⃣ 回傳 heap 中的所有數字
+return [num for freq, num in heap]  # 回傳 heap 中的所有數字
 ```
 - 把 (freq, num) 中的 num 抽出來
 
@@ -209,8 +233,9 @@ class Solution:
                 if len(res) == k:
                     return res
 ```
+
 ```python
-        bucket = [[] for _ in range(len(nums) + 1)]
+bucket = [[] for _ in range(len(nums) + 1)]
 ```
 - 建立一個 bucket 陣列，index 代表出現的「次數」
 
@@ -221,26 +246,23 @@ class Solution:
 - 範例：bucket[3] = [1]，代表數字 1 出現了 3 次
 
 ```python
-        for num, freq in count.items():
-            bucket[freq].append(num)
+for num, freq in count.items():
+    bucket[freq].append(num)
 ```
 - 把每個數字根據「出現次數」放到對應的桶裡
 
 - 範例：如果 1 出現 3 次，就放進 bucket[3] 裡
 
 ```python
-        res = []
-        for freq in range(len(bucket) - 1, 0, -1):
+res = []
+for freq in range(len(bucket) - 1, 0, -1):
 ```
 - 從最高頻率開始往下找（因為我們要找「最常出現」的）
 
 - 例如從 bucket[6], bucket[5], ..., bucket[1]
 
-```python
-            for num in bucket[freq]:
-                res.append(num)
-                if len(res) == k:
-                    return res
+```python:
+return res
 ```
 - 把桶裡的數字一個個加入結果
 
@@ -277,6 +299,9 @@ k = 2
 
 English:
 
+            for num in bucket[freq]:
+                res.append(num)
+                if len(res) == k
 - Learned how to use Counter for frequency mapping
 
 - Used heapq to solve top-k problems efficiently
