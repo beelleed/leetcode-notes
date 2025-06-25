@@ -39,7 +39,7 @@ class Solution:
         count = Counter(nums)  # 統計每個元素出現的次數
         return [item for item, _ in heapq.nlargest(k, count.items(), key=lambda x: x[1])]
 ```
-count = Counter(nums) 回傳一個字典：key 是數字，value 是次數
+1. count = Counter(nums) 回傳一個字典：key 是數字，value 是次數
 
 - 作用：
 
@@ -53,7 +53,7 @@ count = Counter(nums)
 ```
 - 時間複雜度： O(n)
 
-heapq.nlargest(k, count.items(), key=lambda x: x[1])
+2. heapq.nlargest(k, count.items(), key=lambda x: x[1])
 
 - count.items()
 
@@ -61,7 +61,7 @@ heapq.nlargest(k, count.items(), key=lambda x: x[1])
 
     - 範例：[(1, 3), (2, 2), (3, 1)]
 
-key=lambda x: x[1]
+3. key=lambda x: x[1]
 
 - 說明要根據「value（出現次數）」來做排序
 
@@ -79,7 +79,7 @@ heapq.nlargest(k, ...)
 
 - 時間複雜度： O(n log k)
 
-[item for item, _ in ...]
+4. [item for item, _ in ...]
 
 - 說明：
 
