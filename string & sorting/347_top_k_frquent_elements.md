@@ -262,7 +262,10 @@ for freq in range(len(bucket) - 1, 0, -1):
 - 例如從 bucket[6], bucket[5], ..., bucket[1]
 
 ```python:
-return res
+for num in bucket[freq]:
+    res.append(num)
+    if len(res) == k:
+        return res
 ```
 - 把桶裡的數字一個個加入結果
 
@@ -299,9 +302,6 @@ k = 2
 
 English:
 
-            for num in bucket[freq]:
-                res.append(num)
-                if len(res) == k
 - Learned how to use Counter for frequency mapping
 
 - Used heapq to solve top-k problems efficiently
