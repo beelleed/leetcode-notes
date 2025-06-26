@@ -77,6 +77,13 @@ while heap:
     freq,ch = heapq.heappop(heap)
     res.append(ch * (-freq))
 ```
+- freq,ch = heapq.heappop(heap)
+    - 因為「需要用到 pop 出來的內容」，所以必須接住它的回傳值
+
+    - heapq.heappop(heap) 會回傳 heap 中最小的元素，通常是一個 tuple，例如 (freq, ch)
+
+    - 只寫 heapq.heappop(heap) 只有在你「只想把它丟掉，不想用它」的時候才會用
+    
 - 每次從堆中彈出一個 (–freq, ch)：
 
     - ch * (-freq)：把字元 ch 重複出現次數次。
