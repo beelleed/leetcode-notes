@@ -31,7 +31,7 @@ for i in range(5, 0, -1):
 
 - 從 5 開始，每次 -1，到 1 結束（不包含 0）
 
-### 🧰 LeetCode 常見寫法：倒序掃頻率桶
+## 🧰 LeetCode 常見寫法：倒序掃頻率桶
 ```python
 for freq in range(len(bucket) - 1, 0, -1):
     for ch in bucket[freq]:
@@ -63,14 +63,14 @@ range(3, 0, -1)
 | 處理桶排序最大到最小順序 | `for freq in range(len(bucket) - 1, 0, -1):` |
 | 二維陣列從右下角掃描   | `for i in range(rows - 1, -1, -1):`  `for j in range(cols - 1, -1, -1):`        |
 
-### ⚠️ 注意事項 | Tips & Warnings
+## ⚠️ 注意事項 | Tips & Warnings
 - stop 是「不包含的」，即使是倒序也一樣
 
 - 負步長 -1 才能達成倒序，不能寫成 1 或 0
 
 - 適用於處理「最大到最小」、「從尾到頭」的各種場景
 
-### 🧠 學習總結 | Key Takeaways
+## 🧠 學習總結 | Key Takeaways
 - range(len(bucket) - 1, 0, -1) 是 Python 倒序迴圈的經典範例
 
 - 常見於桶排序、字元頻率統計、反向遍歷陣列等題目
