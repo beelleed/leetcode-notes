@@ -1,7 +1,5 @@
 # LeetCode 347: 出現次數最多的前 K 個元素 | Top K Frequent Elements
 
----
-
 ## 🔗 題目連結 | Problem Link
 - [LeetCode 347 - Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/)
 
@@ -107,7 +105,7 @@ class Solution:
             - 把每個 tuple 當作 x
 
             - 拿 x[1]（也就是第二個值）來排序
-            
+
 | 表達方式                 | 意義                         |
 | -------------------- | -------------------------- |
 | `lambda x: x[1]`     | 對每個元素取出第 1 個 index 的值（第二欄） |
