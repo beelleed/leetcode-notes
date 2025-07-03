@@ -1,5 +1,7 @@
 # 🔢 LeetCode 2 - 兩數相加 | Add Two Numbers
 
+🔗 題目連結：[https://leetcode.com/problems/add-two-numbers/](https://leetcode.com/problems/add-two-numbers/)
+
 ---
 
 ## 📘 題目說明 | Problem Description
@@ -9,8 +11,6 @@
 
 ### English:
 You are given two non-empty linked lists representing two non-negative integers. The digits are stored in **reverse order**, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
-
-🔗 題目連結：[https://leetcode.com/problems/add-two-numbers/](https://leetcode.com/problems/add-two-numbers/)
 
 ---
 
