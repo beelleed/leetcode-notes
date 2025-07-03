@@ -4,16 +4,27 @@
 
 ## 📘 題目說明 | Problem Description
 
-請設計一個支援以下操作的「最小堆疊」：
-- `push(x)`：將元素 x 推入堆疊中
-- `pop()`：移除堆疊頂端元素
-- `top()`：取得堆疊頂端元素
-- `getMin()`：取得堆疊中最小值（**O(1)** 時間）
+### 中文
+請你設計一個支援以下操作的堆疊，並能在 O(1) 時間內取得最小值：
+
+1. `push(x)` — 將元素 x 推入堆疊
+2. `pop()` — 移除堆疊頂端元素
+3. `top()` — 取得堆疊頂端元素
+4. `getMin()` — 取得堆疊中所有元素的最小值
+
+### English:
+Design a stack that supports the following operations and can retrieve the minimum element in **O(1) time**:
+
+1. `push(x)` — Push element `x` onto stack
+2. `pop()` — Removes the element on the top of the stack
+3. `top()` — Get the top element
+4. `getMin()` — Retrieve the minimum element in the stack
 
 ---
 
 ## 🧠 解題思路 | Solution Strategy
 
+### 中文
 我們使用兩個 stack：
 1. `stack`：存放所有值
 2. `min_stack`：存放每個狀態下的最小值
@@ -21,6 +32,17 @@
 每次 push：
 - `stack` 加入新值
 - `min_stack` 加入「新值 vs 目前最小值」中較小者
+
+### English:
+We use two stacks to implement MinStack:
+1. `stack`: stores all pushed values
+2. `min_stack`: stores the minimum value at each state, synchronized with `stack` length
+
+Each time we `push()`:
+- Add the new value to `stack`
+- Compare the new value with the current minimum, and push the smaller one to `min_stack`
+
+This design allows `getMin()` to run in **O(1) time complexity**.
 
 ---
 
@@ -91,7 +113,7 @@ def pop(self) -> None:
 def top(self) -> int:
     return self.stack[-1]
 ```
--回傳 stack 頂端的元素（最後一個被放進來的值）。
+- 回傳 stack 頂端的元素（最後一個被放進來的值）。
 
 - [-1] 是 Python 中取「最後一項」的語法。
 
