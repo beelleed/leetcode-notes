@@ -8,8 +8,6 @@
 - 不需要使用 `def` 命名函式
 - 通常用於**一行內可完成的簡單邏輯**
 
----
-
 In Python, `lambda` is an anonymous function. That means:
 - It has no name (unlike regular functions)
 - It's typically used for simple one-line operations
