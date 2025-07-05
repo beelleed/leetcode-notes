@@ -2,6 +2,8 @@
 
 🔗 [題目連結 | Problem Link](https://leetcode.com/problems/maximum-depth-of-binary-tree/)
 
+---
+
 ## 📘 題目說明 | Problem Description
 
 給定一個二元樹的根節點 `root`，請返回其最大深度。
