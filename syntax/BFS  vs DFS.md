@@ -6,8 +6,6 @@
 
 BFS（Breadth-First Search，廣度優先搜尋）與 DFS（Depth-First Search，深度優先搜尋）是遍歷樹或圖的兩種常見方式。
 
----
-
 BFS and DFS are two fundamental ways to traverse trees or graphs.
 
 ---
@@ -38,8 +36,6 @@ BFS and DFS are two fundamental ways to traverse trees or graphs.
 `1 → 2 → 3 → 4 → 5 → 6`
 
 → 一層一層往下走，先處理所有兄弟節點，再往下一層。
-
----
 
 ### 📌 DFS 遍歷順序（前序）：
 `1 → 2 → 4 → 5 → 3 → 6`
@@ -99,7 +95,7 @@ def maxDepth(root):
 
 ---
 
-✅ 學到什麼 | What I Learned
+## ✅ 學到什麼 | What I Learned
 - BFS 適合「由淺入深」，逐層探索，常用 queue
 
 - DFS 適合「一路到底」，再回頭處理，常用 stack 或遞迴
