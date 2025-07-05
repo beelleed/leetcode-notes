@@ -88,6 +88,8 @@ class Solution:
 | 遞迴 DFS | O(n)  | O(h)（樹的高度）         |
 | 迭代 BFS | O(n)  | O(n)（queue 最多裝滿一層） |
 
+---
+
 ## 📌 學到的東西 | What I Learned
 - 二元樹深度問題可以用 DFS 或 BFS 解
 
