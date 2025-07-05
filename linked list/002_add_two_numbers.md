@@ -54,9 +54,9 @@ class Solution:
             if l1: 
                 l1 = l1.next 
 
-            # 如果 l2 還沒到底，就往下走一步（走訪下一個節點
+            # 如果 l2 還沒到底，就往下走一步（走訪下一個節點 ）
             if l2: 
-                l2 = l2.next ）
+                l2 = l2.next
 
         return dummy.next  # 最後返回 dummy.next，就是結果串列的起點（略過 dummy 自己）
 ```
