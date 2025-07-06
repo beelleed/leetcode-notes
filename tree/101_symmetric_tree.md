@@ -62,6 +62,16 @@ class Solution:
 
     - 遞迴比較左節點的左子樹與右節點的右子樹，以及左節點的右子樹與右節點的左子樹。
 
+```python
+return (t1.val == t2.val) and isMirror(t1.left, t2.right) and isMirror(t1.right, t2.left)
+```
+這行程式碼等同於下面這個完整的 if 判斷邏輯：
+```python
+if t1.val == t2.val and isMirror(t1.left, t2.right) and isMirror(t1.right, t2.left):
+    return True
+else:
+    return False
+```
 ### 範例 | Example
 ```markdown
        1
