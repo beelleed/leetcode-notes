@@ -31,6 +31,7 @@ To determine whether a binary tree is symmetric, we need to check if the left an
 3. The right subtree of the left node must be a mirror of the left subtree of the right node.
 
 This can be achieved using recursion or iteration.
+
 ---
 
 ## 🔁 遞迴解法 | Recursive Solution
