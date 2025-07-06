@@ -10,10 +10,10 @@ class Solution:
                    isMirror(t1.left, t2.right) and \
                    isMirror(t1.right, t2.left)
         return isMirror(root, root)
+  
     
 # Iterative Solution
 from collections import deque
-
 class Solution:
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
         if not root:

@@ -7,7 +7,7 @@
 ## 📘 題目說明 | Problem Description
 
 **中文：**  
-給定一個二元樹的根節點 `root`，檢查該樹是否是其自身的鏡像（即，圍繞其中心對稱）。
+給定一個二元樹的根節點 `root`，檢查該樹是否是其自身的鏡像（即圍繞其中心對稱）。
 
 **English：**  
 Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
@@ -24,6 +24,13 @@ Given the root of a binary tree, check whether it is a mirror of itself (i.e., s
 
 這可以通過遞迴或迭代的方式實現。
 
+To determine whether a binary tree is symmetric, we need to check if the left and right subtrees are mirror images of each other. Specifically:
+
+1. The two nodes must have equal values.
+2. The left subtree of the left node must be a mirror of the right subtree of the right node.
+3. The right subtree of the left node must be a mirror of the left subtree of the right node.
+
+This can be achieved using recursion or iteration.
 ---
 
 ## 🔁 遞迴解法 | Recursive Solution
