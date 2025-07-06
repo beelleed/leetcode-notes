@@ -46,8 +46,7 @@ class Solution:
                 return True
             if not t1 or not t2:
                 return False
-            return (t1.val == t2.val) and 
-                   isMirror(t1.left, t2.right) and isMirror(t1.right, t2.left)
+            return (t1.val == t2.val) and isMirror(t1.left, t2.right) and isMirror(t1.right, t2.left)
         return isMirror(root, root)
 ```
 ### ✅ 程式碼解析 | Code Explanation
@@ -62,6 +61,45 @@ class Solution:
     - 如果兩個節點的值不相等，則不對稱。
 
     - 遞迴比較左節點的左子樹與右節點的右子樹，以及左節點的右子樹與右節點的左子樹。
+
+### 範例 | Example
+```markdown
+       1
+     /   \
+    2     2
+   / \   / \
+  3  4  4   3
+```
+#### 🧠 執行流程：
+
+1. isSymmetric(root)
+     ↓
+
+2. isMirror(root, root)
+     → t1.val == t2.val == 1 ✅
+     → 遞迴：isMirror(t1.left, t2.right) 和 isMirror(t1.right, t2.left)
+
+#### 👇 遞迴展開流程：
+```scss
+isMirror(1, 1)
+├── isMirror(2, 2)
+│   ├── isMirror(3, 3)
+│   │   ├── isMirror(None, None) ✅ → True
+│   │   └── isMirror(None, None) ✅ → True
+│   └── isMirror(4, 4)
+│       ├── isMirror(None, None) ✅ → True
+│       └── isMirror(None, None) ✅ → True
+└── 最終回傳 True
+```
+
+#### ✅ 每一層檢查內容：
+- t1.val == t2.val
+
+- t1.left 與 t2.right 是對稱
+
+- t1.right 與 t2.left 是對稱
+
+若全部成立則這兩棵子樹對稱。
 
 ---
 
@@ -97,6 +135,35 @@ class Solution:
     - 如果其中一個為 None，或兩個節點的值不相等，則不對稱。
 
     - 將 t1 的左子節點和 t2 的右子節點、t1 的右子節點和 t2 的左子節點加入佇列。
+
+### 範例 | Example
+```markdown
+       1
+     /   \
+    2     2
+   / \   / \
+  3  4  4   3
+
+初始 queue：
+```css
+[(2, 2)] ← root.left, root.right
+```
+步驟：
+1. 比較 (2, 2) → ✅ 相等
+
+    - 加入 (3, 3) 和 (4, 4)
+
+2. 比較 (3, 3) → ✅ 相等
+
+    - 加入 (None, None), (None, None)
+
+3. 比較 (4, 4) → ✅ 相等
+
+    - 加入 (None, None), (None, None)
+
+4. queue 剩下全部是 (None, None) → ✅ 通過
+
+5. ✅ 最終回傳 True → 樹是對稱的
 
 ---
 
