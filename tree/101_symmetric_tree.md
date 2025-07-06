@@ -73,6 +73,7 @@ class Solution:
 #### 🧠 執行流程：
 
 1. isSymmetric(root)
+
      ↓
 
 2. isMirror(root, root)
