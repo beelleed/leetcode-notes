@@ -95,12 +95,12 @@ class Solution:
             # 交換左右子節點
             current.left, current.right = current.right, current.left
 
-        # 將非空子節點加入佇列
-        if current.left:
-            queue.append(current.left)
-        if current.right:
-            queue.append(current.right)
-    return root
+            # 將非空子節點加入佇列
+            if current.left:
+                queue.append(current.left)
+            if current.right:
+                queue.append(current.right)
+        return root
 ```
 解析：
 
