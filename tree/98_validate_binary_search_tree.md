@@ -1,0 +1,142 @@
+# ✅ LeetCode 98. 驗證二元搜尋樹 | Validate Binary Search Tree
+
+🔗 [題目連結 | Problem Link](https://leetcode.com/problems/validate-binary-search-tree/)
+
+## 📘 題目說明 | Problem Description
+
+給定一棵二元樹，請判斷它是否是一棵有效的「二元搜尋樹」（Binary Search Tree, BST）。
+
+有效的 BST 需滿足以下條件：
+- 左子樹所有節點的值 < 根節點的值
+- 右子樹所有節點的值 > 根節點的值
+- 左右子樹本身也必須是 BST
+
+> Given the root of a binary tree, determine if it is a valid binary search tree (BST).
+
+A valid BST is defined as follows:
+
+- The left subtree of a node contains only nodes with keys less than the node's key.
+
+- The right subtree of a node contains only nodes with keys greater than the node's key.
+
+- Both the left and right subtrees must also be binary search trees.
+
+---
+
+## 🧠 解題思路 | Solution Strategy
+
+### 方法一：中序遍歷法（In-order Traversal）
+**中文**
+- 中序遍歷 BST 會產生「嚴格遞增」的數列。
+- 我們可以使用一個變數 `prev` 保存上一個節點的值，與當前節點進行比較。
+- 一旦出現當前節點 ≤ `prev`，就不是有效 BST。
+
+**English**
+- In-order traversal of a BST yields a strictly increasing sequence.
+
+- In-order traversal of a BST yields a strictly increasing sequence.
+
+- If we ever encounter a node whose value is less than or equal to prev, the tree is not a valid BST.
+
+---
+
+## 🧾 程式碼與詳細解釋 | Code with Detailed Explanation
+
+```python
+class Solution:
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        self.prev = None  # 保存中序遍歷中前一個節點的值
+
+        def inorder(node):
+            if not node:
+                return True
+
+            # 遞迴左子樹
+            if not inorder(node.left):
+                return False
+
+            # 中序訪問當前節點，與前一個節點比較
+            if self.prev is not None and node.val <= self.prev:
+                return False
+            self.prev = node.val  # 更新 prev
+
+            # 遞迴右子樹
+            return inorder(node.right)
+
+        return inorder(root)
+```
+
+---
+
+## 📘 方法二：上下界限制法 | Method 2: Recursive with Bounds
+
+### 🧠 解題思路 | Strategy Explanation
+
+- 對於每個節點，我們遞迴檢查它的值是否在一個「有效區間」之內。
+- 左子樹的所有節點值應小於其祖先節點的值，右子樹的節點值應大於其祖先節點的值。
+- 每層遞迴都會根據當前節點的值更新上下界。
+
+> For each node, we recursively check whether its value falls within a valid range.
+> The left subtree must be less than the current node, and the right subtree must be greater.
+> These bounds are updated during recursion.
+
+---
+
+### ✅ Python 程式碼 | Python Code
+
+```python
+class Solution:
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        def helper(node, lower=float('-inf'), upper=float('inf')):
+            if not node:
+                return True
+
+            val = node.val
+            if val <= lower or val >= upper:
+                return False
+
+            if not helper(node.left, lower, val):
+                return False
+            if not helper(node.right, val, upper):
+                return False
+            return True
+
+        return helper(root)
+```
+
+---
+
+## ⏱️ 時間與空間複雜度 | Time and Space Complexity
+- 時間複雜度：O(n)，其中 n 為節點數，每個節點僅被訪問一次。
+
+- 空間複雜度：O(h)，其中 h 為樹的高度，遞迴堆疊的深度。
+
+---
+
+## 🧠 學到的東西 | What I Learned 
+
+✅ 方法一：中序遍歷法（In-order Traversal）
+- 利用了 BST 的中序遍歷為「嚴格遞增序列」這一性質。
+
+- 實作簡潔，只需一個 prev 變數來記錄上一個節點。
+
+- 缺點是相對不直觀，對 BST 結構理解較弱時容易犯錯。
+
+I learned that a valid BST should yield a strictly increasing sequence during in-order traversal. Using a single prev variable is efficient but can be error-prone if the BST property isn’t fully understood.
+
+✅ 方法二：上下界遞迴法（Recursive Bounds Check）
+- 更符合 BST 的定義：左子樹值 < 節點 < 右子樹值。
+
+- 每一層都遞迴地傳遞「上下限」，對結構限制更嚴格。
+
+- 這種寫法較直觀，也比較好解釋錯誤原因。
+
+I learned how to explicitly enforce the BST property at every level using min and max bounds. This method is easier to reason about and ensures each node is valid in its whole subtree.
+
+---
+
+## ✅ 方法對比與總結 | Comparison & Summary
+| 方法   | 優點        | 缺點      | 適用場景       |
+| ---- | --------- | ------- | ---------- |
+| 中序遍歷 | 實作簡單，空間低  | 容易忽略樹結構 | 小題快速實作     |
+| 區間遞迴 | 嚴謹正確、符合定義 | 多傳參數略複雜 | 解釋錯誤、面試時使用 |
