@@ -38,9 +38,7 @@ A valid BST is defined as follows:
 
 - If we ever encounter a node whose value is less than or equal to prev, the tree is not a valid BST.
 
----
-
-## 🧾 程式碼與詳細解釋 | Code with Detailed Explanation
+### 🧾 程式碼與詳細解釋 | Code with Detailed Explanation
 
 ```python
 class Solution:
@@ -80,8 +78,6 @@ class Solution:
 > The left subtree must be less than the current node, and the right subtree must be greater.
 > These bounds are updated during recursion.
 
----
-
 ### ✅ Python 程式碼 | Python Code
 
 ```python
@@ -103,6 +99,21 @@ class Solution:
 
         return helper(root)
 ```
+```python
+if val <= lower or val >= upper:
+    return False
+```
+- 如果節點值不在指定範圍內，代表不是 BST
+
+```python
+if not helper(node.left, lower, val):
+```
+- 遞迴檢查左子樹，新的上限是當前節點值
+
+```python
+if not helper(node.right, val, upper):
+```
+- 遞迴檢查右子樹，新的下限是當前節點值
 
 ---
 
