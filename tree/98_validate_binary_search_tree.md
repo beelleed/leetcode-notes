@@ -63,6 +63,38 @@ class Solution:
 
         return inorder(root)
 ```
+```python
+def inorder(node):
+    if not node:
+        return True
+```
+- 若目前節點是空的（None），代表已走到底部（如葉節點的左右子樹），回傳 True 表示這部分是合法的 BST。
+
+```python
+if not inorder(node.left):
+    return False
+```
+- 遞迴處理左子樹。
+
+- 如果左子樹不是 BST（也就是有節點違反規則），則立即回傳 False。
+
+```python
+if self.prev is not None and node.val <= self.prev:
+    return False
+```
+- 判斷目前節點值是否大於前一個節點值。
+
+- 若不是「嚴格大於」，代表中序排序錯誤，違反 BST 條件，直接回傳 False。
+
+```python
+self.prev = node.val
+```
+- 若當前節點合法，更新 self.prev 為目前節點的值，方便與下個節點做比較。
+
+```python
+return inorder(node.right)
+```
+- 遞迴處理右子樹，若有違規則也會返回 False。
 
 ---
 
