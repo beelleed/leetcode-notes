@@ -2,6 +2,8 @@
 
 🔗 [題目連結 | Problem Link](https://leetcode.com/problems/number-of-islands/)
 
+---
+
 ## 題目說明 | Problem Description
 
 ### 📘 中文
@@ -11,6 +13,7 @@
 Given an `m x n` 2D binary grid `grid` which represents a map of `'1'`s (land) and `'0'`s (water), return the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically.
 
 #### 範例 | Examples
+```markdown
 Example 1:
 
 Input: grid = [
@@ -29,6 +32,7 @@ Input: grid = [
   ["0","0","0","1","1"]
 ]
 Output: 3
+```
 
 ---
 
@@ -107,9 +111,9 @@ count = 0
 
 ### 🌊 定義 DFS 函式
 ```python
-def dfs(r, c):
-    if r < 0 or c < 0 or r >= cols or grid[r][c] == '0':
-        return
+        def dfs(r, c):
+            if r < 0 or c < 0 or r >= rows or c >= cols or grid[r][c] == '0':
+                return
 ```
 - 如果當前座標超出邊界或該格是水（'0'），就直接 return（不繼續遞迴）。
 
