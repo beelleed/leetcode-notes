@@ -11,6 +11,26 @@
 ### English:
 Given a reference of a node in a connected undirected graph, return a deep copy (clone) of the graph. Each node contains a value (val) and a list of neighbors (neighbors).
 
+### Examples
+- Example 1:
+    - Input: adjList = [[2,4],[1,3],[2,4],[1,3]]
+    - Output: [[2,4],[1,3],[2,4],[1,3]]
+    - Explanation: There are 4 nodes in the graph.
+        - 1st node (val = 1)'s neighbors are 2nd node (val = 2) and 4th node (val = 4).
+        - 2nd node (val = 2)'s neighbors are 1st node (val = 1) and 3rd node (val = 3).
+        - 3rd node (val = 3)'s neighbors are 2nd node (val = 2) and 4th node (val = 4).
+        - 4th node (val = 4)'s neighbors are 1st node (val = 1) and 3rd node (val = 3).
+
+- Example 2:
+    - Input: adjList = [[]]
+    - Output: [[]]
+    - Explanation: Note that the input contains one empty list. The graph consists of only one node with val = 1 and it does not have any neighbors.
+
+- Example 3:
+    - Input: adjList = []
+    - Output: []
+    - Explanation: This an empty graph, it does not have any nodes.
+
 ---
 
 ## 🧠 解題思路 | Solution Strategy
@@ -46,6 +66,7 @@ class Node:
 ---
 
 ## 🧪  解法程式碼 | Python Code
+### DFS
 ```python
 from typing import Optional
 
@@ -71,7 +92,7 @@ class Solution:
         return dfs(node)
 ```
 
-### 🔍 程式碼解析 | Code Explanation
+#### 🔍 程式碼解析 | Code Explanation
 🔹 if not node: return None
 - 如果圖是空的（沒有節點），直接回傳 None。\
 
@@ -114,7 +135,7 @@ class Solution:
 
 - 我們從原圖的 node 開始進行深度優先複製。
 
-### ✅ 補充說明
+#### ✅ 補充說明
 
 - 這段程式碼的核心技巧在於「避免重複建立節點」與「遞迴建立鄰接關係」，它的設計非常精簡：
 
@@ -126,7 +147,7 @@ class Solution:
 
     - 適合處理圖的深拷貝問題。
 
-### 🖼 圖解 | Visualization
+#### 🖼 圖解 | Visualization
 假設圖如下：
 ```lua
 1 -- 2
@@ -143,6 +164,66 @@ graph = {
 }
 ```
 每個節點都會被 DFS 克隆一次，並建立對應的鄰居連結。
+
+---
+
+### BFS
+```python
+from typing import Optional
+from collections import deque
+
+class Solution:
+    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+        if not node:
+            return None
+
+        visited = {}
+        queue = deque([node])
+        visited[node] = Node(node.val)
+
+        while queue:
+            current = queue.popleft()
+            for neighbor in current.neighbors:
+                if neighbor not in visited:
+                    visited[neighbor] = Node(neighbor.val)
+                    queue.append(neighbor)
+                visited[current].neighbors.append(visited[neighbor])
+
+        return visited[node]
+```
+#### 🔍 BFS 解法說明
+✅ 初始化
+- queue 是一個佇列，用來廣度搜尋整張圖。
+
+- visited 字典記錄每個節點對應的 clone 節點。
+
+✅ while loop
+- 每次從 queue 拿出當前節點 current。
+
+- 遍歷其所有 neighbor：
+
+    - 若 neighbor 還沒被複製，就複製它並加進 queue。
+
+    - 把對應的 clone 加進 current 的 clone 的 neighbors。
+
+✅ 結果回傳
+- 回傳最初傳入節點的 clone：visited[node]
+
+✅ 適用情境
+- 避免遞迴爆棧：當圖的節點很多很廣，DFS 可能會爆遞迴堆疊，BFS 是穩定選擇。
+
+- 執行效率好：對寬度大的圖，BFS 擴展更快。
+
+---
+
+## ✅ 差異比較：DFS vs BFS
+| 特性     | DFS              | BFS               |
+| ------ | ---------------- | ----------------- |
+| 遍歷順序   | 一條路走到底，遇到再回溯     | 一層一層擴展所有節點        |
+| 使用結構   | 遞迴（或使用 stack 模擬） | queue（佇列）         |
+| 適用情境   | 遞迴直覺寫法，適合小圖      | 迴圈處理、可避免遞迴堆疊溢出    |
+| 空間使用   | 最多堆疊深度為 O(N)     | 最多 queue 可能為 O(N) |
+| 實際效率差異 | 取決於圖的形狀，無絕對優劣    | 對「廣而淺」的圖可能略快      |
 
 ---
 
