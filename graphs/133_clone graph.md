@@ -13,6 +13,7 @@ Given a reference of a node in a connected undirected graph, return a deep copy 
 
 ### Examples
 - Example 1:
+![](./images/133_clone_graph_question.png)
     - Input: adjList = [[2,4],[1,3],[2,4],[1,3]]
     - Output: [[2,4],[1,3],[2,4],[1,3]]
     - Explanation: There are 4 nodes in the graph.
