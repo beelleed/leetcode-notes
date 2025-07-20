@@ -17,10 +17,9 @@
 Given a 2D grid of `0`s (water) and `1`s (land), return the area of the largest island. An island is a group of `1`s connected **4-directionally** (horizontal and vertical). You may assume all four edges of the grid are surrounded by water.
 
 ### Examples
-```markdown
-Example 1:
+- Example 1:
 ![](../images/695_maxarea1-grid.jpg)
-Input: grid = [
+    - input: grid = [
     [0,0,1,0,0,0,0,1,0,0,0,0,0],
     [0,0,0,0,0,0,0,1,1,1,0,0,0],
     [0,1,1,0,1,0,0,0,0,0,0,0,0],
@@ -30,14 +29,14 @@ Input: grid = [
     [0,0,0,0,0,0,0,1,1,1,0,0,0],
     [0,0,0,0,0,0,0,1,1,0,0,0,0]
     ]
-Output: 6
-Explanation: The answer is not 11, because the island must be connected 4-directionally.
+    - Output: 6
+    - Explanation: The answer is not 11, because the island must be connected 4-directionally.
 
-Example 2:
+- Example 2:
 
-Input: grid = [[0,0,0,0,0,0,0,0]]
-Output: 0
-```
+    - Input: grid = [[0,0,0,0,0,0,0,0]]
+    - Output: 0
+
 
 ---
 
