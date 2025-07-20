@@ -28,6 +28,7 @@ If this is impossible, return `-1`.
 
 ### Examples
 - Example 1:
+![](./images/994_ex1.png)
     - Input: grid = [[2,1,1],[1,1,0],[0,1,1]]
     - -Output: 4
 
