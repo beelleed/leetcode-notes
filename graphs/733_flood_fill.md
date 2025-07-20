@@ -18,7 +18,7 @@ Given a 2D array `image` representing a picture, a starting pixel `(sr, sc)` and
 
 ### Examples
 - Example 1:
-![](./images/733_flood1-grid_ex1.jpg)
+![](../images/733_flood1-grid_ex1.jpg)
     - Input: image = [[1,1,1],[1,1,0],[1,0,1]], sr = 1, sc = 1, color = 2
 
     - Output: [[2,2,2],[2,2,0],[2,0,1]]

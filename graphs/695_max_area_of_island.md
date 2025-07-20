@@ -19,7 +19,7 @@ Given a 2D grid of `0`s (water) and `1`s (land), return the area of the largest 
 ### Examples
 ```markdown
 Example 1:
-![](./images/695_maxarea1-grid.jpg)
+![](../images/695_maxarea1-grid.jpg)
 Input: grid = [
     [0,0,1,0,0,0,0,1,0,0,0,0,0],
     [0,0,0,0,0,0,0,1,1,1,0,0,0],
