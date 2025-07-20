@@ -17,12 +17,13 @@ Given an undirected graph `graph`, where `graph[i]` is a list of all the nodes a
 ### Examples
 
 - Example 1:
-
+![](./images/785_ex1.jpg)
     - Input: graph = [[1,2,3],[0,2],[0,1,3],[0,2]]
     - Output: false
     - Explanation: There is no way to partition the nodes into two independent sets such that every edge connects a node in one and a node in the other.
 
 - Example 2:
+![](./images/785_ex2.jpg)
     - Input: graph = [[1,3],[0,2],[1,3],[0,2]]
     - Output: true
     - Explanation: We can partition the nodes into two sets: {0, 2} and {1, 3}.
