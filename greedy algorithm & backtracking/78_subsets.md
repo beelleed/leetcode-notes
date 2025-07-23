@@ -22,9 +22,29 @@ Given an integer array nums of unique elements, return all possible subsets (the
 
 ---
 
-##  解題思路 | Solution Strategy
+## 🧠 解題思路 | Solution Strategy
 ✅ 核心想法：
-每個元素都有兩種選擇：包含或不包含。因此，對於長度為 n 的陣列，總共有 2^n 種子集。可以使用 回溯法（Backtracking） 或 位元操作（Bit Manipulation） 來生成所有子集
+- 每個元素都有兩種選擇：包含或不包含。
+
+- 因此，對於長度為 n 的陣列，總共有 2^n 種子集。
+
+- 我們可以透過：
+
+    - 🔁 回溯法（Backtracking） 逐步嘗試所有選擇。
+
+    - ⚙️ 位元操作（Bit Manipulation） 使用二進位表示選與不選的組合。
+
+
+✅ Core Idea:
+- Each element has two options: include or not include.
+
+- Therefore, for an array of length n, there are 2^n possible subsets.
+
+- We can generate all subsets using:
+
+    - 🔁 Backtracking: recursively explore inclusion/exclusion of each element.
+
+    - ⚙️ Bit Manipulation: use binary representation to simulate choices (e.g., 1 for include, 0 for exclude).
 
 ---
 
@@ -104,7 +124,7 @@ return res        # 回傳所有子集
     - 回溯，移除 1 → 試 2 → backtrack(2, [2])
 
         - ...
-        
+
 #### 🕒 時間複雜度（Time Complexity）
 - 每個元素都有選或不選兩種選擇
 
