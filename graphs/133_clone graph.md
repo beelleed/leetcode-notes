@@ -94,47 +94,47 @@ class Solution:
 ```
 
 #### 🔍 程式碼解析 | Code Explanation
-🔹 if not node: return None
-- 如果圖是空的（沒有節點），直接回傳 None。\
+-  if not node: return None
+    - 如果圖是空的（沒有節點），直接回傳 None。
 
-🔹 visited = {}
-- 建立一個字典來記錄已經被「複製（clone）」過的節點。
+-  visited = {}
+    - 建立一個字典來記錄已經被「複製（clone）」過的節點。
 
-- key 是原圖的節點（Node 實體），value 是對應的「新圖」中節點（克隆後的 Node 實體）。
+    - key 是原圖的節點（Node 實體），value 是對應的「新圖」中節點（克隆後的 Node 實體）。
 
-🔹 def dfs(current_node): ...
-- 這是我們用來遞迴複製整個圖的函式。
+-  def dfs(current_node): ...
+    - 這是我們用來遞迴複製整個圖的函式。
 
-🔹 if current_node in visited: return visited[current_node]
-- 意義：這個節點之前已經被複製過了，所以我們直接回傳那個複製品。
+-  if current_node in visited: return visited[current_node]
+    - 意義：這個節點之前已經被複製過了，所以我們直接回傳那個複製品。
 
-- 作用：防止無限遞迴，也確保圖中所有邊的連線不會重複建立節點。
+    - 作用：防止無限遞迴，也確保圖中所有邊的連線不會重複建立節點。
 
-🔹 clone = Node(current_node.val)
-- 建立當前節點的新副本，使用它的 val。
+-  clone = Node(current_node.val)
+    - 建立當前節點的新副本，使用它的 val。
 
-- 這時候 neighbors 是空的，稍後會一一補上。
+    - 這時候 neighbors 是空的，稍後會一一補上。
 
-🔹 visited[current_node] = clone
-- 把這個新節點加到 visited 字典中，方便其他地方引用。
+-  visited[current_node] = clone
+    - 把這個新節點加到 visited 字典中，方便其他地方引用。
 
-🔹 for neighbor in current_node.neighbors:
-- 遍歷原圖中 current_node 的所有鄰居。
+-  for neighbor in current_node.neighbors:
+    - 遍歷原圖中 current_node 的所有鄰居。
 
-- 對每個鄰居執行 DFS 遞迴，並將回傳的新節點加入 clone.neighbors。
+    - 對每個鄰居執行 DFS 遞迴，並將回傳的新節點加入 clone.neighbors。
 
-🔹 clone.neighbors.append(dfs(neighbor))
-- 遞迴呼叫 dfs(neighbor) 來複製鄰居節點，並將其加入目前這個節點的鄰接關係中。
+-  clone.neighbors.append(dfs(neighbor))
+    - 遞迴呼叫 dfs(neighbor) 來複製鄰居節點，並將其加入目前這個節點的鄰接關係中。
 
-- 這是建立圖的核心步驟：確保連線關係保持一致。
+    - 這是建立圖的核心步驟：確保連線關係保持一致。
 
-🔹 return clone
-- 回傳新建好的節點，這個會被上層節點加進去作為 neighbors。
+-  return clone
+    - 回傳新建好的節點，這個會被上層節點加進去作為 neighbors。
 
-🔹 return dfs(node)
-- 呼叫遞迴的起點。
+-  return dfs(node)
+    - 呼叫遞迴的起點。
 
-- 我們從原圖的 node 開始進行深度優先複製。
+    - 我們從原圖的 node 開始進行深度優先複製。
 
 #### ✅ 補充說明
 
