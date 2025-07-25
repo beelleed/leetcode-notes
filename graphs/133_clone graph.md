@@ -166,6 +166,67 @@ graph = {
 ```
 每個節點都會被 DFS 克隆一次，並建立對應的鄰居連結。
 
+### 📍 DFS 遞迴流程圖
+```text
+Start cloneGraph(node=1)
+↓
+Check if node is None → No
+Initialize visited = {}
+
+Call dfs(1)
+↓
+1 not in visited → create clone Node(1)
+visited = {1: clone_1}
+
+Iterate neighbors of 1 → [2, 4]
+
+  ┌── Call dfs(2)
+  │   ↓
+  │   2 not in visited → create clone Node(2)
+  │   visited = {1: clone_1, 2: clone_2}
+  │
+  │   Iterate neighbors of 2 → [1, 3]
+  │
+  │     ┌── dfs(1) already in visited → return clone_1
+  │     └── Call dfs(3)
+  │          ↓
+  │          3 not in visited → create clone Node(3)
+  │          visited = {1, 2, 3}
+  │
+  │          Iterate neighbors of 3 → [2, 4]
+  │
+  │            ┌── dfs(2) already in visited → return clone_2
+  │            └── Call dfs(4)
+  │                 ↓
+  │                 4 not in visited → create clone Node(4)
+  │                 visited = {1, 2, 3, 4}
+  │
+  │                 Iterate neighbors of 4 → [1, 3]
+  │                   ┌── dfs(1) → clone_1
+  │                   └── dfs(3) → clone_3
+  │                 clone_4.neighbors = [clone_1, clone_3]
+  │
+  │          clone_3.neighbors = [clone_2, clone_4]
+  │
+  │   clone_2.neighbors = [clone_1, clone_3]
+
+clone_1.neighbors = [clone_2, clone_4]
+
+return clone_1
+```
+#### 🔄 簡要流程說明
+1. 用 DFS 遍歷整張圖。
+
+2. 每訪問一個節點：
+
+    - 建立它的 clone
+
+    - 記錄在 visited 字典裡
+
+3. 如果一個節點已經訪問過，就直接從 visited 拿 clone，不重複建立。
+
+4. 每個 clone node 的鄰居也是 clone 過的鄰居。
+
 ---
 
 ### BFS
