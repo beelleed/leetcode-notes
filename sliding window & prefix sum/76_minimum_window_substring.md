@@ -29,12 +29,24 @@
 
 ## 📌 解題思路 | Solution Idea
 
+### 中文
 使用滑動窗口（Sliding Window）+ 雙指針 + 字典統計：
 
 1. 用一個字典 `need` 記錄 t 中每個字符需要出現的次數。
 2. 用 `window` 記錄當前視窗中字符的出現次數。
 3. 當視窗滿足條件（所有 `need` 中的字符都被包含且數量足夠）時，嘗試收縮左邊界以獲得更小的子串。
 4. 每次找到更小的合法子串就更新起點與長度。
+
+### English
+Using the Sliding Window technique with two pointers and character frequency dictionaries:
+
+1. Use a dictionary need to record how many times each character in t must appear.
+
+2. Use another dictionary window to track the frequency of characters within the current sliding window in s.
+
+3. When the current window satisfies the condition (contains all required characters with the correct frequencies), try to shrink the left boundary to find a smaller valid substring.
+
+4. Each time a smaller valid substring is found, update the starting index and minimum length.
 
 ---
 
