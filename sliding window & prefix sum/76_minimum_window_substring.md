@@ -1,4 +1,5 @@
 # 📘 LeetCode 76 - 最小覆蓋子串 (Minimum Window Substring)
+🔗 [題目連結](https://leetcode.com/problems/minimum-window-substring/)
 
 ## 🧾 題目描述 | Problem Description
 
@@ -6,15 +7,23 @@
 - Given two strings `s` and `t`, return the minimum window in `s` which contains all the characters in `t` (including duplicates).
 
 ### Examples
-Using the Sliding Window technique with two pointers and character frequency dictionaries:
+- Example 1:
 
-1. Use a dictionary need to record how many times each character in t must appear.
+    - Input: s = "ADOBECODEBANC", t = "ABC"
+    - Output: "BANC"
+    - Explanation: The minimum window substring "BANC" includes 'A', 'B', and 'C' from string t.
 
-2. Use another dictionary window to track the frequency of characters within the current sliding window in s.
+- Example 2:
 
-3. When the current window satisfies the condition (contains all required characters with the correct frequencies), try to shrink the left boundary to find a smaller valid substring.
+    - Input: s = "a", t = "a"
+    - Output: "a"
+    - Explanation: The entire string s is the minimum window.
 
-4. Each time a smaller valid substring is found, update the starting index and minimum length.
+- Example 3:
+
+    - Input: s = "a", t = "aa"
+    - Output: ""
+    - Explanation: Both 'a's from t must be included in the window. Since the largest window of s only has one 'a', return empty string.
 
 ---
 
