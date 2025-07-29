@@ -112,6 +112,8 @@ min_len = float('inf')
 
 - start / min_len：記錄最短合法視窗的起始位置與長度
 
+- min_len = float('inf'): 先設一個『不可能的最大值』，之後只要有合法子串，一定比它短。float('inf') = 正無限大（∞）
+
 ### 🔁 主迴圈：右邊擴張窗口
 ```python
 while right < len(s):
@@ -149,11 +151,9 @@ if right - left < min_len:
 d = s[left]
 left += 1
 if d in need:
-    left += 1
-    if d in need:
-        if window[d] == need[d]:
-            valid -= 1
-        window[d] -= 1
+    if window[d] == need[d]:
+        valid -= 1
+    window[d] -= 1
 ```
 - 把最左邊的字元從 window 移除。
 
@@ -208,19 +208,43 @@ return "" if min_len == float('inf') else s[start:start + min_len]
 ```
 
 ---
+
 ## 🔍 視覺化指針移動
-
+### 🌱 初始狀態：
 ```plaintext
-s = "ADOBECODEBANC"
-t = "ABC"
+left = 0
+right = 0
+window = {}
+valid = 0
 need = {'A':1, 'B':1, 'C':1}
-
-步驟：
-right 滑到 'A' → window['A'] = 1 → valid += 1
-...
-right 滑到 'C' → window['C'] = 1 → valid == 3 ✅
-→ 開始嘗試從 left 收縮，找到 "BANC"
 ```
+### 🧭 Sliding Window 執行過程：
+| 步驟   | right | 字元 | 行動                  | window 更新                           | valid | left | 視窗內容          |
+| ---- | ----- | -- | ------------------- | ----------------------------------- | ----- | ---- | ------------- |
+| 1    | 0     | A  | 加入 → 是 need 中       | {'A': 1}                            | ✅1    | 0    | A             |
+| 2    | 1     | D  | 加入 → 不是必要字          | {'A': 1, 'D': 1}                    | 1     | 0    | AD            |
+| 3    | 2     | O  | 加入 → 不是必要字          | {'A': 1, 'D': 1, 'O': 1}            | 1     | 0    | ADO           |
+| 4    | 3     | B  | 加入 → 是 need 中       | {'A':1, 'D':1, 'O':1, 'B':1}        | ✅2    | 0    | ADOB          |
+| 5    | 4     | E  | 加入 → 不是必要字          | {'A':1, 'D':1, 'O':1, 'B':1, 'E':1} | 2     | 0    | ADOBE         |
+| 6    | 5     | C  | 加入 → 是 need 中       | {..., 'C':1}                        | ✅3    | 0    | ADOBEC ✅ 合法視窗 |
+| 🔁收縮 |       |    | left = 0, 移除 A      | A 數量不足 → valid -=1 = 2              | ❌2    | 1    | DOBEC         |
+| 7    | 6     | O  | 加入                  | O: 2                                | 2     | 1    | DOBECO        |
+| 8    | 7     | D  | 加入                  | D: 2                                | 2     | 1    | DOBECOD       |
+| 9    | 8     | E  | 加入                  | E: 2                                | 2     | 1    | DOBECODE      |
+| 10   | 9     | B  | 加入                  | B: 2                                | 2     | 1    | DOBECODEB     |
+| 11   | 10    | A  | 加入 → A: 1 == need A | valid +=1 → valid = 3 ✅             | ✅3    | 1    | DOBECODEBA    |
+| 🔁收縮 |       |    | left = 1, 移除 D      | D:1 → 不影響 valid                     | 3     | 2    | OBECODEBA     |
+|      |       |    | left = 2, 移除 O      | O:1 → 不影響 valid                     | 3     | 3    | BECODEBA      |
+|      |       |    | left = 3, 移除 B      | B:1 → 還夠 → valid 不變                 | 3     | 4    | ECODEBA       |
+|      |       |    | left = 4, 移除 E      | E:1 → 不影響 valid                     | 3     | 5    | CODEBA        |
+|      |       |    | left = 5, 移除 C      | C:0 → valid -=1 → ❌2                | ❌2    | 6    | ODEBA         |
+| 12   | 11    | N  | 加入 → 不影響 valid      | N:1                                 | 2     | 6    | ODEBAN        |
+| 13   | 12    | C  | 加入 → valid +=1      | C:1 == need C → ✅3                  | ✅3    | 6    | ODEBANC       |
+| 🔁收縮 |       |    | left = 6, 移除 O      | O:0 → 不影響 valid                     | 3     | 7    | DEBANC        |
+|      |       |    | left = 7, 移除 D      | D:1 → 不影響 valid                     | 3     | 8    | EBANC         |
+|      |       |    | left = 8, 移除 E      | E:1 → 不影響 valid                     | 3     | 9    | BANC ✅最短合法    |
+|      |       |    | left = 9, 移除 B      | B:1 → 不足 → valid -=1 → ❌2           | ❌2    | 10   | ANC           |
+
 
 ---
 
