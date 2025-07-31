@@ -117,6 +117,13 @@ window[left_char] -= 1
 if window[left_char] == 0:
     del window[left_char]
 ```
+- left_char = s2[i - len1]
+    - 我們的視窗往右移動時：
+
+        - i 是新加入的右邊字元的索引（s2[i]）
+
+        - i - len1 就是視窗最左邊的舊字元（要被移除）
+    - 所以這一行的意思是： 「取出視窗最左邊即將被移除的字元，命名為 left_char」
 -  移除視窗左邊的字元（使視窗長度保持為 len(s1)）
 
     - 如果某字元減到 0，從字典中刪除，保持 window 精簡，方便比較
