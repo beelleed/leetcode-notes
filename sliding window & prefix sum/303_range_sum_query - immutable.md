@@ -43,7 +43,7 @@ Implement a class `NumArray` that supports:
 - 前綴和陣列 `prefix[i]` 表示 `nums[0]` 到 `nums[i-1]` 的總和。
 - 查詢區間 `[left, right]` 的總和可以用：
   
-sumRange=prefix[right+1]−prefix[left]
+    - sumRange=prefix[right+1]−prefix[left]
 
 ### English
 - Since the array does not change, we can precompute the prefix sum.
@@ -52,7 +52,7 @@ sumRange=prefix[right+1]−prefix[left]
 
 - The sum of a range [left, right] can be calculated as:
 
-sumRange=prefix[right+1]−prefix[left]
+    - sumRange=prefix[right+1]−prefix[left]
 
 ---
 
