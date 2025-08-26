@@ -10,13 +10,51 @@
 ### English:
 Given an array of strings `strs`, group all anagrams together. You may return the answer in any order.
 
+### Examples
+- Example 1:
+
+    - Input: strs = ["eat","tea","tan","ate","nat","bat"]
+
+    - Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+
+    - Explanation:
+        - There is no string in strs that can be rearranged to form "bat".
+        - The strings "nat" and "tan" are anagrams as they can be rearranged to form each other.
+        - The strings "ate", "eat", and "tea" are anagrams as they can be rearranged to form each other.
+
+- Example 2:
+
+    - Input: strs = [""]
+
+    - Output: [[""]]
+
+- Example 3:
+
+    - Input: strs = ["a"]
+
+    - Output: [["a"]]
+
+- Constraints:
+
+    - 1 <= strs.length <= 104
+    - 0 <= strs[i].length <= 100
+    - strs[i] consists of lowercase English letters.
+
 ---
 
 ## 💡 解題思路 | Solution Idea
 
+### 中文
 - 所有字母異位詞，**排序後會得到相同的字串**。
 - 將排序後的字串當作 Key，對應原本的字串放入 value list 中。
 - 使用 `defaultdict(list)` 自動幫你建立空 list，非常方便。
+
+### English
+- All anagrams will produce the same string when sorted.
+
+- Use the sorted string as the key, and store the original strings in the value list.
+
+- Using defaultdict(list) automatically initializes empty lists, which makes the code cleaner and more convenient.
 
 🔑 **關鍵技巧**：  
 排序字串當作雜湊 Key ➜ 找出同組的異位詞。
