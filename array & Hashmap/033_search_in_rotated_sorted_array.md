@@ -1,4 +1,7 @@
 # 🔍 LeetCode 33 – Search in Rotated Sorted Array
+[題目連結](https://leetcode.com/problems/search-in-rotated-sorted-array/)
+
+---
 
 ## 📘 題目說明 | Problem Description
 
@@ -11,6 +14,20 @@
 You are given an integer array `nums` sorted in ascending order, but rotated at an unknown pivot. Given a target value, return its index if found in `nums`, otherwise return `-1`.  
 Must run in `O(log n)` time.
 
+### Examples
+- Example 1:
+
+    - Input: nums = [4,5,6,7,0,1,2], target = 0
+    - Output: 4
+- Example 2:
+
+    - Input: nums = [4,5,6,7,0,1,2], target = 3
+    - Output: -1
+- Example 3:
+
+    - Input: nums = [1], target = 0
+    - Output: -1
+ 
 ---
 
 ## 💡 解題思路 | Solution Idea
