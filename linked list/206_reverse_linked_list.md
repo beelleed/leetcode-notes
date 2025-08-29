@@ -13,17 +13,25 @@ Given the `head` of a singly linked list, reverse the list, and return the rever
 
 ### Examples
 Example 1:
+
 ![](../images/206_rev1ex1.jpg)
+
 Input: head = [1,2,3,4,5]
+
 Output: [5,4,3,2,1]
 
 Example 2:
+
 ![](../images/206_rev1ex2.jpg)
+
 Input: head = [1,2]
+
 Output: [2,1]
 
 Example 3:
+
 Input: head = []
+
 Output: []
 
 ---
