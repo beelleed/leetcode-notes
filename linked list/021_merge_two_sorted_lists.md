@@ -16,6 +16,7 @@ You are given the heads of two sorted linked lists `list1` and `list2`. Merge th
 - Example 1:
 
 ![](../images/21_merge_ex1.jpg)
+   
     Input: list1 = [1,2,4], list2 = [1,3,4]
 
     Output: [1,1,2,3,4,4]
