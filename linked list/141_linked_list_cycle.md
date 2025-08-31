@@ -1,6 +1,7 @@
 # 🔁 LeetCode 141 - 判斷連結串列是否有環 | Linked List Cycle
 
 [Leetcode 141](https://leetcode.com/problems/linked-list-cycle/)
+
 ---
 
 ## 📘 題目說明 | Problem Description
