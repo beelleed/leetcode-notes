@@ -4,7 +4,7 @@
 
 ---
 
-##  題目說明 | Problem Description
+## 📘 題目說明 | Problem Description
 
 ### **中文：**  
   給定一個整數陣列 `prices`，其中 `prices[i]` 表示第 i 天的股票價格。你只能進行 **一次買入和一次賣出**，且必須在買入之後才賣出（不能同一天操作）。請計算可獲得的最大利潤，若無法獲利則回傳 `0`。
@@ -74,6 +74,10 @@ min_price = float('inf')
     - min_price 設為「無限大」：代表目前還沒買股票，要找到最低的買入價。
 ```python
 max_profit = 0
+```
+🔹 初始化最大利潤為 0（因為可能無法賺錢，只能賺 0）。
+```python
+for price in prices:
 ```
 🔁 遍歷每天的股票價格。
 ```python
