@@ -19,19 +19,21 @@ Given `head`, the head of a singly linked list, determine if the linked list has
 - Return `True` if there is a cycle; otherwise, return `False`.
 
 ### Examples
-- Example 1:
+Example 1:
 
 ![](../images/141_circularlinkedlist_ex1.png)
 - Input: head = [3,2,0,-4], pos = 1
 - Output: true
 - Explanation: There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed).
-- Example 2:
+
+Example 2:
 
 ![](../images/141_circularlinkedlist_ex2.png)
 - Input: head = [1,2], pos = 0
 - Output: true
 - Explanation: There is a cycle in the linked list, where the tail connects to the 0th node.
-- Example 3:
+
+Example 3:
 
 ![](../images/141_circularlinkedlist_ex3.png)
 - Input: head = [1], pos = -1
