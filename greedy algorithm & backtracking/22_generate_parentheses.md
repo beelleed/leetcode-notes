@@ -1,6 +1,6 @@
 # 22. Generate Parentheses | 生成有效括號組合
 
-[Leetcode 207](https://leetcode.com/problems/generate-parentheses/)
+[Leetcode 22](https://leetcode.com/problems/generate-parentheses/)
 
 ---
 
