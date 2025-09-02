@@ -114,10 +114,23 @@ if left > n or right > n or right > left:
 ### ✅ 終止條件：合法組合完成
 ```python
 if left == n and right == n:
-    result.append(current)
-    return
+    result.append(current) # 加入結果
+    return                 # 停止遞迴，返回上一層
 ```
 當左右括號都用完時，表示我們已經生成了一個合法的括號字串，加入結果列表中。
+
+❌ 如果沒寫 return 會怎樣？
+
+如果你省略 return，程式會繼續往下跑這兩行：
+```python
+backtrack(left + 1, right, current + "(")
+backtrack(left, right + 1, current + ")")
+```
+但此時：
+
+- left > n 或 right > n → 下一層會立即被剪枝
+
+- 雖然不會出錯，但會產生不必要的遞迴呼叫，降低效率
 
 ### 🔁 遞迴邏輯：嘗試加入括號
 ```python
