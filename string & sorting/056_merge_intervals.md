@@ -1,6 +1,6 @@
 # 🔢 LeetCode 56. Merge Intervals | 合併區間
 
-[Leetcode 207](https://leetcode.com/problems/merge-intervals/)
+[Leetcode 56](https://leetcode.com/problems/merge-intervals/)
 
 ---
 
