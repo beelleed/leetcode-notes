@@ -110,6 +110,43 @@ for i in range(n - 1, -1, -1):
 | 1 | 2        | 1              | 1×12 = 12      | 12×2 = 24          |
 | 0 | 1        | 1              | 1×24 = 24      | 24×1 = 24          |
 
+🔹 初始：
+```python
+right_product = 1
+```
+（表示「目前還沒乘任何數」）
+- i = 3：
+
+    - nums[3] = 4
+
+    - 執行 result[3] *= right_product ➜ 6 × 1 = 6
+
+    - 更新：right_product *= nums[3] ➜ 1 × 4 = 4
+
+- i = 2：
+
+    - nums[2] = 3
+
+    - 執行 result[2] *= right_product ➜ 2 × 4 = 8
+
+    - 更新：right_product *= nums[2] ➜ 4 × 3 = 12
+
+- i = 1：
+
+    - nums[1] = 2
+
+    - 執行 result[1] *= right_product ➜ 1 × 12 = 12
+
+    - 更新：right_product *= nums[1] ➜ 12 × 2 = 24
+
+- i = 0：
+
+    - nums[0] = 1
+
+    - 執行 result[0] *= right_product ➜ 1 × 24 = 24
+
+    - 更新：right_product *= nums[0] ➜ 24 × 1 = 24（最後也沒用了）
+
 ### ✅ 最終結果
 ```python
 return result
