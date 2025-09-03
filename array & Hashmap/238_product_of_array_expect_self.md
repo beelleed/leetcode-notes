@@ -96,6 +96,7 @@ for i in range(n - 1, -1, -1):
     result[i] *= right_product
     right_product *= nums[i]
 ```
+
 這段意思是：
 
 - 用一個變數 right_product，記錄「右邊所有元素的乘積」。
@@ -146,6 +147,28 @@ right_product = 1
     - 執行 result[0] *= right_product ➜ 1 × 24 = 24
 
     - 更新：right_product *= nums[0] ➜ 24 × 1 = 24（最後也沒用了）
+
+#### 📘 語法格式：
+```python
+range(start, stop, step)
+```
+| 參數    | 意義           |
+| ----- | ------------ |
+| start | 起始值（**包含**）  |
+| stop  | 結束值（**不包含**） |
+| step  | 每次增加或減少多少    |
+
+- 假設 n = 4，這段會變成：
+```python
+range(3, -1, -1)
+```
+👉 從 3 開始
+
+👉 每次 減 1
+
+👉 到 大於 -1 為止（也就是 0 為止）
+
+🔁 會產生的數字是：3, 2, 1, 0
 
 ### ✅ 最終結果
 ```python
