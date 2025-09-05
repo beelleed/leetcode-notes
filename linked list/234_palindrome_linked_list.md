@@ -15,7 +15,7 @@ Given the head of a singly linked list, return `true` if it is a palindrome or `
 ### Examples
 - Example 1:
 
-![](../images/234_pal2linked-list1.jpg)
+![](../images/234_pal1linked-list1.jpg)
     Input: head = [1,2,2,1]
     Output: true
 
