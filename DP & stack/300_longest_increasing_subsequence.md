@@ -70,7 +70,7 @@ dp = [1] * n
 
 - 為什麼一開始都是 1？因為每個數字至少可以自己單獨成一個子序列。
 ```python
-for i in range(n):
+for i in range(1, n):
 ```
 - 從頭到尾檢查每個數字 nums[i]，假設它是子序列的最後一個數字。
 ```python
