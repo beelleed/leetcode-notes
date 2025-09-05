@@ -12,6 +12,19 @@
 ### English:
 Given the head of a singly linked list, return `true` if it is a palindrome or `false` otherwise.
 
+### Examples
+- Example 1:
+
+![](../images/234_pal2linked-list1.jpg)
+    Input: head = [1,2,2,1]
+    Output: true
+
+- Example 2:
+
+![](../images/234_pal2linked-list2.jpg)
+    Input: head = [1,2]
+    Output: false
+
 ---
 
 ## 🧠 解題思路 | Solution Idea
