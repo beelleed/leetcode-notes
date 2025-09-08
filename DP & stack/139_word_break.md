@@ -20,7 +20,7 @@
 
 ---
 
-## 🧠 解法一：動態規劃（Bottom‑Up DP）
+## 🧠 動態規劃（Bottom‑Up DP）
 
 ### 中文思路：
 1. 建立長度為 `n + 1` 的布林陣列 `dp`，其中 `dp[i]` 代表子字串 `s[0:i]` 是否可拆分。
@@ -149,13 +149,13 @@ dp = [True, False, False, False, False, False, False, False, False]
 
 ### 解題關鍵技巧 | Insights
 
-使用 dp[i] 記錄是否可拆分到特定位置。
+- 使用 dp[i] 記錄是否可拆分到特定位置。
 
-內層 break 提升效率。
+- 內層 break 提升效率。
 
-善用 set 優化字典查詢。
+- 善用 set 優化字典查詢。
 
-這是 bottom‑up DP，清晰易懂又效率高。
+- 這是 bottom‑up DP，清晰易懂又效率高。
 
 ---
 
