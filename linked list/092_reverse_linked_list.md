@@ -134,8 +134,8 @@ dummy.next 是反轉後的新 head，確保即使 head 被反轉區包含也能�
 4. 原始鏈表：
     ```markdown
     dummy → 1 → 2 → 3 → 4 → 5
-             ↑
-           prev
+            ↑    ↑
+          prev  tail
     ```
     - 設定：
 
@@ -145,16 +145,61 @@ dummy.next 是反轉後的新 head，確保即使 head 被反轉區包含也能�
 
 5. 🔁 第一次執行迴圈
     ```python
-    temp = tail.next         # temp = 3
-    tail.next = temp.next    # tail.next = 4（2 指向 4）
-    temp.next = prev.next    # 3.next = 2
-    prev.next = temp         # 1 指向 3
-    ```
-    結果鏈表變成：
-    ```nginx
-    dummy → 1 → 3 → 2 → 4 → 5
-    ```
+    prev = 1
+    tail = 2（固定不動）
 
+    temp = tail.next  # 所以 temp = 3
+    ```
+    圖像變成這樣（尚未改變）：
+    ```text
+    1 → 2 → 3 → 4 → 5
+      ↑    ↑
+    tail  temp
+    ```
+    - ✂️ 第一步：tail.next = temp.next
+        這行是讓 2 不再指向 3，而是指向 4：
+        ```python
+        tail.next = temp.next  # 2 → 4
+        ```
+        圖變成：
+        ```text
+        1 → 2 → 4 → 5
+            ↑
+            tail
+
+        3（暫時斷開）
+        ```
+    - 🪄 第二步：temp.next = prev.next
+
+        此行是讓 temp = 3 指向 prev.next，而 prev.next = 2
+        ```python
+        temp.next = prev.next  # 3 → 2
+        ```
+        圖變成：
+        ```text
+        3 → 2 → 4 → 5
+              ↑
+             tail
+        ```
+    - 🔗 第三步：prev.next = temp
+
+        讓 1 指向 3：
+        ```python
+        prev.next = temp  # 1 → 3
+        ```
+        最終結果變成：
+        ```text
+        1 → 3 → 2 → 4 → 5
+                  ↑
+                 tail
+        ```
+    - 📌 小結四行是做什麼的：
+        ```python
+        temp = tail.next         # 找到要移動的節點（3）
+        tail.next = temp.next    # 把 tail（2）後面指向 4，斷開 3
+        temp.next = prev.next    # 讓 3 指向 2
+        prev.next = temp         # 把 1 指向 3
+        ```
 6. 🔁 第二次執行迴圈
     ```python
     temp = tail.next         # temp = 4
