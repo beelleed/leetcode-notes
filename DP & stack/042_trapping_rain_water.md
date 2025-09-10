@@ -32,11 +32,10 @@
 我們可以用 **動態規劃（雙向預計算）** 或 **雙指針優化**：
 
 ### 動態規劃（DP）版本：
-- **中文:**
-    1. 建兩個陣列 `left_max` 和 `right_max`，分別儲存從左到右和從右到左的最高牆高度。
-    2. 任一位置 `i` 上能儲水的高度 = `min(left_max[i], right_max[i]) - height[i]`。
-    3. 累加所有 `i` 可儲水值即為總量。  
-    :contentReference[oaicite:0]{index=0}
+- **中文:** 
+    1. 構建兩個陣列 `left_max` 和 `right_max`，分別記錄每個位置左邊（含自身）和右邊（含自身）的最大高度值。  
+    2. 雨水高度 = `min(left_max[i], right_max[i]) - height[i]`。  
+    3. 把每個位置能儲水的量加總起來即可得答案。
 
 - **English:**  
     1. Create two arrays `left_max` and `right_max` that store the max height to the left (inclusive) and right (inclusive) for each position.  
@@ -89,11 +88,10 @@ right_max = [0] * n
 - 初始化兩個長度為 n 的陣列：
 
     - left_max[i]: 表示從左到第 i 根柱子為止的最高高度。
-    - 
-right_max[i]: 表示從右到第 i 根柱子為止的最高高度。
+    - right_max[i]: 表示從右到第 i 根柱子為止的最高高度。
 ```python
 left_max[0] = height[0]
-right_max[-1]
+right_max[-1] = height[-1]
 ```
 - 初始化最邊界的最大值：第一個位置的左邊最大值就是它自己；最後一個位置的右邊最大值也是它自己。
 ```python
