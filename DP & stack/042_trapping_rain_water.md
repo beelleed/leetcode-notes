@@ -67,7 +67,7 @@ class Solution:
         for i in range(1, n):
             left_max[i] = max(left_max[i-1], height[i])
         for i in range(n-2, -1, -1):
-            right_max[i] = max(right_max[i+1], height[i])
+            right_max[i] = max(right_max[ei+1], height[i])
 
         total_water = 0
         for i in range(n):
@@ -118,6 +118,11 @@ for i in range(n - 2, -1, -1):
 - 到 0 結束（含 0）
 
 也就是說：從右往左走整個陣列
+
+🤔 為什麼要從倒數第二個 index 開始？
+- 因為最右邊那個 right_max[n-1]，沒有右邊了！
+
+- 所以它自己的「右邊最大值」就是自己 ➜ right_max[n-1] = height[n-1]
 
 ---
 
