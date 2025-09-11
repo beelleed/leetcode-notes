@@ -85,7 +85,7 @@ class Solution:
         return False
 ```
 ```python
-len1, len2 = lwn(s1), len(s2)
+len1, len2 = len(s1), len(s2)
 if len1 > len2:
     return False
 ```
