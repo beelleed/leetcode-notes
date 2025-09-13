@@ -85,7 +85,7 @@ def __init__(self):
 
 ```python
 def push(self, val:int) -> None:
-    selff.stack.append(val)
+    self.stack.append(val)
 ```
 - 把這個值 val 加進主堆疊。
 
