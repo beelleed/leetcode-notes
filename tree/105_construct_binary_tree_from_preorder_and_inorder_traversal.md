@@ -195,25 +195,111 @@ return helper(0, 0, len(preorder))
 preorder = [3, 9, 20, 15, 7]
 inorder  = [9, 3, 15, 20, 7]
 ```
-1. preorder[0] = 3 → 根節點是 3
+### 初始呼叫
+```scss
+helper(pre_start=0, in_start=0, size=5)
+```
+- preorder[0] = 3 → 此 subtree 的根是 3
 
-2. 在 inorder 中找 3 的位置：inorder_index_map[3] = 1 ， 所以左子樹有 1 個節點（在 inorder 中 index < 1），右子樹有 len(inorder) - 1 - 1 = 3 節點
+- 在 inorder 裡找到 3 的 index → root_in_index = 1
 
-3. 左子樹：
+計算：
 
-    - preorder 對應範圍是 preorder[1 : 1 + 1] = [9]
+- 左子樹節點數量 left_size = root_in_index - in_start = 1 - 0 = 1
 
-    - inorder 對應範圍是 inorder[0 : 1] = [9]
+- 右子樹節點數量 right_size = size - left_size - 1 = 5 - 1 - 1 = 3
 
-4. 右子樹：
+建立：
+```markdown
+         3
+        / \
+      ?     ?
+```
+接著建：
 
-    - preorder 範圍是 preorder[1 + 1 : 1 + 1 + 3] = [20, 15, 7]
+- 左子樹：helper(pre_start + 1 =1, in_start =0, size = left_size =1)
 
-    - inorder 範圍是 inorder[2 : 5] = [15, 20, 7]
+- 右子樹：helper(pre_start + 1 + left_size =2, in_start = root_in_index + 1 =2, size = right_size =3)
 
-5. 依遞迴重複以上對 left 和 right 子樹進行
+### 左子樹部分
 
-最後的重建樹結構是：
+呼叫：
+```scss
+helper(pre_start=1, in_start=0, size=1)
+```
+- preorder[1] = 9 → 根是 9
+
+- 在 inorder 裡找到 9 的 index → 0
+
+計算：
+
+- left_size = 0 - 0 = 0
+
+- right_size = 1 - 0 - 1 = 0
+
+建立節點 9，左子樹與右子樹皆為 None，結束這支子樹。
+### 右子樹部分
+
+呼叫：
+```scss
+helper(pre_start=2, in_start=2, size=3)
+```
+- preorder[2] = 20 → 根是 20
+
+- 在 inorder 找到 20 的 index → 在 inorder 是 inorder_index_map[20] = 3
+
+計算：
+
+- left_size = root_in_index - in_start = 3 - 2 = 1
+
+- right_size = size - left_size - 1 = 3 - 1 - 1 = 1
+
+建立節點 20：
+```markdown
+        20
+       /   \
+     ?       ?
+```
+繼續建左與右子樹：
+
+- 左子樹：helper(pre_start=3, in_start=2, size=1)
+
+- 右子樹：helper(pre_start=3 + left_size =4, in_start= root_in_index + 1 =4, size=1)
+### 右子樹的左子節點（20 的左子樹）
+
+呼叫：
+```scss
+helper(pre_start=3, in_start=2, size=1)
+```
+- preorder[3] = 15 → 根是 15
+
+- 在 inorder 找到 15 的位置 → index = 2
+
+計算：
+
+- left_size = 2 - 2 = 0
+
+- right_size = 1 - 0 - 1 = 0
+
+節點 15，左右都 None。
+### 右子節點（20 的右子樹）
+
+呼叫：
+```scss
+helper(pre_start=4, in_start=4, size=1)
+```
+- preorder[4] = 7 → 根是 7
+
+- 在 inorder 找到 7 的位置 → index = 4
+
+計算：
+
+- left_size = 4 - 4 = 0
+
+- right_size = 1 - 0 - 1 = 0
+
+節點 7，左右皆 None
+### 最後的重建樹結構：
 ```markdown
     3
    / \
@@ -221,6 +307,15 @@ inorder  = [9, 3, 15, 20, 7]
      / \
     15  7
 ```
+### 📊 步驟對照表（preorder/inorder 區段）
+| 範圍階段    | preorder 範圍                     | inorder 範圍                     | 根節點 | 左子樹大小 | 右子樹大小 |
+| ------- | ------------------------------- | ------------------------------ | --- | ----- | ----- |
+| 整棵樹     | preorder\[0:5] = \[3,9,20,15,7] | inorder\[0:5] = \[9,3,15,20,7] | 3   | 1     | 3     |
+| 左子樹     | preorder\[1:2] = \[9]           | inorder\[0:1] = \[9]           | 9   | 0     | 0     |
+| 右子樹     | preorder\[2:5] = \[20,15,7]     | inorder\[2:5] = \[15,20,7]     | 20  | 1     | 1     |
+| 20 的左子樹 | preorder\[3:4] = \[15]          | inorder\[2:3] = \[15]          | 15  | 0     | 0     |
+| 20 的右子樹 | preorder\[4:5] = \[7]           | inorder\[4:5] = \[7]           | 7   | 0     | 0     |
+
 
 ---
 
