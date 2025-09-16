@@ -117,7 +117,7 @@ for i in range(level_size):
 - 用迴圈處理當層的所有節點，依序從 queue 取出節點。
 ```python
 if i == level_size - 1:
-    result.appens(node.val)
+    result.append(node.val)
 ```
 - 若是該層最後一個節點（最右邊），加入結果中。
 ```python
