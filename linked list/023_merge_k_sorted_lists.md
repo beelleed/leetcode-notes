@@ -40,17 +40,10 @@
 
 ## 🧠 解題思路 | Solution Idea
 
-有幾種做法，但最常見/效率好的包括：
-
-1. **小根堆／優先佇列（Min-Heap / Priority Queue）方法**  
-   - 把每個非空鏈表的頭節點推入小根堆  
-   - 重複取出堆中的最小節點，將該節點接到結果串列尾部  
-   - 如果該節點有下一個節點，就把下一個節點也推入堆  
-   - 直到堆空  
-
-2. **分治法（Divide and Conquer）**  
-   - 將 k 個串列兩兩合併，一次合併兩個，重複此過程 → k 個串列合併為 k/2 個，再合併，直到只剩一個  
-   - 合併兩個已排序鏈表的成本為 O(n)，透過分治能把總時間降到 O(n log k)
+- 使用最小堆（Min Heap）來追蹤每個 linked list 中目前最小的節點。
+- 初始時，把每條 linked list 的頭節點放入 min heap 中。
+- 每次從 heap 取出最小值節點，接到結果 linked list 後面，並將該節點的下一個節點放入 heap。
+- 重複直到所有節點處理完畢。
 
 ---
 
@@ -60,35 +53,33 @@
 from typing import List, Optional
 import heapq
 
-# Definition for singly-linked list.
 class ListNode:
-    def __init__(self, val: int=0, next: Optional['ListNode']=None):
+    def __init__(self, val: int = 0, next: Optional['ListNode'] = None):
         self.val = val
         self.next = next
 
-    # 若要 nodes 可以比較大小，加這 comparator
-    def __lt__(self, other: 'ListNode') -> bool:
-        return self.val < other.val
-
 class Solution:
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-        # 初始化 min-heap，只放非空的頭節點
+        # ✅ 初始化 heap
         min_heap = []
-        for node in lists:
+        for i, node in enumerate(lists):
             if node:
-                heapq.heappush(min_heap, node)
+                # 💡 使用 (val, index, node) 避免 TypeError
+                heapq.heappush(min_heap, (node.val, i, node))
 
-        # dummy 頭節點方便處理
-        dummy = ListNode(0)
-        current = dummy
+        # ✅ 建立結果 linked list 的 dummy 起點
+        dummy = ListNode()
+        curr = dummy
 
-        # 當堆還有節點時
+        # ✅ 每次取出最小節點，加入結果串列
         while min_heap:
-            smallest_node = heapq.heappop(min_heap)   # 取出最小值節點
-            current.next = smallest_node               # 接到結果串列
-            current = current.next
-            if smallest_node.next:
-                heapq.heappush(min_heap, smallest_node.next)  # 推入下一節點
+            val, i, node = heapq.heappop(min_heap)
+            curr.next = node
+            curr = curr.next
+
+            # ✅ 如果有下一個節點，就加入 heap
+            if node.next:
+                heapq.heappush(min_heap, (node.next.val, i, node.next))
 
         return dummy.next
 ```
@@ -97,40 +88,50 @@ class Solution:
 class Solution:
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
         min_heap = []
-        for node in lists:
+        for i, node in enumerate(lists):
             if node:
-                heapq.heappush(min_heap, node)
-```
-- 將每個非空鏈表的第一個節點推入 min_heap。
+                heapq.heappush(min_heap, (node.val, i, node))
 
-- 這裡 heapq 根據節點值自動排序。
+```
+- min_heap 是一個最小堆，用來追蹤所有目前節點的最小值。
+
+- enumerate(lists) 讓我們能追蹤是哪一個 linked list 的節點（避免同值比較失敗）。
+
+- 每個放入 heap 的元素是三元組 (節點值, list編號, 節點物件)。
+
+    - heapq 預設比較的是三元組的第一個元素（這裡是節點值）。
+
 ### 🧱 準備 dummy 節點
 ```python
 dummy = ListNode(0)
-current = dummy
+curr = dummy
 ```
-- 建立一個 dummy 頭節點作為結果串列的起點。
+- 建立一個 dummy 節點當作結果 linked list 的開頭，方便最後直接回傳 dummy.next。
 
-- current 指標用來逐步擴展結果鏈表。
+- curr 是指向目前結果串列的尾端節點，隨時更新。
 ### 🔁 處理所有節點
 ```python
 while min_heap:
-    smallest_node = heapq.heappop(min_heap)
-    current.next = smallest_node
-    current = current.next
-    if smallest_node.next:
-        heapq.heappush(min_heap, smallest_node.next)
+    val, i, node = heapq.heappop(min_heap)
+    curr.next = node
+    curr = curr.next
 ```
-- 每次從堆中取出最小節點 smallest_node，加到結果鏈結串列。
+- 每次從堆中拿出值最小的節點 node。
 
-- 若該節點有下一個節點，就推入堆，保持 heap 的動態性。
+- 把它接到 curr.next 上，並移動 curr 指針。
+### ➕ 加入下一個節點
+```python
+if node.next:
+    heapq.heappush(min_heap, (node.next.val, i, node.next))
+```
+- 如果這個節點 node 還有後續的節點（node.next 不為 None）：
 
-- 重複直到堆空，所有節點都處理完。
+    - 把它的下一個節點也加入堆中繼續比大小。
 ### ✅ 回傳結果
 ```python
 return dummy.next
 ```
-- 回傳 dummy 的下一個節點，即為合併完成後的排序鏈結串列的頭節點。
+- dummy 是我們建立的虛擬節點，所以實際結果是從 dummy.next 開始的 linked list。
 
 ---
 
@@ -144,43 +145,18 @@ return dummy.next
 
 - List C: 2 → 6
 
-初始：
-```ini
-lists = [A (head=1), B (head=1), C (head=2)]
-min_heap = [nodeA(1), nodeB(1), nodeC(2)]  # 值分別 1,1,2
-```
-建立 dummy → None
-
-### 步驟 1：
-
-    - heap pop → 拿到值最小的 node（假設是 A 的頭部節點 1 或 B 的頭部節點 1，任一者）
-
-    - current.next 指向該節點
-
-    - 接著把被取出節點的 next（若存在）推入 heap
-
-    - 更新 current 移動
-
-- 例如拿 A 的 1 → heap 後成 [B(1), C(2), A(4)] → 結果串列 dummy → 1
-
-### 步驟 2：
-
-    - pop heap → B(1) → 結果變 1 → 1
-
-    - 把 B 的 next（3）推入 heap → heap = [C(2), A(4), B(3)]
-
-### 步驟 3：
-
-    - pop heap → C(2) → 結果 1 → 1 → 2
-
-    - 把 C 的 next（6）推入 heap → heap = [B(3), A(4), C(6)]
-
-- 接續直到所有節點都被處理完：
-
-- 最終合併結果：
-```text
-1 → 1 → 2 → 3 → 4 → 4 → 5 → 6
-```
+| 步驟   | `min_heap`（包含哪些節點）                                                                               | 拿出的小節點 (val, i) | 結果 Linked List（從 dummy.next 開始） | 接入 heap 的下一節點（如果有）             |
+| ---- | ------------------------------------------------------------------------------------------------ | --------------- | ------------------------------- | ------------------------------ |
+| 初始化  | push A.head(1,0), B.head(1,1), C.head(2,2)  <br> 所以 `min_heap` = \[(1,0,A1), (1,1,B1), (2,2,C1)] | —               | `[]`                            | —                              |
+| 步驟 1 | 同如上                                                                                              | pop (1,0,A1)    | `1`                             | A1.next 是 4 → 所以 push (4,0,A4) |
+| 步驟 2 | heap 現在是 \[(1,1,B1), (2,2,C1), (4,0,A4)]                                                         | pop (1,1,B1)    | `1 → 1`                         | B1.next 是 3 → push (3,1,B3)    |
+| 步驟 3 | heap = \[(2,2,C1), (4,0,A4), (3,1,B3)]                                                           | pop (2,2,C1)    | `1 → 1 → 2`                     | C1.next 是 6 → push (6,2,C6)    |
+| 步驟 4 | heap = \[(3,1,B3), (4,0,A4), (6,2,C6)]                                                           | pop (3,1,B3)    | `1 → 1 → 2 → 3`                 | B3.next 是 4 → push (4,1,B4)    |
+| 步驟 5 | heap = \[(4,0,A4), (6,2,C6), (4,1,B4)]                                                           | pop (4,0,A4)    | `1 → 1 → 2 → 3 → 4`             | A4.next 是 5 → push (5,0,A5)    |
+| 步驟 6 | heap = \[(4,1,B4), (6,2,C6), (5,0,A5)]                                                           | pop (4,1,B4)    | `1 → 1 → 2 → 3 → 4 → 4`         | B4.next 是 None → 不推新的          |
+| 步驟 7 | heap = \[(5,0,A5), (6,2,C6)]                                                                     | pop (5,0,A5)    | `1 → 1 → 2 → 3 → 4 → 4 → 5`     | A5.next 是 None → 不推新的          |
+| 步驟 8 | heap = \[(6,2,C6)]                                                                               | pop (6,2,C6)    | `1 → 1 → 2 → 3 → 4 → 4 → 5 → 6` | C6.next 是 None → 不推新的          |
+| 完成   | heap 空                                                                                           | —               | `1 → 1 → 2 → 3 → 4 → 4 → 5 → 6` | —                              |
 
 ---
 

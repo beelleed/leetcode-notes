@@ -1,34 +1,32 @@
 from typing import List, Optional
 import heapq
 
-# Definition for singly-linked list.
 class ListNode:
-    def __init__(self, val: int=0, next: Optional['ListNode']=None):
+    def __init__(self, val: int = 0, next: Optional['ListNode'] = None):
         self.val = val
         self.next = next
 
-    # 若要 nodes 可以比較大小，加這 comparator
-    def __lt__(self, other: 'ListNode') -> bool:
-        return self.val < other.val
-
 class Solution:
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-        # 初始化 min-heap，只放非空的頭節點
+        # ✅ 初始化 heap
         min_heap = []
-        for node in lists:
+        for i, node in enumerate(lists):
             if node:
-                heapq.heappush(min_heap, node)
+                # 💡 使用 (val, index, node) 避免 TypeError
+                heapq.heappush(min_heap, (node.val, i, node))
 
-        # dummy 頭節點方便處理
-        dummy = ListNode(0)
-        current = dummy
+        # ✅ 建立結果 linked list 的 dummy 起點
+        dummy = ListNode()
+        curr = dummy
 
-        # 當堆還有節點時
+        # ✅ 每次取出最小節點，加入結果串列
         while min_heap:
-            smallest_node = heapq.heappop(min_heap)   # 取出最小值節點
-            current.next = smallest_node               # 接到結果串列
-            current = current.next
-            if smallest_node.next:
-                heapq.heappush(min_heap, smallest_node.next)  # 推入下一節點
+            val, i, node = heapq.heappop(min_heap)
+            curr.next = node
+            curr = curr.next
+
+            # ✅ 如果有下一個節點，就加入 heap
+            if node.next:
+                heapq.heappush(min_heap, (node.next.val, i, node.next))
 
         return dummy.next
