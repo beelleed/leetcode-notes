@@ -103,7 +103,7 @@ class Solution:
 
 ### 🧱 準備 dummy 節點
 ```python
-dummy = ListNode(0)
+dummy = ListNode()
 curr = dummy
 ```
 - 建立一個 dummy 節點當作結果 linked list 的開頭，方便最後直接回傳 dummy.next。
