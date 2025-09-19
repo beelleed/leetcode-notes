@@ -117,8 +117,6 @@ while current_num + 1 in num_set:
 
 - 每次存在就把 current_num 加 1，current_streak 加 1。
 
----
-
 ### 更新最長紀錄
 ```python
 longest = max(longest, current_streak)
