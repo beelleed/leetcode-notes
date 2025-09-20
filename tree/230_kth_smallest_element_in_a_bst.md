@@ -7,7 +7,8 @@
 
 **中文**：
 
-給你一棵二元搜尋樹（BST）的根節點 `root` 和一個整數 `k`，請回傳 BST 中第 k 小的節點值（以 1 為起始索引）。  
+給你一棵二元搜尋樹（BST）的根節點 `root` 和一個整數 `k`，請回傳 BST 中第 k 小的節點值（以 1 為起始索引）。 
+ 
 **English**: 
 
 Given the root of a Binary Search Tree (BST) and an integer `k`, return the *k-th smallest* value of all the node values in the BST. The counting is 1-indexed.
