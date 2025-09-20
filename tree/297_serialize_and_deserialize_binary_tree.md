@@ -31,7 +31,17 @@ Given a binary tree, implement two functions: `serialize(root)` to convert the t
 
 ## 🧠 解題思路 | Solution Idea
 
-下面是兩種常見且推薦的方式：
+兩種常見方法：
+
+1. **Level‑order (BFS) 方法**（層級遍歷）：  
+   - 在序列化時，以 BFS 遍歷所有節點，包括 `None`（空節點）作為標記。  
+   - 在反序列化時，以同樣的順序讀取資料，重建每個父節點的左子與右子。
+
+2. **Pre-order 或 Post-order DFS 方法**（遞迴）：  
+   - 序列化時用遞迴先序遍歷（pre-order），空節點用特殊標記（如 `#` 或 `null`）表示。  
+   - deserialize 用同樣格式的遞迴方法／iterator 重建樹。
+
+選擇 BFS 或 DFS 都可以，只要一致：serialize 和 deserialize 必須配對。
 
 | 方法 | 優點 | 缺點 |
 |---|-----|------|
