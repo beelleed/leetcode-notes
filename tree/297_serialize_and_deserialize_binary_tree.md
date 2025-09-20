@@ -141,7 +141,7 @@ class Codec:
 ```python
 def deserialize(self, data: str) -> Optional[TreeNode]:
     if not data:
-        returnNone
+        return None
     parts = data.split(",")
     self.index = 0
     def dfs() - > Optional[TreeNode]:
@@ -150,7 +150,7 @@ def deserialize(self, data: str) -> Optional[TreeNode]:
         if val == Codec.NULL:
             return None
         node = TreeNode(int(val))
-        node.left = def()
+        node.left = dfs()
         node.right = dfs()
         return node
     return dfs()
@@ -186,9 +186,11 @@ def deserialize(self, data: str) -> Optional[TreeNode]:
     4   5
 ```
 序列化結果會是：
+
     ```arduino
     "1,2,#,#,3,4,#,#,5,#,#"
     ```
+
 還原過程如下：
 
 - index=0：建立 TreeNode(1)
