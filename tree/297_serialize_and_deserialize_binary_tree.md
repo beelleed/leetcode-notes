@@ -1,11 +1,31 @@
 # 🌳 LeetCode 297 – Serialize and Deserialize Binary Tree
+🔗 題目連結：[https://leetcode.com/problems/serialize-and-deserialize-binary-tree/](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/)
 
 ---
 
 ## 📄 題目說明 | Problem Description
 
-- **中文**：給定一棵二元樹，需要實作兩個方法：`serialize(root)` 把樹轉成字串；`deserialize(data)` 把那個字串轉回原本的樹結構。序列化格式可以自己決定，但要能完整還原。
-- **English**: Given a binary tree, implement two functions: `serialize(root)` to convert the tree into a string, and `deserialize(data)` to reconstruct the exact same binary tree from that string. You can choose any format as long as it preserves structure.
+**中文**：
+
+給定一棵二元樹，需要實作兩個方法：`serialize(root)` 把樹轉成字串；`deserialize(data)` 把那個字串轉回原本的樹結構。序列化格式可以自己決定，但要能完整還原。
+
+**English**: 
+
+Given a binary tree, implement two functions: `serialize(root)` to convert the tree into a string, and `deserialize(data)` to reconstruct the exact same binary tree from that string. You can choose any format as long as it preserves structure.
+
+### Examples
+- Example 1:
+
+![](../images/297_serdeser1.jpg)
+
+    Input: root = [1,2,3,null,null,4,5]
+ 
+    Output: [1,2,3,null,null,4,5]
+
+- Example 2:
+
+    - Input: root = []
+    - Output: []
 
 ---
 
