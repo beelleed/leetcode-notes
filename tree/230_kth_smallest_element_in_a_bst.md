@@ -1,11 +1,32 @@
 # 🔎 LeetCode 230 – Kth Smallest Element in a BST
+🔗 題目連結：[https://leetcode.com/problems/kth-smallest-element-in-a-bst/](https://leetcode.com/problems/kth-smallest-element-in-a-bst/)
 
 ---
 
 ## 📄 題目說明 | Problem Description
 
-- **中文**：給你一棵二元搜尋樹（BST）的根節點 `root` 和一個整數 `k`，請回傳 BST 中第 k 小的節點值（以 1 為起始索引）。  
-- **English**: Given the root of a Binary Search Tree (BST) and an integer `k`, return the *k-th smallest* value of all the node values in the BST. The counting is 1-indexed.
+**中文**：
+
+給你一棵二元搜尋樹（BST）的根節點 `root` 和一個整數 `k`，請回傳 BST 中第 k 小的節點值（以 1 為起始索引）。  
+**English**: 
+
+Given the root of a Binary Search Tree (BST) and an integer `k`, return the *k-th smallest* value of all the node values in the BST. The counting is 1-indexed.
+
+### Examples
+- Example 1:
+
+![](../images/230_kthtree1.jpg)
+
+    Input: root = [3,1,4,null,2], k = 1
+    Output: 1
+
+- Example 2:
+
+![](../images/230_kthtree2.jpg)
+
+    Input: root = [5,3,6,2,4,null,null,1], k = 3
+
+    Output: 3
 
 ---
 
