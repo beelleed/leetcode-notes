@@ -185,7 +185,7 @@ def deserialize(self, data: str) -> Optional[TreeNode]:
      / \
     4   5
 ```
-序列化結果會是：
+- 序列化結果會是：
 
     ```arduino
     "1,2,#,#,3,4,#,#,5,#,#"
