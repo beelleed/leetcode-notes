@@ -120,21 +120,25 @@ class Codec:
 ```
 ✏️ 解析：
 
-- NULL = "#"：當節點是 None，用 "#" 表示
+- NULL = "#" 是一個常數，用來標記空節點（None）。這樣反序列化時能知道哪裡該插 None。
 
-- dfs(node)：
+- serialize 接受一棵樹的根節點 root。
 
-    - 如果是空節點，就加 #
+- vals = [] 用來收集 DFS 遍歷過程的每個節點（包括空節點）的標記／值。
 
-    - 否則：
+- dfs(node) 是遞迴函式：
 
-        - 把 node.val 轉字串加進 list
+    1. 如果 node 是 None，就把 "#" 加到 vals，然後 return（不繼續深入這支支線）。
 
-        - 遞迴左邊
+    2. 否則，把這個節點的值 node.val 轉成字串放入 vals。
 
-        - 遞迴右邊
+    3. 遞迴呼叫 dfs(node.left)，處理左子樹。
 
-- 最後用 join() 把 list 變成一個字串，例如：
+    4. 遞迴呼叫 dfs(node.right)，處理右子樹。
+
+- dfs(root)：從根節點開始整棵樹的 DFS。
+
+- ",".join(vals)：把 vals 裡面的元素用逗號串起來成為一個字串。這就是最終的序列化結果。例如：
     ```arduino
     "1,2,#,#,3,4,#,#,5,#,#"
     ```
@@ -157,21 +161,27 @@ def deserialize(self, data: str) -> Optional[TreeNode]:
 ```
 ✏️ 解析：
 
-- data.split(",") → 把序列化字串轉為 list，例如：
-    ```python
-    ['1', '2', '#', '#', '3', '4', '#', '#', '5', '#', '#']
-    ```
-- self.index：用來追蹤當前讀取的位置（因為我們是先序順序）
+- 如果 data 是空字串（"" 或者 None 的情況），就直接回傳 None，代表樹也空。
 
-- dfs()：
+- parts = data.split(",")：把序列化字串切割成一個 list，每個元素是節點值或 "#"。
 
-    - 如果當前值是 "#" → 表示這是空節點，回傳 None
+- self.index = 0：這是一個類屬性，用來追蹤目前讀到 parts 的哪一個位置。因為 DFS 先序遍歷；反序列化時也要按照這個順序「讀值 → 建節點 or 空節點」。
 
-    - 否則建立一個 TreeNode
+- dfs() 函式：
 
-    - 接著遞迴建立 left 和 right 子樹
+    1. 讀 parts[self.index] 作為 val，然後 self.index += 1 推進位置。
 
-    - 最後回傳 node
+    2. 如果 val == Codec.NULL（也就是 "#"），代表這是一個空節點，就回傳 None。
+
+    3. 否則，把 val 轉成整數，用 TreeNode(int(val)) 建一個節點。
+
+    4. 遞迴呼叫 dfs() 建這個節點的左子樹（node.left = dfs()）。
+
+    5. 遞迴呼叫 dfs() 建右子樹（node.right = dfs()）。
+
+    6. 回傳這個 node。
+
+- 最後 return dfs()：從最外層的根節點開始還原整棵樹。
 
 ---
 
