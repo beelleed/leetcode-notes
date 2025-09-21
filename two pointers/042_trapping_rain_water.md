@@ -67,7 +67,7 @@ class Solution:
         for i in range(1, n):
             left_max[i] = max(left_max[i-1], height[i])
         for i in range(n-2, -1, -1):
-            right_max[i] = max(right_max[ei+1], height[i])
+            right_max[i] = max(right_max[i+1], height[i])
 
         total_water = 0
         for i in range(n):
