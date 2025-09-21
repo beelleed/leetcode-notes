@@ -85,7 +85,71 @@ class Solution:
         dfs(root)
         return self.max_sum
 ```
+| 區段                                                                            | 功能                                            | 為什麼這樣寫                              |
+| ----------------------------------------------------------------------------- | --------------------------------------------- | ----------------------------------- |
+| `self.max_sum = float('-inf')`                                                | 初始化一個全域變數來追蹤目前見過的最大路徑和                        | 因為節點值可以是負的，如果初始化為 0 的話可能錯過全負的最大路徑場景 |
+| 定義 `dfs(node)` 函式                                                             | 做遞迴，自底向上計算每個節點對上一層的「貢獻」 + 更新最大路徑              | 要探訪所有節點，且子節點先算，父節點再用子節點結果           |
+| `if not node: return 0`                                                       | 基本情況：空節點對路徑和的貢獻為 0                            | 空節點不能貢獻，避免遞迴 None 帶來錯誤              |
+| `left_gain = max(dfs(node.left), 0)` 和 `right_gain = max(dfs(node.right), 0)` | 算左右子樹對這條路徑可以加的最大正貢獻；如果貢獻是負的，就不要用（取 0）         | 否則如果子樹值是負值，加上會降低總和，最好忽略該方向          |
+| `current_max_path = node.val + left_gain + right_gain`                        | 計算如果這個節點作為「頂點」(peak)，同時接受左右的貢獻，經過 node 的最大路徑和 | 因為路徑可以通過這個節點，上下左右連接左右兩邊             |
+| `self.max_sum = max(self.max_sum, current_max_path)`                          | 更新整棵樹中見過的最大路徑和                                | 確保考慮所有節點做為中間節點的情況                   |
+| `return node.val + max(left_gain, right_gain)`                                | 回傳給父節點的最大「單一路徑貢獻」，父節點不能同時往左和往右繼續，只能選一邊        | 父節點如果要連接這子樹的話，只能選左右中比較大的一條來延伸       |
 
+---
+
+## 🧪 範例流程
+
+假設樹是：
+```markdown
+       -10
+       /  \
+      9    20
+          /  \
+        15    7
+```
+初始 self.max_sum = -∞
+
+遞迴流程（post‑order）：
+
+1. dfs(9)
+
+    - 左子、右子都是 None → left_gain = 0, right_gain = 0
+
+    - current_max_path = 9 + 0 + 0 = 9
+
+    - 更新 self.max_sum = max(-∞, 9) = 9
+
+    - 返回 9 + max(0, 0) = 9
+
+2. dfs(15) → 類似，得 15，更新 self.max_sum → 15
+
+3. dfs(7) → 得 7，self.max_sum 保持 15
+
+4. dfs(20)
+
+    - 左子 dfs(15) 給 15, 右子 dfs(7) 給 7
+
+    - left_gain = max(15,0) = 15, right_gain = max(7,0) = 7
+
+    - current_max_path = 20 + 15 + 7 = 42
+
+    - 更新 self.max_sum = max(15,42) = 42
+
+    - 返回給父：20 + max(15,7) = 35
+
+5. dfs(-10)
+
+    - 左子給 9，右子給 35
+
+    - left_gain = max(9,0) = 9, right_gain = max(35,0) = 35
+
+    - current_max_path = -10 + 9 + 35 = 34
+
+    - self.max_sum = max(42,34) = 42
+
+    - 返回 (不重要給父，因為這是 root)
+
+6. 最後回傳 self.max_sum = 42
 
 ---
 
