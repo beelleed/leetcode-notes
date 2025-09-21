@@ -37,9 +37,7 @@ Given a binary tree, find the maximum path sum of any path. The path can start a
 
 ## 🧠 解題思路 | Solution Idea
 
-這題的關鍵在於 **從每個節點作為「最高點（peak）」或者「轉折點」** 計算可能的最大路徑，同時又要考慮當節點向上貢獻路徑給父節點時只能選擇其左右子樹的一邊。
-
-具體步驟：
+關鍵: **從每個節點作為「最高點（peak）」或者「轉折點」** 計算可能的最大路徑，同時又要考慮當節點向上貢獻路徑給父節點時只能選擇其左右子樹的一邊。
 
 1. 用 DFS 遞迴（post‑order：先算左子樹、右子樹，再算自己）遍歷整顆樹。  
 2. 對於任一節點 node，先從左子樹和右子樹取得貢獻值（即從那邊往下能得到的最大正路徑值），記為 `left_gain`、`right_gain`。  
