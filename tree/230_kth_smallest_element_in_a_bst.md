@@ -8,7 +8,7 @@
 **中文**：
 
 給你一棵二元搜尋樹（BST）的根節點 `root` 和一個整數 `k`，請回傳 BST 中第 k 小的節點值（以 1 為起始索引）。 
- 
+
 **English**: 
 
 Given the root of a Binary Search Tree (BST) and an integer `k`, return the *k-th smallest* value of all the node values in the BST. The counting is 1-indexed.
@@ -103,7 +103,7 @@ while current:
 ```python
 current = stack.pop()
 k -= 1
-iff k == 0:
+if k == 0:
 return current.val
 ```
 - 每 pop 一個節點代表訪問到一個值。
@@ -120,6 +120,16 @@ current = current.right
 ---
 
 ## 🧪 範例
+假設有一棵 BST 如下：
+```markdown
+       5
+      / \
+     3   7
+    / \   \
+   1   4   9
+```
+我們設定 k = 3（找第 3 小的節點值）。
+
 | 步驟 | stack 狀態      | current 節點          | k 值 | 動作說明                       | 已訪問順序     |
 | -- | ------------- | ------------------- | --- | -------------------------- | --------- |
 | 初始 | `[]`          | `5`                 | 3   | 開始，current 不為 None，往左推進    | —         |
