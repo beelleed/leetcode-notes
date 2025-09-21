@@ -15,7 +15,7 @@ Given a binary tree, find the maximum path sum of any path. The path can start a
 ### Examples
 - Example 1:
 
-![](../images/124_exx2.jpg)
+![](../images/124_exx1.jpg)
 
     Input: root = [1,2,3]
     
