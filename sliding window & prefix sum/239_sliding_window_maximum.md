@@ -1,4 +1,5 @@
 # 📊 LeetCode 239 – Sliding Window Maximum
+🔗 題目連結 | Problem Link: [https://leetcode.com/problems/sliding-window-maximum/](https://leetcode.com/problems/sliding-window-maximum/)
 
 ---
 
@@ -6,6 +7,28 @@
 
 - **中文**：給定整數陣列 `nums` 和一個滑動視窗大小 `k`，這個視窗從陣列最左邊移動到最右邊，每次移動一步。每個視窗的當下包含 `k` 個元素，求每一個視窗的最大值，回傳這些最大值組成的陣列。  
 - **English**: Given an integer array `nums` and a window size `k`, there is a sliding window which moves from the very left of the array to the very right. You can only see the `k` numbers inside the window at any time. Each time the window moves right by one, return the maximum value in the current window. Produce an array of these maximums.
+
+- **Examples**:
+    - Example 1:
+
+        - Input: nums = [1,3,-1,-3,5,3,6,7], k = 3
+        - Output: [3,3,5,5,6,7]
+        - Explanation: 
+        ```markdown
+        Window position                Max
+        ---------------               -----
+        [1  3  -1] -3  5  3  6  7       3
+        1 [3  -1  -3] 5  3  6  7       3
+        1  3 [-1  -3  5] 3  6  7       5
+        1  3  -1 [-3  5  3] 6  7       5
+        1  3  -1  -3 [5  3  6] 7       6
+        1  3  -1  -3  5 [3  6  7]      7
+        ```
+
+    - Example 2:
+
+        - Input: nums = [1], k = 1
+        - Output: [1]
 
 ---
 
