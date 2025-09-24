@@ -6,11 +6,11 @@
 
 ## 🧩 題目描述 Problem Description
 
-中文：
+### 中文：
 給定一個只包含 ()、[]、{} 的字串 s，請判斷是否為「有效的括號配對」。
 有效的括號需同類型、順序正確，且成對閉合。
 
-English:
+### English:
 Given a string s containing just the characters '(', ')', '{', '}', '[' and ']',
 determine if the input string is valid.
 
@@ -21,6 +21,22 @@ A valid string must satisfy:
 2.Open brackets are closed in the correct order
 
 3.Every closing bracket has a corresponding open bracket of the same type
+
+### Examples
+- Example 1:
+
+    - Input: s = "ABAB", k = 2
+    - Output: 4
+    - Explanation: Replace the two 'A's with two 'B's or vice versa.
+
+- Example 2:
+
+    - Input: s = "AABABBA", k = 1
+    - Output: 4
+    - Explanation: 
+        - Replace the one 'A' in the middle with 'B' and form "AABBBBA". 
+        - The substring "BBBB" has the longest repeating letters, which is 4.
+        - There may exists other ways to achieve this answer too.
 
 ---
 
