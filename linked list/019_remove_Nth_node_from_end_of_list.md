@@ -91,9 +91,9 @@ dummy.next
 - 這樣就算要刪掉頭節點，也能統一處理，不需要特別判斷。
 
 鏈表示意：
-    ```rust
+    
     dummy -> 1 -> 2 -> 3 -> 4 -> 5
-    ```
+   
 ```python
 fast = dummy
 slow = dummy
@@ -111,11 +111,12 @@ for _ in range(n + 1):
 
 例子：[1,2,3,4,5], n=2
 
-    ```ini
     fast 走 3 步後 (n+1=3):
+
     fast -> 3
+
     slow -> dummy
-    ```
+    
 ```python
 while fast:
     fast = fast.next
@@ -127,10 +128,10 @@ while fast:
 
 例子：
 
-    ```ini
     fast = None
+
     slow = 3
-    ```
+
 ```python
 slow.next = slow.next.next
 ```
