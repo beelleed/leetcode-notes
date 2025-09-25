@@ -110,7 +110,8 @@ for _ in range(n + 1):
     - 之後當 fast 走到 None（鏈表尾後一格），slow 就會正好停在要刪的節點的前一個。
 
 例子：[1,2,3,4,5], n=2
-    ```rust
+
+    ```ini
     fast 走 3 步後 (n+1=3):
     fast -> 3
     slow -> dummy
@@ -125,6 +126,7 @@ while fast:
 此時 slow 剛好在要刪的節點的前一個。
 
 例子：
+
     ```ini
     fast = None
     slow = 3
