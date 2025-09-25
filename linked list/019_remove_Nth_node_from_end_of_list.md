@@ -171,22 +171,44 @@ return dummy.next
 
     - 第二步：fast → 2
 
+    - 第三步：fast → 3
+
+此時：
+```markdown
+dummy -> 1 -> 2 -> 3 -> 4 -> 5 -> None
+ ^slow
+             ^fast
+```
+
 3. 檢查 if not fast: fast 現在不是 None，所以繼續。
 
-4. 進入 while fast.next: 迴圈，fast 和 slow 一起移動直到 fast.next 為 None：
+4. 進入 while fast: 迴圈，fast 和 slow 一起移動直到 fast 為 None：
 
-    - fast at 2, slow at dummy → both 移動 → fast at 3, slow at 1
+    - 迭代 1:
+        fast = 4, slow = 1
 
-    - fast at 3, slow at 1 → both 移動 → fast at 4, slow at 2
+    - 迭代 2:
+        fast = 5, slow = 2
 
-    - fast at 4, slow at 2 → both 移動 → fast at 5, slow at 3
+    - 迭代 3:
+        fast = None, slow = 3
 
-    - 現在 fast.next 是 None（fast 在最後一節點 5），停止
+此時：
+```markdown
+dummy -> 1 -> 2 -> 3 -> 4 -> 5 -> None
+                  ^slow
+                          fast=None
+```
 
 5. 此時 slow 在節點值為 3 的節點。
     - slow.next 是節點 4 → 這是要刪除的節點
 
     - slow.next = slow.next.next → 跳過節點 4，讓 3 指向 5
+
+結果：
+```markdown
+dummy -> 1 -> 2 -> 3 -> 5 -> None
+```
 
 6. 回傳 dummy.next → 原來 head 仍是 1，因此整個修改後的鏈表是： 1 → 2 → 3 → 5
 
