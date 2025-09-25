@@ -67,16 +67,12 @@ class Solution:
         fast = dummy
         slow = dummy
 
-        # fast 指針先走 n 步
-        for _ in range(n):
+        # 讓 fast 先走 n+1 步
+        for _ in range(n + 1):
             fast = fast.next
 
-        # 若 fast 為 None，代表原本 head 長度等於 n，需要刪除 head
-        if not fast:
-            return head.next
-
         # 同時移動 fast 和 slow，直到 fast 到最尾端
-        while fast.next:
+        while fast:
             fast = fast.next
             slow = slow.next
 
@@ -86,16 +82,69 @@ class Solution:
         # 回傳 dummy.next 作為新的 head
         return dummy.next
 ```
+```python
+dummy = ListNode(0)
+dummy.next
+```
+- 在鏈表最前面加一個 dummy 節點。
 
-| 區段                                                    | 做什麼 / 功能                           | 為什麼這樣寫                                                                    |
-| ----------------------------------------------------- | ---------------------------------- | ------------------------------------------------------------------------- |
-| `dummy = ListNode(0); dummy.next = head`              | 建一個虛擬節點 `dummy`，它的下個節點指向 `head`    | 為了處理要刪除第一個節點（即 head 本身被移除）的情況比較好處理，用 dummy 可以統一處理，不需 special case 太多。     |
-| `fast = dummy; slow = dummy`                          | 設定兩個指針，一開始都從 dummy 出發              | fast 用來先往前跑，slow 則用來“追”fast，到特定距離後可以定位要刪的節點的前一個節點。                        |
-| `for _ in range(n): fast = fast.next`                 | fast 先移動 n 步                       | 讓 fast 和 slow 之間有 n 節點的間距，這樣當 fast 到達尾端時，slow 正好在「要刪除節點的前一個節點」位置。         |
-| `if not fast: return head.next`                       | 如果 fast 已經變成 `None`（到表尾後超過）        | 表示整個 list 的長度正好是 n 或更小，使得要刪除的是 head 節點本身。此時可以直接跳過 head 回傳 `head.next`。    |
-| `while fast.next: fast = fast.next; slow = slow.next` | 同時往前移動 fast 和 slow，直到 fast 到最後一個節點 | 因為 fast 先走過 n 步，所以當 fast 到 list 的最後時，slow 正好在「被刪節點的前一節點」。                 |
-| `slow.next = slow.next.next`                          | 刪除節點：跳過 slow 的下一個節點（即被刪掉的節點）       | 這樣就從鏈結串列中移除了第 n 個從尾端算起的節點。                                                |
-| `return dummy.next`                                   | 回傳修改後的 head                        | dummy.next 是新的 head（可能原本的 head 沒被刪，也可能原 head 被刪，那 dummy.next 自動指向新的第一節點）。 |
+- 這樣就算要刪掉頭節點，也能統一處理，不需要特別判斷。
+
+鏈表示意：
+    ```rust
+    dummy -> 1 -> 2 -> 3 -> 4 -> 5
+    ```
+```python
+fast = dummy
+slow = dummy
+```
+- 兩個指針都從 dummy 開始。
+```python
+for _ in range(n + 1):
+    fast = fast.next
+```
+- 為什麼要走 n+1 步？
+
+    - 讓 fast 和 slow 之間保持一個「n+1 的間距」。
+
+    - 之後當 fast 走到 None（鏈表尾後一格），slow 就會正好停在要刪的節點的前一個。
+
+例子：[1,2,3,4,5], n=2
+    ```rust
+    fast 走 3 步後 (n+1=3):
+    fast -> 3
+    slow -> dummy
+    ```
+```python
+while fast:
+    fast = fast.next
+    slow = slow.next
+```
+- 兩個指針一起往前走，直到 fast = None。
+
+此時 slow 剛好在要刪的節點的前一個。
+
+例子：
+    ```ini
+    fast = None
+    slow = 3
+    ```
+```python
+slow.next = slow.next.next
+```
+- slow.next 就是要刪的節點。
+
+把它跳過即可。
+
+例子：
+
+    原本：3 -> 4 -> 5
+
+    刪掉 4：3 -> 5
+```python
+return dummy.next
+```
+- 因為可能刪掉頭節點，所以最安全的做法是回傳 dummy.next（真正的鏈表頭）。
 
 ---
 
