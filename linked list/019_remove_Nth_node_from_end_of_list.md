@@ -84,7 +84,7 @@ class Solution:
 ```
 ```python
 dummy = ListNode(0)
-dummy.next
+dummy.next = head
 ```
 - 在鏈表最前面加一個 dummy 節點。
 
