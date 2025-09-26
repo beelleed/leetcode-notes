@@ -95,23 +95,28 @@ Valid operators are `+`, `-`, `*`, and `/`. Each operator applies to the two mos
 ```python
 class Solution:
     def evalRPN(self, tokens: List[str]) -> int:
-        stack = []
-        for token in tokens:
-            if token in {"+", "-", "*", "/"}:
-                b = stack.pop()      # 右值
-                a = stack.pop()      # 左值
-                if token == "+":
+        stack = []                       # 用來存操作數（整數）
+        for token in tokens:             # 逐個讀 token
+            if token in {'+', '-', '*', '/'}:   # 碰到運算子
+                b = stack.pop()          # 後彈出的是「右操作數」
+                a = stack.pop()          # 先彈出的是「左操作數」
+
+                if token == '+':
                     val = a + b
-                elif token == "-":
-                    val = a - b
-                elif token == "*":
+                elif token == '-':
+                    val = a - b          # 注意：次序不可顛倒
+                elif token == '*':
                     val = a * b
                 else:
-                    val = int(a / b)  # 向 0 收斂的整数除
-                stack.append(val)
+                    # Python 的 / 是實數除法；int(實數) 會朝 0 取整（符合題意）
+                    val = int(a / b)
+
+                stack.append(val)        # 把本次結果推回堆疊
             else:
-                stack.append(int(token))
-        return stack[-1] # 最後一個元素
+                stack.append(int(token)) # 碰到數字就壓入堆疊
+
+        return stack[-1]                 # 最終結果在堆疊頂端
+
 ```
 ## 🧠 核心學習重點 Key Takeaways
 - Stack LIFO 原理：最後 push 的先 pop → 運算使用的順序是右值先出。
