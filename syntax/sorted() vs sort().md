@@ -56,6 +56,10 @@ print(nums)
 # [3, 2, 1]
 ```
 
+- reverse=False（預設值） → 升冪排序（由小到大）
+
+- reverse=True → 降冪排序（由大到小）
+
 ## ✅ 總結
 
 - sorted()
