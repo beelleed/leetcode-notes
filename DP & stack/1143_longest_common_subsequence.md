@@ -12,6 +12,20 @@ Given two strings `text1` and `text2`, return the length of their longest common
 
 ---
 
+## 📘 解題思路 Explanation
+初始條件 Initialization
+- 第一行與第一列初始化為 0，表示空字串與任何字串的 LCS 為 0。
+
+狀態定義 State Definition
+- dp[i][j]: 表示 text1 前 i 個字元 與 text2 前 j 個字元 的最長公共子序列長度
+
+- dp[i][j] =
+
+    - 若 text1[i-1] == text2[j-1], dp[i-1][j-1] + 1 
+    -  否則 max(dp[i-1][j], dp[i][j-1])
+
+---
+
 ## ✅ 正確解法 Correct Solution (Dynamic Programming)
 
 ```python
@@ -29,21 +43,51 @@ class Solution:
 
         return dp[m][n]
 ```
+### 🔍 變數與結構說明
 
-## 📘 解題思路 Explanation
-初始條件 Initialization
-- 第一行與第一列初始化為 0，表示空字串與任何字串的 LCS 為 0。
+- m = len(text1), n = len(text2)：分別為兩個字串的長度。
 
-狀態定義 State Definition
-- dp[i][j]: 表示 text1 前 i 個字元 與 text2 前 j 個字元 的最長公共子序列長度
+- dp 是一個 (m+1)×(n+1) 的二維表格。dp[i][j] 表示 text1 的前 i 個字符 和 text2 的前 j 個字符 的最長公共子序列長度。
 
-- dp[i][j] =
+    - 用 m+1 和 n+1 是為了讓邊界容易處理（有一行／一列為 0 作為 base case）。
 
-    - 若 text1[i-1] == text2[j-1], dp[i-1][j-1] + 1 
-    -  否則 max(dp[i-1][j], dp[i][j-1])
+- dp[0][*] 或 dp[*][0] 都是 0，意味著如果其中一個字串長度為 0，公共子序列長度就是 0。
+
+### 🔁 主迴圈邏輯
+```python
+for i in range(1, m + 1):
+    for j in range(1, n + 1):
+        if text1[i - 1] == text2[j - 1]:
+            dp[i][j] = dp[i - 1][j - 1] + 1
+        else:
+            dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+```
+- 解釋：
+
+    - i 和 j 分別對應到 text1 和 text2 的字元位置（用 i - 1、j - 1 索引）。
+
+    - 若 text1[i - 1] == text2[j - 1]，表示這兩個字符可以延續一條公共子序列，那麼：
+        ```python
+        dp[i][j] = dp[i - 1][j - 1] + 1
+        ```
+        意思是：前 i−1 和 j−1 的公共子序列再加上這一個匹配字符。
+
+    - 否則，如果兩個字符不一樣，那麼這個位置的公共子序列要麼是：
+
+        - 不把 text1[i - 1] 用進來 → 用 dp[i - 1][j]
+
+        - 不把 text2[j - 1] 用進來 → 用 dp[i][j - 1]
+
+    - 所以取兩者的最大值：
+        ```python
+        dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+        ```
+- 這樣可保證 dp[i][j] 是最長的可能值。
+
+---
 
 ## ⏱️ 時間複雜度 Time Complexity
-- O(m * n)
+- 時間複雜度：O(m × n)，因為要填 m×n 個格子，每格做 O(1) 操作。
 
 ## 💾 空間複雜度 Space Complexity
 - 標準解法：使用 dp[m+1][n+1] 的二維陣列，空間複雜度為：O(m * n)
