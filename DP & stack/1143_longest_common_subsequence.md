@@ -10,6 +10,25 @@
 
 Given two strings `text1` and `text2`, return the length of their longest common subsequence. The subsequence does not need to be contiguous, but must preserve the relative order of characters.
 
+### Examples
+- Example 1:
+
+    - Input: text1 = "abcde", text2 = "ace" 
+    - Output: 3  
+    - Explanation: The longest common subsequence is "ace" and its length is 3.
+
+- Example 2:
+
+    - Input: text1 = "abc", text2 = "abc"
+    - Output: 3
+    - Explanation: The longest common subsequence is "abc" and its length is 3.
+
+- Example 3:
+
+    - Input: text1 = "abc", text2 = "def"
+    - Output: 0
+    - Explanation: There is no such common subsequence, so the result is 0.
+
 ---
 
 ## 📘 解題思路 Explanation
