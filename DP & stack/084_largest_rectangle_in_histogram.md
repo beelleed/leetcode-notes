@@ -86,7 +86,7 @@ n = len(heights)
 
 ### 🔸 2. 主迴圈 + 虛擬柱子處理
 ```python
-for i inrange(n + 1):
+for i in range(n + 1):
     current_height = 0 if i == nelse heightts[i]
 ```
 - 透過 i == n 時加入一個虛擬高度為 0 的柱子，確保 stack 最後會清空
