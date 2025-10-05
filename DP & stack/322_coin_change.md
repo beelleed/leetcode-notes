@@ -66,6 +66,15 @@ dp = [0] + [amount + 1] * amount
 - dp[0] = 0：代表金額 0 不需要任何硬幣。
 
 - 其餘初始化為 amount + 1，當作一個無限大的預設值（因為最大不可能超過 amount 枚硬幣）。
+
+### 📘 小記法：
+
+- 如果是「最小化」型 DP（像 Coin Change、Min Path Sum），
+    - 初始化 = 很大值（amount + 1 或 float('inf')）
+
+- 如果是「最大化」型 DP（像 House Robber、LCS），
+    - 初始化 = 很小值（0 或 -inf）
+
 ```python
 for coin in coins:
 ```
@@ -83,6 +92,11 @@ dp[i] = min(dp[i], dp[i - coin] + 1)
 
     2. 用這個硬幣 → dp[i - coin] + 1（代表用掉一枚 coin 之後，剩下的部分已知最少硬幣數）
 
+| 部分             | 意思                         |
+| -------------- | -------------------------- |
+| `dp[i - coin]` | 湊出金額 `(i - coin)` 需要的最少硬幣數 |
+| `+ 1`          | 再加上「這次使用的這一枚硬幣」            |
+
 - 取兩者的較小值來更新 dp[i]。
 ```python
 return dp[amount] if dp[amount] <= amount else -1
@@ -90,6 +104,12 @@ return dp[amount] if dp[amount] <= amount else -1
 - 最後，若 dp[amount] 仍然是初始的無限大（代表湊不到），回傳 -1；
 
 - 否則回傳最少硬幣數 dp[amount]。
+
+| 條件                     | 意義            | 動作              |
+| ---------------------- | ------------- | --------------- |
+| `dp[amount] <= amount` | 代表有被更新，真的湊得出  | 回傳最少硬幣數         |
+| `dp[amount] > amount`  | 代表沒被更新（還是初始值） | 回傳 `-1` 表示不可能湊出 |
+
 
 ## 🧪 範例
 ```python
