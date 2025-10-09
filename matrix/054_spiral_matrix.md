@@ -5,8 +5,8 @@
 
 ## 📄 題目說明 | Problem Description
 
-- **中文**：給你一個 \(m \times n\) 的整數矩陣 `matrix`，請你以螺旋（順時針）順序遍歷矩陣中的所有元素，並回傳遍歷後的元素列表。  
-- **English**: Given an \( m \times n \) matrix `matrix`, return all the elements of the matrix in spiral order (clockwise).
+- **中文**：給你一個 m * n 的整數矩陣 `matrix`，請你以螺旋（順時針）順序遍歷矩陣中的所有元素，並回傳遍歷後的元素列表。  
+- **English**: Given an m * n matrix `matrix`, return all the elements of the matrix in spiral order (clockwise).
 
 - **Examples**:
     - Example 1:
