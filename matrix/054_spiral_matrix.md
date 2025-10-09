@@ -105,6 +105,22 @@ class Solution:
 | 向上走（條件） | `if left ≤ right:`<br>`for i in range(bottom, top-1, -1): result.append(matrix[i][left])`<br>`left += 1`     | 若左右界仍有效，遍歷左邊界並把左界右移 |
 | 回傳結果    | `return result`                                                                                              | 回傳螺旋順序的所有元素         |
 
+### 📘 解釋 range(left, right + 1)
+- range(start, stop) 的 stop 是「不包含」的邊界。
+
+- 若要包含 right，就要寫 stop = right + 1。
+
+- 所以 range(left, right + 1) 表示從 left 到 right（包含）逐一遍歷。
+
+### 📘 解釋 range(left, right - 1, -1)
+- range(start, stop, step)
+
+    - 會從 start 走到 不含 stop
+
+    - 每次加上 step（正數向右、負數向左）
+
+    - 當要從右往左掃時，應該從 right 開始，走到 left 結束（包含 left）。
+
 ---
 
 ## 🧪 範例流程 | Example Walkthrough
