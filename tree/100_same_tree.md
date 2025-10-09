@@ -27,11 +27,12 @@
         - Output: false
 
     - Example 3:
+    
         ![](../images/100_ex3.jpg)
 
         - Input: p = [1,2,1], q = [1,1,2]
         - Output: false
-        
+
 ---
 
 ## 🧠 解題思路 | Solution Idea
