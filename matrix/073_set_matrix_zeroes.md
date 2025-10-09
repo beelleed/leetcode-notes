@@ -14,6 +14,7 @@ Given an 𝑚 × 𝑛 integer matrix matrix, if an element is 0, set its entire 
 
 ### Examples
 - Example 1:
+
     ![](../images/73_mat1.jpg)
 
     Input: matrix = [[1,1,1],[1,0,1],[1,1,1]]
@@ -21,6 +22,7 @@ Given an 𝑚 × 𝑛 integer matrix matrix, if an element is 0, set its entire 
     Output: [[1,0,1],[0,0,0],[1,0,1]]
 
 - Example 2:
+
     ![](../images/73_mat2.jpg)
 
     Input: matrix = [[0,1,2,0],[3,4,5,2],[1,3,1,5]]
@@ -162,7 +164,7 @@ class Solution:
 
 ---
 
-## ⏱ 複雜度分析
+## ⏱ 複雜度分析 | Complexity
 
 - 時間複雜度：𝑂(𝑚 × 𝑛)，整個矩陣要遍歷幾次也是線性的。
 
