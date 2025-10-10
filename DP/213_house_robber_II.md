@@ -239,16 +239,16 @@ class Solution:
                 return 0
             if m == 1:
                     return houses[0]
-                # dp[i] 表示偷到 houses[i]（考慮到第 i 間）時的最大金額
-                dp = [0] * m
-                dp[0] = houses[0]
-                dp[1] = max(houses[0], houses[1])
-                # 從第三間 (index=2) 開始
-                for i in range(2, m):
-                    # 偷這間：dp[i-2] + houses[i]
-                    # 不偷這間：dp[i-1]
-                    dp[i] = max(dp[i - 1], dp[i - 2] + houses[i])
-                return dp[-1]
+            # dp[i] 表示偷到 houses[i]（考慮到第 i 間）時的最大金額
+            dp = [0] * m
+            dp[0] = houses[0]
+            dp[1] = max(houses[0], houses[1])
+            # 從第三間 (index=2) 開始
+            for i in range(2, m):
+                # 偷這間：dp[i-2] + houses[i]
+                # 不偷這間：dp[i-1]
+                dp[i] = max(dp[i - 1], dp[i - 2] + houses[i])
+            return dp[-1]
 
 
         # 情況一：不偷最後一間
