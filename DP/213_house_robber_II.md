@@ -233,102 +233,143 @@ class Solution:
             return nums[0]
 
         # 線性版本的打家劫舍，用完整 dp 陣列寫法
-        def rob_linear_dp(houses: List[int]) -> int:
-            m = len(houses)
-            if m == 0:
-                return 0
-            if m == 1:
-                return houses[0]
-            # dp[i] 表示偷到 houses[i]（考慮到第 i 間）時的最大金額
-            dp = [0] * m
-            dp[0] = houses[0]
-            dp[1] = max(houses[0], houses[1])
-            # 從第三間 (index=2) 開始
-            for i in range(2, m):
-                # 偷這間：dp[i-2] + houses[i]
-                # 不偷這間：dp[i-1]
-                dp[i] = max(dp[i - 1], dp[i - 2] + houses[i])
-            return dp[-1]
+        def rob_range(start: int, end: int) -> int:
+            m = end - start + 1
+            dp = [0] * (m + 1)
+            dp[1] = nums[start]
+            for i in range(2, m + 1):
+                # nums[start + i - 1] 是第 i 間房子的實際值（因為 nums 是 0-based）
+                dp[i] = max(dp[i - 1], dp[i - 2] + nums[start + i - 1])
+            return dp[m]
 
-
-        # 情況一：不偷最後一間
-        case1 = rob_linear_dp(nums[:-1])
-        # 情況二：不偷第一間
-        case2 = rob_linear_dp(nums[1:])
-
-        return max(case1, case2)
+        return max(rob_range(0, n - 2), rob_range(1, n - 1))
 ```
-### 邊界處理
+### 🧱 Step 1 - Edge Case 處理
 ```python
-n = len(nums)
-if n == 0:
+if not nums:
     return 0
+n = len(nums)
 if n == 1:
     return nums[0]
 ```
-- 若無房子可偷，回傳 0
+- 如果 nums 是空的，就不能搶，回傳 0。
 
-- 若只有一間房子，偷那間就是最大金額
+- 如果只有一間房子，就只能搶這一間。
 
-### 線性版 DP：rob_linear_dp
+### 🧱 Step 2 - 定義 rob_range() 子函式
 ```python
-m = len(houses)
-if m == 0:
-    return 0
-if m == 1:
-    return houses[0]
-dp = [0] * m
-dp[0] = houses[0]
-dp[1] = max(houses[0], houses[1])
+def rob_range(start: int, end: int) -> int:
+    m = end - start + 1
+    dp = [0] * (m + 1)
+    dp[1] = nums[start]
 ```
-- 若線性子列長度為 0、1，直接處理
+- 這個函式負責處理一段連續的房子（不包含環狀限制）。
 
-- 初始化 dp[0] 和 dp[1]，表示前 1 間或前 2 間偷到的最大金額
+- 使用 1-based index 的 dp 陣列：dp[i] 表示搶到「第 i 間（相對位置）房子」的最大金額。
+
+- dp[1] = nums[start]：第一間房子只能搶它自己。
+### 🧱 Step 3 - 動態規劃遞推關係
 ```python
-for i in range(2, m):
-    dp[i] = max(dp[i - 1], dp[i - 2] + houses[i])
+for i in range(2, m + 1):
+    dp[i] = max(dp[i - 1], dp[i - 2] + nums[start + i - 1])
 ```
-- 對於第 i 間房子，有兩種選擇：
+- 這是標準的 House Robber transition：
 
-    - 不偷第 i 間：得到 dp[i - 1]
+    - dp[i - 1]: 不搶當前房子，保留前面最大值。
 
-    - 偷第 i 間：得到 dp[i - 2] + houses[i]
+    - dp[i - 2] + nums[start + i - 1]: 搶這一間，就不能搶上一間。
 
-    - 選較大的那一個
+- 注意 nums[start + i - 1]：因為 nums 是 0-based，而 dp 是 1-based。
 
-- 最後 return dp[-1] 把最後一間房子的最大偷盜金額當作線性子問題的答案。
+    - 在函式 rob_range(start, end) 中，我們定義一段從 nums[start] 到 nums[end] 的子區間，並建立一個新的 dp 陣列，長度為這段區間的長度 + 1，用來存放動態規劃的結果。
+
+    - 💡 dp[i] 的含義是：表示搶到 第 i 間房子（從 start 開始算） 為止的最大金額。
+
+    - 🔢 舉例說明：
+
+        假設：
+
+        ```python
+        nums = [2, 3, 2]
+        start = 1  # 對應房子是 3（index 1）
+        end = 2    # 對應房子是 2（index 2）
+        ```
+        - 在 rob_range(1, 2) 中，我們會建立：
+        ```python
+        dp = [0, nums[1], ...]
+        ```
+        - 在第 i = 2 次迴圈中，我們要處理「實際上的第幾間房子」？
+
+        - 因為 dp 是從 1 開始記錄（不是從 0），所以：
+            ```python
+            nums[start + i - 1]
+            = nums[1 + 2 - 1]
+            = nums[2]
+            ```
+        - ✔️ 正確對應到「實際上的第 i 間房子」。
+
+
+### 🧱 Step 4 - 回傳最大值
+```python
+return dp[m]
+```
+- 最後一間（第 m 間）房子的 dp 值，就是這一段的最大獲利。
+
+### 🧱 Step 5 - 主邏輯：比較兩種情況
+```python
+return max(rob_range(0, n - 2), rob_range(1, n - 1))
+```
+- 不能同時搶第一和最後一間，所以分兩種情況：
+
+    1. 把第一間包含進來，最後一間不能搶 → rob_range(0, n - 2)
+
+    2. 把最後一間包含進來，第一間不能搶 → rob_range(1, n - 1)
+
+- 取兩者最大值為最終解。
 
 ---
 
 ## 🧪 範例
 
-- 假設 nums = [2, 7, 9, 3, 1]
+- nums = [2, 3, 2]
 
-### 情況一（排除最後一間） → [2, 7, 9, 3]
+### 📘 1. rob_range(0, 1) → 處理 [2, 3]
 
-- m = 4
+- 對應房子：第 1 間、第 2 間（不能搶最後一間）
 
-- dp 初始化：dp = [2, max(2,7)=7, 0, 0] → dp = [2, 7, 0, 0]
+    - 初始化：
+        - m = 2（範圍大小）
+        - dp = [0, 2, 0] → dp[1] = nums[0] = 2
 
-- i = 2 → dp[2] = max(dp[1], dp[0] + 9) = max(7, 2+9=11) = 11
+- 迴圈：
 
-- i = 3 → dp[3] = max(dp[2], dp[1] + 3) = max(11, 7+3=10) = 11
-→ case1 = 11
+    - i = 2
 
-### 情況二（排除第一間） → [7, 9, 3, 1]
+        - dp[2] = max(dp[1], dp[0] + nums[1]) = max(2, 0 + 3) = 3
 
-- m = 4
+- 結果：dp = [0, 2, 3] → 回傳 dp[2] = 3
 
-- dp 初始化：dp = [7, max(7,9)=9, 0, 0] → dp = [7, 9, 0, 0]
+### 📘 2. rob_range(1, 2) → 處理 [3, 2]
 
-- i = 2 → dp[2] = max(dp[1], dp[0] + 3) = max(9,7+3=10) = 10
+- 對應房子：第 2 間、第 3 間（不能搶第一間）
 
-- i = 3 → dp[3] = max(dp[2], dp[1] + 1) = max(10,9+1=10) = 10
-→ case2 = 10
+    - 初始化：
+        - m = 2
+        - dp = [0, 3, 0] → dp[1] = nums[1] = 3
 
-結果：max(case1, case2) = max(11, 10) = 11
+- 迴圈：
 
-所以 rob([2,7,9,3,1]) = 11
+    - i = 2
+
+        - dp[2] = max(dp[1], dp[0] + nums[2]) = max(3, 0 + 2) = 3
+
+- 結果：dp = [0, 3, 3] → 回傳 dp[2] = 3
+
+### ✅ 最終結果：
+```python
+max(rob_range(0, 1), rob_range(1, 2)) = max(3, 3) = 3
+```
+所以答案是 3。
 
 ---
 
