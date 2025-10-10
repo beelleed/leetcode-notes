@@ -1,4 +1,5 @@
 # 🏠 LeetCode 213 — House Robber II / 打家劫舍 II
+🔗 [題目連結](https://leetcode.com/problems/house-robber-ii/)
 
 ---
 
@@ -7,6 +8,24 @@
 - **中文**：有一排屋子排成一個圓圈，每個屋子裡有一定數量的金錢（`nums[i]`）。如果你偷相鄰的兩個房子就會觸動警報。因為是圓形排列，第一個和最後一個房子互為鄰居。求在不觸警報的情況下，能偷到的最大金額。
 
 - **English**: Houses are arranged in a circle, each house has some money. You cannot rob two adjacent houses or else the alarm triggers. Because it's a circle, the first and last house are adjacent. Return the maximum money you can rob without alerting the police.
+
+- **Examples**
+    - Example 1:
+
+        - Input: nums = [2,3,2]
+        - Output: 3
+        - Explanation: You cannot rob house 1 (money = 2) and then rob house 3 (money = 2), because they are adjacent houses.
+
+    - Example 2:
+
+        - Input: nums = [1,2,3,1]
+        - Output: 4
+        - Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3). Total amount you can rob = 1 + 3 = 4.
+
+    - Example 3:
+
+        - Input: nums = [1,2,3]
+        - Output: 3
 
 ---
 
