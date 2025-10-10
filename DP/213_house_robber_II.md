@@ -238,7 +238,7 @@ class Solution:
             if m == 0:
                 return 0
             if m == 1:
-                    return houses[0]
+                return houses[0]
             # dp[i] 表示偷到 houses[i]（考慮到第 i 間）時的最大金額
             dp = [0] * m
             dp[0] = houses[0]
