@@ -246,9 +246,10 @@ class Solution:
 ```
 ### 🧱 Step 1 - Edge Case 處理
 ```python
-if not nums:
-    return 0
 n = len(nums)
+# 邊界處理
+if n == 0:
+    return 0
 if n == 1:
     return nums[0]
 ```
