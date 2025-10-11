@@ -63,6 +63,48 @@ class Solution:
                 dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
         return dp[m][n]
 ```
+```python
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+```
+- 定義一個 Solution 類別，內部有一個方法 uniquePaths，接收 m（列數）和 n（行數）作為輸入。
+
+```python
+dp = [[0] * (n + 1) for _ in range(m + 1)]
+```
+- 初始化一個 2D 陣列 dp，大小為 (m+1) x (n+1)，初始值都為 0。
+-  為什麼要多一行一列？→ 因為這裡用的是 1-based index（從 1 開始），這樣在寫 dp[i-1][j] 等公式時就不會超出邊界。
+
+```python
+dp[1][1] = 1
+```
+-  初始化起點 (1,1) 為 1，代表：到起點的路徑只有「站在原地」這一條。
+
+```python
+for i in range(1, m + 1):
+    for j in range(1, n + 1):
+```
+-  開始走過整個 dp 陣列的每一格（從 1 開始），表示我們從第 1 行第 1 列開始更新每一格的值。
+
+```python
+if i == 1 and j == 1:
+    continue
+```
+- 跳過 (1,1)，因為它已經在前面設定為 1，不用再更新。
+
+```python
+dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
+```
+-  核心遞推公式：
+
+    - 可以從「上方格子」走下來：dp[i-1][j]
+
+    - 或從「左方格子」走過來：dp[i][j-1] 所以總路徑數為兩者的和。
+
+```python
+return dp[m][n]
+```
+-  最終回傳右下角格子的值，即為從左上角走到右下角的總路徑數。
 
 ---
 
