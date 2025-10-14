@@ -1,14 +1,29 @@
 # 🔄 LeetCode 48 — Rotate Image / 旋轉圖像
+🔗 [題目連結](https://leetcode.com/problems/rotate-image/)
 
 ---
 
 ## 📄 題目說明 | Problem Description
 
-**中文**  
+### 中文  
 給你一個 n × n 的二維矩陣 `matrix`，代表一張圖像。請你**原地**將這張圖像順時針旋轉 90 度。注意：不能額外開新矩陣，你必須在原本的 `matrix` 上修改。
 
-**English**  
+### English 
 You are given an n × n 2D matrix representing an image. Rotate the image by 90 degrees **clockwise**, doing so **in-place**—you must modify the input matrix directly without allocating another matrix.
+
+### Examples
+- Example 1:
+
+    ![](../images/048_mat1.jpg)
+    - Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]
+    - Output: [[7,4,1],[8,5,2],[9,6,3]]
+
+- Example 2:
+
+    ![](../images/048_mat2.jpg)
+
+    - Input: matrix = [[5,1,9,11],[2,4,8,10],[13,3,6,7],[15,14,12,16]]
+    - Output: [[15,13,2,5],[14,3,4,1],[12,6,8,9],[16,7,10,11]]
 
 ---
 
