@@ -153,7 +153,7 @@ def dfs(r, c, visited, prev_height):
 
         1. (r, c) 越界
 
-        2. 已被訪問過（visited[r][c] 已為 True）
+        2. 已被訪問過（visited[r][c] 已為 True）(visited[r][c] 是一個 布林值 (True / False) 的矩陣)
 
         3. 當前格子的高度比前一格 (prev_height) 小 → 代表這條路「逆向」不合法
 
