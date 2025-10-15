@@ -122,26 +122,26 @@ class Trie:
 
 ```python
     def insert(self, word: str) -> None:
-        cur = self.root
+        node = self.root
 ```
 - 每次插入一個單字時，從根節點開始。
 
-- cur 是目前走到的字典位置。
+- node 是目前走到的字典位置。
 
 ```python
         for ch in word:
-            if ch not in cur:
-                cur[ch] = {}
-            cur = cur[ch]
+            if ch not in node:
+                node[ch] = {}
+            node = node[ch]
 ```
 - 遍歷單字中的每個字元 ch：
 
-    - 如果目前層級 cur 中沒有這個字元，表示這個分支還沒建立 → 新增一個空字典。
+    - 如果目前層級 node 中沒有這個字元，表示這個分支還沒建立 → 新增一個空字典。
 
-    - 然後走到下一層，更新 cur 為 cur[ch]，繼續處理下個字元。
+    - 然後走到下一層，更新 node 為 node[ch]，繼續處理下個字元。
 
 ```python
-        cur[True] = True
+        node[True] = True
 ```
 - 當整個單字都插入完，代表走到了最後一層。
 
