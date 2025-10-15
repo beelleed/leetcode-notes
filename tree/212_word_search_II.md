@@ -221,7 +221,7 @@ words = ["abe", "dog", "ado"]
 
 - 最終 Trie 結構（字典表示）可能是：
     ```markdown
-        root
+    root
     ├─ 'a' → nodeA
     │     ├─ 'b' → nodeAB
     │     │     └─ 'e' → nodeABE (word = "abe")
