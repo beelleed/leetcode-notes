@@ -1,3 +1,26 @@
+# Method 1: Code Example
+class Trie:
+    def __init__(self):
+        self.root = {}
+
+    def insert(self, word: str) -> None:
+        cur = self.root
+        for ch in word:
+            if ch not in cur:
+                cur[ch] = {}
+            cur = cur[ch]
+        cur[True] = True  # 標記完整單字
+
+    def startsWith(self, prefix: str) -> bool:
+        cur = self.root
+        for ch in prefix:
+            if ch not in cur:
+                return False
+            cur = cur[ch]
+        return True
+
+
+# Method 2: Code Example
 class TrieNode:
     def __init__(self):
         self.children = [None] * 26

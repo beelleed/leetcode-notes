@@ -43,7 +43,33 @@ All inputs are lowercase English letters (a‑z). :contentReference[oaicite:0]{i
     
 ---
 
-## 🧱 資料結構選擇與設計
+## 🧠 解題思路 | Approach
+- ✅ 自定義 TrieNode 類別
+
+- ✅ 或使用 Python 的巢狀字典
+
+### 方法一 : 巢狀字典
+1. insert(word)：
+
+    - 從 Trie 的根節點開始，對 word 的每個字元進行：
+
+        - 若該字元不存在於當前字典中，則新增一個空字典。
+
+        - 向下移動至下一層。
+
+    - 最後在該單字的末尾位置，設 cur[True] = True 表示這裡是一個完整單字的結尾。
+
+2. startsWith(prefix)：
+
+    - 從 Trie 的根開始，遍歷 prefix 中每個字元：
+
+        - 若該字元不在當前層字典中，直接返回 False。
+
+        - 否則繼續向下走。
+
+    - 若整個 prefix 都找到，返回 True。
+
+### 方法二 : 資料結構選擇與設計
 
 - 我們用一個 **TrieNode** 類別來代表每個節點。每個節點有：
   1. `children`：通常是一個長度為 26 的陣列或字典，代表 a–z 的子節點  
@@ -53,7 +79,160 @@ All inputs are lowercase English letters (a‑z). :contentReference[oaicite:0]{i
 
 ---
 
-## 💡 程式碼範例（Python 實作）
+## 💡 方法一 : 程式碼範例
+
+```python
+class Trie:
+    def __init__(self):
+        self.root = {}
+        self.END = True  # 特殊標記，代表某個節點為完整詞結尾
+
+    def insert(self, word: str) -> None:
+        node = self.root
+        for ch in word:
+            if ch not in node:
+                node[ch] = {}
+            node = node[ch]
+        node[self.END] = True  # 加入結尾標記
+
+    def startsWith(self, prefix: str) -> bool:
+        node = self.root
+        for ch in prefix:
+            if ch not in node:
+                return False
+            node = node[ch]
+        return True
+```
+```python
+class Trie:
+    def __init__(self):
+        self.root = {}
+```
+- 建立 Trie 時初始化一個空字典 self.root，代表字首樹的根節點。
+
+- 這個 self.root 將用來儲存所有單字的開頭。
+
+```python
+    def insert(self, word: str) -> None:
+        cur = self.root
+```
+- 每次插入一個單字時，從根節點開始。
+
+- cur 是目前走到的字典位置。
+
+```python
+        for ch in word:
+            if ch not in cur:
+                cur[ch] = {}
+            cur = cur[ch]
+```
+- 遍歷單字中的每個字元 ch：
+
+    - 如果目前層級 cur 中沒有這個字元，表示這個分支還沒建立 → 新增一個空字典。
+
+    - 然後走到下一層，更新 cur 為 cur[ch]，繼續處理下個字元。
+
+```python
+        cur[True] = True
+```
+- 當整個單字都插入完，代表走到了最後一層。
+
+- 在這一層加上 True: True 作為「完整單字結尾」的標記。
+
+```python
+    def startsWith(self, prefix: str) -> bool:
+        cur = self.root
+```
+- 搜尋前綴字時，仍然從根節點開始。
+
+```python
+        for ch in prefix:
+            if ch not in cur:
+                return False
+            cur = cur[ch]
+```
+- 檢查 prefix 中的每個字元：
+
+    - 如果該字元不存在於目前節點 → 回傳 False（找不到這個 prefix）
+
+    - 如果存在 → 走進下一層，繼續檢查下一個字元
+
+```python
+        return True
+```
+- 若整個 prefix 都成功走完 → 回傳 True
+
+---
+
+## 📘 範例 | Examples
+- 範例一：
+```python
+trie = Trie()
+trie.insert("apple")
+```
+執行後的 self.root 結構會變成：
+```python
+{
+  'a': {
+    'p': {
+      'p': {
+        'l': {
+          'e': {
+            True: True
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+- 每個字元是一層嵌套字典，最後的 True: True 是單字結尾標記。
+
+- 範例二：
+```python
+trie.startsWith("app")  # ✅ True
+```
+
+- "a" 存在 → 繼續
+
+- "p" 存在 → 繼續
+
+- "p" 存在 → 結束
+
+- 🔚 找到了整個 prefix，回傳 True
+
+- 範例三：
+```python
+trie.startsWith("bat")  # ❌ False
+```
+
+- "b" 不存在於 root → 直接回傳 False
+
+---
+
+## 🧩 時間與空間複雜度 | Time & Space Complexity
+
+| 操作           | 時間複雜度          | 空間複雜度        |
+| ------------ | -------------- | ------------ |
+| `insert`     | O(L) — L 為單字長度 | O(L) — 新節點空間 |
+| `startsWith` | O(L)           | O(1)         |
+
+---
+
+## 📘 學到的東西 | What I Learned
+
+- 巢狀字典可以簡潔地模擬 Trie 結構，不需額外 class。
+
+- node = node[ch] 是在不斷深入 Trie 的每層。
+
+- 使用特殊標記 self.END = True 來記錄完整詞結尾，這樣可以延伸實作 search()。
+
+- 雖然這種寫法簡單，但在大型應用中建議還是用 TrieNode 來增加可維護性。
+
+---
+
+## 💡 方法二 : 程式碼範例 
 
 ```python
 class TrieNode:
