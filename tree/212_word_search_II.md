@@ -196,7 +196,7 @@ for r in range(rows):
     for c in range(cols):
         dfs(r, c, root)
 ```
-- 對 board 上每一個位置 (i, j) 當作起點，呼叫 dfs(i, j, root) 開始尋字。
+- 對 board 上每一個位置 (r, c) 當作起點，呼叫 dfs(r, c, root) 開始尋字。
 
 ### 6. 回傳結果
 ```python
