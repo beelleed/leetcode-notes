@@ -126,16 +126,47 @@ def search(self, word: str) -> bool:
 
 ### 📍處理通配符 .
 ```python
-        if ch == '.':
-            for key, child in node.items():
-                if key is not self.END:
-                    if dfs(child, i + 1):
-                        return True
-            return False
+for key, child in node.items():
 ```
-- . 可代表任意字母 → 遍歷當前節點的所有子節點。
 
-- 忽略 END 標記（不是字母分支），對每個子節點遞迴處理。
+- node 是一個字典。
+
+- .items() 回傳的是目前節點中所有的 key-value 組合。
+
+    - key 是字元（a–z 或 True 作為結尾標記）
+
+    - child 是下一層的字典（代表子 Trie）
+```python
+if key is not self.END:
+```
+
+- self.END 是我們設為 True 的結尾符號，用來標記一個完整字串的終點。
+
+- 我們 不應該對 True 做遞迴，所以要跳過。
+```python
+if dfs(child, i + 1):
+    return True
+```
+
+- 對每個子節點遞迴呼叫 dfs，如果任一條路徑成功（整個單字能對應上），就回傳 True。
+```python
+return False
+```
+
+- 如果 26 條路徑都試過了，沒有任何一條成功，那就表示這個通配符無法匹配，回傳 False。
+
+### ▶ else: 普通字元的處理
+```python
+if ch not in node:
+    return False
+```
+
+- 如果目前節點中沒有這個字元，那代表這個字無法構成。
+```python
+return dfs(node[ch], i + 1)
+```
+
+- 繼續往下一層遞迴。
 
 ### 🧾 處理一般字母
 ```python
