@@ -11,6 +11,14 @@ class Trie:
             cur = cur[ch]
         cur[True] = True  # 標記完整單字
 
+    def search(self, word: str) -> bool:
+        cur = self.root
+        for ch in word:
+            if ch not in cur:
+                return False  # 沒有這個字母，單字不存在
+            cur = cur[ch]
+        return True in cur  # 只有有 True 標記，才算是完整單字
+
     def startsWith(self, prefix: str) -> bool:
         cur = self.root
         for ch in prefix:

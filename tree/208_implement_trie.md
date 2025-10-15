@@ -95,6 +95,14 @@ class Trie:
             node = node[ch]
         node[self.END] = True  # 加入結尾標記
 
+    def search(self, word: str) -> bool:
+        cur = self.root
+        for ch in word:
+            if ch not in cur:
+                return False  # 沒有這個字母，單字不存在
+            cur = cur[ch]
+        return True in cur  # 只有有 True 標記，才算是完整單字
+
     def startsWith(self, prefix: str) -> bool:
         node = self.root
         for ch in prefix:
@@ -138,6 +146,45 @@ class Trie:
 - 當整個單字都插入完，代表走到了最後一層。
 
 - 在這一層加上 True: True 作為「完整單字結尾」的標記。
+```python
+def search(self, word):
+    cur = self.root
+```
+- 初始化一個指針 cur，指向 Trie 的根節點（字典 self.root）。
+
+- 從這個節點出發，逐層往下走。
+
+```python
+for ch in word:
+    if ch not in cur:
+        return False
+    cur = cur[ch]
+```
+
+- 這段是在一個一個字母地檢查：
+
+    - 以 "apple" 為例，第一輪會檢查 'a' 是否存在於 cur。
+
+    - 若 ch 不在 cur 的 key 中，代表 Trie 裡根本沒有這個字，直接 return False。
+
+    - 如果 ch 存在，則讓 cur = cur[ch]，進入下一層繼續檢查下一個字母。
+
+- 這樣就把 word 從 Trie 的頂端一路「走」下去。
+
+```python
+return True in cur
+```
+
+- 這行很關鍵！
+
+    - 到這裡表示「這個字每個字母都有在 Trie 裡」。
+
+    - 但！不代表這是完整的單字。
+
+    - 所以我們要檢查：這層是否有 True 這個 key → 是 insert() 時加上的結尾標記。
+
+- 如果有 True，表示「這是完整的單字」，所以回傳 True。
+- 如果沒有 True，代表這只是個前綴，像 app 只是 apple 的開頭 → 回傳 False。
 
 ```python
     def startsWith(self, prefix: str) -> bool:
