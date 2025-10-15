@@ -5,13 +5,13 @@
 
 ## 📖 題目簡述 | Problem Summary
 
-**中文**  
+### **中文**  
 設計一個資料結構 `WordDictionary`，支援以下兩個操作：
 
 1. `addWord(word)`：將字串 `word` 加入資料結構中（由小寫英文字母組成）。  
 2. `search(word)`：搜尋字串，其中該字串可能包含 `'.'` 通配符，`.` 可匹配任意一個字母。如果存在任一已加入的字詞能符合該模式，則回傳 `True`，否則回傳 `False`。
 
-**English**  
+### **English**  
 Design a data structure called `WordDictionary` that supports:
 
 - `addWord(word)`: Adds a word (lowercase letters) into the data structure.  
@@ -514,8 +514,8 @@ wd.addWord("mad")
 ## ⏱ 複雜度比較 | Complexity
 | 版本             | `addWord` 時間 | `search` 最壞時間（含通配符）         | 空間複雜度                    |
 | -------------- | ------------ | --------------------------- | ------------------------ |
-| 版本 A（dict）     | (O(L))       | 通配符多時最壞 ~(O(26^k \times L)) | 插入總長度空間，dict 節點數量        |
-| 版本 B（TrieNode） | (O(L))       | 同樣 ~(O(26^k \times L))      | 節點數 × 26 pointers + 標記位元 |
+| 版本 A（dict）     | (O(L))       | 通配符多時最壞 ~(O(26^k * L)) | 插入總長度空間，dict 節點數量        |
+| 版本 B（TrieNode） | (O(L))       | 同樣 ~(O(26^k * L))      | 節點數 × 26 pointers + 標記位元 |
 
 ---
 
