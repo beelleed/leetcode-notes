@@ -78,10 +78,10 @@ class Solution:
         prev = None
         curr = second
         while curr:
-            nxt = curr.next
+            temp = curr.next
             curr.next = prev
             prev = curr
-            curr = nxt
+            curr = temp
 
         # 3. 交錯合併前半段 head 和 反轉後半段 prev
         first = head
