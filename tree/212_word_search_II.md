@@ -108,6 +108,15 @@ class TrieNode:
 - children：使用 Python 字典儲存子節點，key 是字母，value 是另一個 TrieNode。
 
 - word：用來儲存完整的字詞（當這個節點標記為某個 words 中的字詞結尾時）。如果這個字段不為 None，代表從 root 到這裡構成了一個可被返回的字詞。
+    - 如果沒有 word，你就得回頭組字串，像這樣：
+    ```python
+    # 每次都要用 path 收集字母
+    path = []
+    ...
+    if node.is_end:
+        res.append("".join(path))
+    ```
+
 
 ### 2. 建 Trie（插入所有 words）
 ```python
