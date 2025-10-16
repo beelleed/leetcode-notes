@@ -228,10 +228,10 @@ while curr:
     curr = nxt           # curr = 5
 
     # 下一圈：
-    nxt = curr.next      # nxt = None（5 的下一節點）
+    temp = curr.next      # nxt = None（5 的下一節點）
     curr.next = prev     # 5.next = 4 → 5 → 4 → None
     prev = curr          # prev = 5
-    curr = nxt           # curr = None → 結束迴圈
+    curr = temp           # curr = None → 結束迴圈
 ```
 
 - 最後 prev 指向節點 5，是反轉後半段的新頭。後半段變為： 5 → 4 → None
