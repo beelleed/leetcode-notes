@@ -93,6 +93,14 @@ for i in range(n + 1):
 
 - current_height 是目前這一根柱子的高度
 
+- 它等價於：
+    ```python
+    if i == n:
+        current_height = 0
+    else:
+        current_height = heights[i]
+    ```
+
 ### 🔸 3. 處理「比當前柱子高」的 stack 元素
 ```python
 while stack and (i == n or heights[stack[-1]] > current_height):
