@@ -112,7 +112,7 @@ class Solution:
 
 - 所以 range(left, right + 1) 表示從 left 到 right（包含）逐一遍歷。
 
-### 📘 解釋 range(left, right - 1, -1)
+### 📘 解釋 range(right, left - 1, -1)
 - range(start, stop, step)
 
     - 會從 start 走到 不含 stop
