@@ -244,6 +244,7 @@ if idx == len(tails):
         - bisect_left(tails, 8) → 會回傳 idx = 3，
         - 因為 8 比所有元素都大，應該放在最後一位（索引 3）。
         - idx == len(tails) 的意義
+        
         | 條件                  | 意思                        | 動作                  |
         | ------------------- | ------------------------- | ------------------- |
         | `idx == len(tails)` | `num` 比 tails 中所有元素都大     | `tails.append(num)` |
