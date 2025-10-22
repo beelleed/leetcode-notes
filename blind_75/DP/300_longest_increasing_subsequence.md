@@ -236,6 +236,19 @@ if idx == len(tails):
     tails.append(num)
 ```
 - 如果 num 比 tails 中所有數字都大，就延長子序列長度，加入新一層。
+    - Example
+        ```python
+        tails = [2, 5, 7]
+        num = 8
+        ```
+        - bisect_left(tails, 8) → 會回傳 idx = 3，
+        - 因為 8 比所有元素都大，應該放在最後一位（索引 3）。
+        - idx == len(tails) 的意義
+        | 條件                  | 意思                        | 動作                  |
+        | ------------------- | ------------------------- | ------------------- |
+        | `idx == len(tails)` | `num` 比 tails 中所有元素都大     | `tails.append(num)` |
+        | `idx < len(tails)`  | 有更大的數存在，找到第一個 ≥ `num` 的位置 | `tails[idx] = num`  |
+
 ```python
 else:
     tails[idx] = num
