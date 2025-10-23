@@ -169,7 +169,7 @@ return dfs(node[ch], i + 1)
 - 繼續往下一層遞迴。
 
 ```python
-    return dfs(self.root, 0)
+return dfs(self.root, 0)
 ```
 - 從根節點開始遞迴搜尋整個字典。
 
