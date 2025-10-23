@@ -168,17 +168,6 @@ return dfs(node[ch], i + 1)
 
 - 繼續往下一層遞迴。
 
-### 🧾 處理一般字母
-```python
-        else:
-            if ch not in node:
-                return False
-            return dfs(node[ch], i + 1)
-```
-- 如果該字母存在於目前節點，繼續往下遞迴。
-
-- 否則代表該單字不存在。
-
 ```python
     return dfs(self.root, 0)
 ```
