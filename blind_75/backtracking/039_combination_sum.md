@@ -132,6 +132,8 @@ path.append(candidates[i])
 backtrack(i, path, remaining - candidates[i])
 ```
 - 這是遞迴呼叫：從當前 index i 繼續遞迴（可以重複使用相同數字），並更新剩餘 target 值。
+    - i:「下一層」遞迴可以繼續使用相同的數字。
+    - i + 1: 「下一層」遞迴不可以繼續使用相同的數字。
 ```python
 path.pop()
 ```
