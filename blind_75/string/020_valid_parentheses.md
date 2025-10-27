@@ -96,6 +96,41 @@ class Solution:
                     return False
         return not stack
 ```
+- 每遇到一個「左括號」 → 先放進堆疊（stack）
+
+- 每遇到一個「右括號」 → 檢查堆疊頂端是不是對應的左括號
+
+    - 如果不是 → 回傳 False（不合法）
+
+    - 如果是 → 彈出那個左括號（配對成功）
+
+- 為什麼最後不能直接 return True
+    - 因為：即使沒有出錯，也不代表所有括號都關閉了
+        - 範例 1️⃣： s = "("
+            - 執行過程：
+
+                - '(' → 放進 stack → stack = ['(']
+
+                - 沒有右括號可配對 → 迴圈跑完
+
+            - 這時候：
+
+                - 程式沒有進入 return False（因為沒遇到不合法配對）
+
+                - 但 stack 還有東西沒清空（'('）
+
+                - 表示有「沒被關閉」的括號 → ❌ 不合法！
+```python
+return not stack
+```
+它等價於：
+```python
+if len(stack) == 0:
+    return True
+else:
+    return False
+```
+
 
 ---
 
