@@ -92,6 +92,8 @@ intervals.sort(key=lambda x: x[1])
 
 - 排序保證我們先考慮結束最早的區間，使後續保留最有空間。
 
+- 貪心核心邏輯: 如果我們先選結束得最早的區間，那它留下的「後面可用時間」最多 → 更容易容納更多區間。
+
 ```python
 count = 0
 prev_end = intervals[0][1]
