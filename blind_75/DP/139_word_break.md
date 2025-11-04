@@ -32,7 +32,7 @@
 1. Define a boolean DP array `dp` of size `n + 1`, where `dp[i]` indicates if `s[0:i]` can be segmented.
 2. Set `dp[0] = true` (empty string).
 3. For each `i`, loop through each `j` below `i`. If `dp[j]` is true and `s[j:i]` is in the word set, set `dp[i] = true` and break.
-4. Return whether the entire string can be segmented. :contentReference[oaicite:2]{index=2}
+4. Return whether the entire string can be segmented. 
 
 ---
 
