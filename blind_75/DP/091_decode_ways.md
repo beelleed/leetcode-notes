@@ -79,7 +79,7 @@ class Solution:
       # dp[i] 表示前 i 個字元有多少種解碼方式
       dp = [0] * (n + 1)
       dp[0] = 1
-      dp[1] = 1  # 前提是 s[0] != '0'
+      dp[1] = 1  if s[0] != '0' else 0
 
       for i in range(2, n + 1):
           # 單個字元部分：s[i-1]
