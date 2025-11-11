@@ -166,6 +166,7 @@ dp = [True, False, False, False, False, False, False, False, False]
 | 空間複雜度 | O(n)      |
 
 - n 為字串長度，k 為平均計算子字串存在於字典中的成本（使用 set 為 O(1)）。
+- O(n² × k) 其中 k 是子字串平均或最長長度（最壞可達 n）。
 
 ---
 
