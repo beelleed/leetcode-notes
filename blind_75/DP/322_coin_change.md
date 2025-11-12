@@ -192,6 +192,22 @@ return dp[11] = 3
 | 時間 | O(amount × N) |
 | 空間 | O(amount)     |
 
+### 🧠 時間複雜度 Time Complexity:
+
+- O(n × amount)
+
+    - n 是硬幣的種類數（len(coins)）
+
+    - 外層跑所有 coin
+
+    - 內層對每個 coin，從 coin 到 amount 更新 dp 陣列
+
+### 🧠 空間複雜度 Space Complexity:
+
+- O(amount)
+
+    - 使用了一個大小為 amount + 1 的一維陣列 dp
+
 ---
 
 ## 📚 我學到了什麼 | What I Learned
