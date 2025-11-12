@@ -72,24 +72,13 @@ class Solution:
         if n == 1:
             return nums[0]
 
-        # 線性版本的 rob 函式（從 start 到 end 包含）
-        def rob_linear(houses: List[int]) -> int:
+        def rob_range(start, end):
             prev1, prev2 = 0, 0
-            # prev1 = 前一個位置偷或不偷的最大值
-            # prev2 = 前兩個位置的最大值
-            for x in houses:
-                # 新的 prev1 是不要偷這間：max(prev1, prev2 + x?) 其實是 max(prev1, prev2 + x) 但這邊用 prev2 + x
-                new_val = max(prev1, prev2 + x)
-                prev2 = prev1
-                prev1 = new_val
+            for i in range(start, end + 1):
+                new = max(prev1, prev2 + nums[i])
+                prev2, prev1 = prev1, new
             return prev1
-
-        # 不偷最後一棟 → rob_linear(nums[0 : n-1])
-        case1 = rob_linear(nums[:-1])
-        # 不偷第一棟 → rob_linear(nums[1 : n])
-        case2 = rob_linear(nums[1:])
-
-        return max(case1, case2)
+        return max(rob_range(0, n - 2), rob_range(1, n - 1))
 ```
 ```python
 n = len(nums)
@@ -104,12 +93,11 @@ if n == 1:
 
     - 如果只有一個房子，答案就是這個房子的金額。
 ```python
-def rob_linear(houses: List[int]) -> int:
+def rob_range(start, end):
     prev1, prev2 = 0, 0
-    for x in houses:
-        new_val = max(prev1, prev2 + x)
-        prev2 = prev1
-        prev1 = new_val
+    for i in range(start, end + 1):
+        new = max(prev1, prev2 + nums[i])
+        prev2, prev1 = prev1, new
     return prev1
 ```
 - 這是 線性版本的打家劫舍（與 LeetCode 198 題相同）：
@@ -122,28 +110,20 @@ def rob_linear(houses: List[int]) -> int:
 
         - 不偷的話能拿到 prev1
 
-        - 偷的話就是 prev2 + x
+        - 偷的話就是 prev2 + nums[i]
 
-    - 所以 new_val = max(prev1, prev2 + x)
+    - 所以 new = max(prev1, prev2 + nums[i])
 
     - 更新變數：把 prev1 給 prev2，然後新的值給 prev1
 
     - 最後回傳 prev1（代表整個線性段的最優解）
 
 ```python
-case1 = rob_linear(nums[:-1])
-case2 = rob_linear(nums[1:])
-return max(case1, case2)
+return max(rob_range(0, n - 2), rob_range(1, n - 1))
 ```
-- 因為原題是圓形排列，第一間與最後一間是鄰居，不能同時偷。
+- 把兩種情況下的最大收益取最大值即可
 
-- 所以拆成兩種情況計算：
-
-    1. 不偷最後一間 → nums[:-1]（從第 0 到倒數第 2 間房子）
-
-    2. 不偷第一間 → nums[1:]（從第 1 間到最後一間房子）
-
-- 分別對這兩條線性情況呼叫 rob_linear，然後取兩者的最大值做為最終答案。
+- 因為不能同時搶第一間和最後一間
 
 ---
 
