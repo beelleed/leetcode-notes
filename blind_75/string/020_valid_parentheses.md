@@ -81,6 +81,8 @@ class Solution:
 
 ❗ Wrong logic: pushing closing brackets into stack and comparing with expected opening — direction is flipped.
 
+---
+
 ##  answer 1: Left-to-Right Mapping
 
 ```python 
@@ -162,6 +164,8 @@ s = "({[]})"
 
 2.空間：O(n) — stack 最多會裝 n 個字元（全為左括號時）
 
+---
+
 ## 🧠 我學到的重點
 
 1.左括號進 stack，右括號比對是否正確配對
@@ -169,6 +173,8 @@ s = "({[]})"
 2.括號對應要搞清楚方向：mapping[左括號] → 對應右括號
 
 3.not stack 是判斷是否配對完畢的關鍵技巧
+
+---
 
 ## answer 2: Right-to-Left Mapping(官方)
 
@@ -250,4 +256,17 @@ return not stack
 這種寫法比較容易判斷「右括號錯配或提早出現」的錯誤
 
 mapping[右括號] → 對應左括號，比對時比較直覺（只看 stack top 是不是對應的）
+
+---
+
+## ⏱️ 時間複雜度（Time Complexity）
+- O(n)，其中 n 是輸入字串 s 的長度：
+
+    - 每個字元最多被處理一次（進 stack 一次、出 stack 一次）。
+
+## 💾 空間複雜度（Space Complexity）
+
+- O(n)：
+
+    - 最壞情況下，所有字符都是左括號，都會被推入 stack 中，因此空間最多使用 n。  
 
