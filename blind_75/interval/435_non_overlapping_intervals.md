@@ -115,6 +115,15 @@ for i in range(1, len(intervals)):
     - 若新的區間 start 小於 prev_end → 與已保留的區間衝突 → 刪掉當前區間（count += 1）
 
     - 否則 → 無衝突 → 保留當前區間，更新 prev_end = end
+- 也可以寫成
+    ```python
+    for start, end in intervals[1:]:
+    if start < prev_end:
+        count += 1
+    else:
+        prev_end = end
+    ```
+    - intervals[1:] 會建立一個新 list → 時間額外多花 O(n) → range 寫法不會（更快）
 
 ```python
 return count
