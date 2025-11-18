@@ -131,7 +131,12 @@ while fast:
     fast = None
 
     slow = 3
+- while 迴圈已經保證 fast 最後一定是 None
+    - 當 fast 是最後一個節點時，fast = fast.next → None
 
+    - 下一次判斷 while fast（假 → 跳出）
+
+    - 因此不用寫if fast == None: 因為永遠為True
 ```python
 slow.next = slow.next.next
 ```
