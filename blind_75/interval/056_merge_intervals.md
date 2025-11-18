@@ -133,6 +133,28 @@ return merged
 ```
 ✅ 回傳合併完的結果。
 
+- 也可以寫成
+    ```python
+    class Solution:
+    def merge(self, intervals):
+        if not intervals:
+            return []
+
+        intervals.sort(key=lambda x: x[0])
+        merged = [intervals[0]]
+
+        for i in range(1, len(intervals)):
+            last = merged[-1]
+            curr = intervals[i]   # ← 正確取出區間
+
+            if curr[0] <= last[1]:
+                last[1] = max(last[1], curr[1])
+            else:
+                merged.append(curr)
+
+        return merged
+    ```
+
 ---
 
 ## 🧪 範例
