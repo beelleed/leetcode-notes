@@ -115,6 +115,19 @@ self.prev = node.val
 return inorder(node.right)
 ```
 - 遞迴處理右子樹，若有違規則也會返回 False。
+```python
+return inorder(root)
+```
+- 如果整棵樹的中序遍歷都合法 → 回傳 True，否則（中間某個地方 return False） → 回傳 False
+- inorder(node) 做三件事：
+
+    1. 檢查左子樹 如果左子樹不是 BST → 回傳 False
+
+    2. 檢查當前值 若 node.val <= self.prev → 回傳 False
+
+    3. 檢查右子樹 如果右子樹不是 BST → 回傳 False
+
+- 只要任何一層 return False，最外面的： return inorder(root) 就會得到 False。
 
 ### 📍 範例 1：合法 BST
 
