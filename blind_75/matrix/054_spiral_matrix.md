@@ -105,6 +105,18 @@ class Solution:
 | 向上走（條件） | `if left ≤ right:`<br>`for i in range(bottom, top-1, -1): result.append(matrix[i][left])`<br>`left += 1`     | 若左右界仍有效，遍歷左邊界並把左界右移 |
 | 回傳結果    | `return result`                                                                                              | 回傳螺旋順序的所有元素         |
 
+- top/bottom、left/right 的邊界在 while 裡面會被改變
+
+    - 所以：
+
+        - while 的條件是迴圈「開始前」檢查
+
+        - 但在迴圈「過程中」，我們自己手動做了 top += 1, right -= 1, bottom -= 1, left += 1
+
+    - 這會造成後面的方向（向左、向上）可能會多跑、跑重複、甚至跑越界。
+    - 所以必須加：if top <= bottom: if left <= right: 來保護不會多走錯誤的方向。
+
+
 ### 📘 解釋 range(left, right + 1)
 - range(start, stop) 的 stop 是「不包含」的邊界。
 
