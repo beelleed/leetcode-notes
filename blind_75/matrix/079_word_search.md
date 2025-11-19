@@ -119,13 +119,13 @@ if board[r][c] != word[i]:
     return False
 ```
 - 當前格子的字母不等於 word[i]，比對失敗。
-
+### ① 做決定（標記已訪問）
 ```python
 temp = board[r][c]
 board[r][c] = '#'
 ```
 - 保存當前格子的值，然後將其標記為「已使用」，避免重複走回同一格。
-
+### ② 試 4 個方向（得到結果，但不要 return）
 ```python
     found = (
         dfs(r+1, c, i+1) or
@@ -135,12 +135,12 @@ board[r][c] = '#'
     )
 ```
 - 對四個方向進行遞迴搜尋，如果其中任一條路成功（回傳 True），則整體為 True。
-
+### ③ 撤銷決定（回溯）
 ```python
 board[r][c] = temp
 ```
 - 回溯：走完這一條路後，要把格子恢復原狀（還原狀態）。
-
+### ④ 回傳結果
 ```python
 return found
 ```
