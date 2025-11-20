@@ -141,7 +141,7 @@ class Trie:
     - 然後走到下一層，更新 node 為 node[ch]，繼續處理下個字元。
 
 ```python
-        node[True] = True
+        node[self.END] = True
 ```
 - 當整個單字都插入完，代表走到了最後一層。
 
