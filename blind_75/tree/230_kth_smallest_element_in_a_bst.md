@@ -104,7 +104,7 @@ while current:
 current = stack.pop()
 k -= 1
 if k == 0:
-return current.val
+    return current.val
 ```
 - 每 pop 一個節點代表訪問到一個值。
 
