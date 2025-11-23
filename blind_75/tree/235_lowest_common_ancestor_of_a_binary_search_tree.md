@@ -61,7 +61,47 @@ class Solution:
             else:
                 return root
 ```
-- 不使用遞迴，使用 while 迴圈逐步尋找符合條件的節點。
+```python
+while root:
+```
+- 用迴圈走過整棵樹（也可以用遞迴方式）
+```python
+if p.val < root.val and q.val < root.val:
+    root = root.left
+```
+- 如果兩個值都小於當前節點，LCA 在左邊，往左子樹走。
+```python
+elif p.val > root.val and q.val > root.val:
+    root = root.right
+```
+- 如果兩個值都大於當前節點，LCA 在右邊，往右子樹走。
+```python
+else:
+    return root
+```
+- 若一個在左、一個在右，或其中一個就是 root，這裡就是他們的最近公共祖先。
+
+### 📘 範例說明：
+
+假設有這棵 BST：
+```markdown
+        6
+       / \
+      2   8
+     / \ / \
+    0  4 7 9
+      / \
+     3   5
+```
+- 查詢 p = 2 和 q = 8：
+
+    - 2 < 6 且 8 > 6 → 分別在左右子樹 → 返回 6
+
+- 查詢 p = 2 和 q = 4：
+
+    - 都 < 6 → 往左走 → 到 2
+
+    - 4 > 2 → 分散兩側 → 返回 2
 
 ---
 
