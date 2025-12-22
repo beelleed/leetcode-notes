@@ -2,6 +2,8 @@
 
 [題目連結](https://leetcode.com/problems/minimum-time-to-complete-trips/)
 
+---
+
 ## 📘 題目說明 | Problem Description
 ### 中文：
 
@@ -30,6 +32,8 @@ Return the minimum time required so that the total number of trips completed by 
     - Input: time = [2], totalTrips = 1
 
     - Output: 2
+
+---
 
 ## 💡 解題思路 | Solution Idea
 
@@ -66,6 +70,8 @@ Return the minimum time required so that the total number of trips completed by 
     ```
 
     最快的車一直跑，一定能完成
+
+---
 
 ## 🧾 程式碼 | Python Code
 ```python
@@ -142,6 +148,8 @@ return left
 
 - 找到 最小可行時間
 
+---
+
 ## 🔍 範例解析 | Example Walkthrough
 ### Input
 ```python
@@ -166,6 +174,8 @@ totalTrips = 5
 `M = min(time) * totalTrips` |
 | 空間複雜度 | `O(1)`                                        |
 
+---
+
 ## 🧠 模板 
 1️⃣ 答案是「時間」→ Binary Search on Answer
 
@@ -177,6 +187,8 @@ totalTrips = 5
 
 5️⃣ hi = min(time) * totalTrips
 
+---
+s
 ## 📚 我學到了什麼 | What I Learned
 
 - 這題不是排程題，而是 單調函數 + 二分答案
