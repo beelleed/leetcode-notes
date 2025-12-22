@@ -188,7 +188,7 @@ totalTrips = 5
 5️⃣ hi = min(time) * totalTrips
 
 ---
-s
+
 ## 📚 我學到了什麼 | What I Learned
 
 - 這題不是排程題，而是 單調函數 + 二分答案
