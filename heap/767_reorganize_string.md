@@ -195,8 +195,6 @@ s = "aaabbc"
 - prev = (0,'')
 - res = []
 
----
-
 ### Round 1
 
 1. pop → (-3,'a')
@@ -208,8 +206,6 @@ s = "aaabbc"
 4. freq += 1 → -2
 
 5. prev = (-2,'a') heap 剩：[(-2,'b'), (-1,'c')]
-
----
 
 ### Round 2
 
@@ -223,8 +219,6 @@ s = "aaabbc"
 
 5. prev = (-1,'b') heap：[(-2,'a'), (-1,'c')]
 
----
-
 ### Round 3
 
 1. pop → (-2,'a')
@@ -236,8 +230,6 @@ s = "aaabbc"
 4. freq += 1 → -1
 
 5. prev = (-1,'a') heap：[(-1,'b'), (-1,'c')]
-
----
 
 ### Round 4
 
@@ -251,8 +243,6 @@ s = "aaabbc"
 
 5. prev = (0,'b') heap：[(-1,'a'), (-1,'c')]
 
----
-
 ### Round 5
 
 1. pop → (-1,'a')
@@ -264,8 +254,6 @@ s = "aaabbc"
 4. freq += 1 → 0
 
 5. prev = (0,'a') heap：[(-1,'c')]
-
----
 
 ### Round 6
 
