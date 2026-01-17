@@ -1,6 +1,6 @@
 # 🔤 LeetCode 127 — Word Ladder / 單字接龍
 
-🔗 題目連結(https://leetcode.com/problems/word-ladder/)
+🔗 [題目連結](https://leetcode.com/problems/word-ladder/)
 
 ---
 
