@@ -169,8 +169,7 @@ return [[x, y] for (_, x, y) in heap]
 
 ---
 
-## 🧪 範例流程 | Example Walkthrough（跑一次你的程式）
-
+## 🧪 範例流程 | Example Walkthrough
 假設：
 ```text
 points = [[1,3], [-2,2], [5,8], [0,1]]
