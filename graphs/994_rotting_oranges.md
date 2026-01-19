@@ -259,7 +259,7 @@ return minutes if fresh_count == 0 else -1
 
 ---
 
-## 🧪 範例 | Example（一步一步照程式碼跑）
+## 🧪 範例 | Example
 
 範例：
 ```text
