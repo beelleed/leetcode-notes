@@ -145,6 +145,34 @@ class LRUCache:
 
   
 ### 🔍 程式碼逐段說明 | Line-by-line Explanation
+#### 0️⃣ 先建立心智模型：兩個結構一起用
+#### ✅ HashMap：self.cache
+
+- key -> Node
+
+- 目的：O(1) 找到某個 key 對應的節點（不用從 linked list 慢慢找）
+
+#### ✅ Doubly Linked List：head <-> ... <-> tail
+
+- 目的：O(1) 維持「最近使用順序」
+
+- 規則（你這份程式碼的定義）：
+
+    - head.next = 最近使用 (MRU)
+
+    - tail.prev = 最久沒用 (LRU)
+
+#### ✅ Dummy head / tail 的好處
+
+- 你永遠不需要特判：
+    - list 是空的
+
+    - node 是第一個
+
+    - node 是最後一個
+
+- 因為 head/tail 永遠存在。
+#### 1️⃣ Node 類別：為什麼要存 key？
 ```python
 class Node:
     def __init__(self, key, value):
@@ -152,7 +180,17 @@ class Node:
         self.value = value
         self.prev = None
         self.next = None
+```
+- key：用在 eviction（移除 LRU）時，能從 dict 刪掉：
+    ```python
+    del self.cache[lru.key]
+    ```
 
+    - 如果 Node 不存 key，你就不知道要從 dict 刪哪個 key。
+
+- prev/next：雙向鏈結，讓你 O(1) 移除任意節點。
+#### 2️⃣ 初始化：把 head/tail 先串起來
+```python
 class LRUCache:
 
     def __init__(self, capacity: int):
@@ -164,60 +202,87 @@ class LRUCache:
         self.head.next = self.tail
         self.tail.prev = self.head
 ```
+初始狀態長這樣：
+```text
+head <-> tail
+```
+
+- 此時：
+
+    - head.prev = None（不用）
+
+    - tail.next = None（不用）
+
+    - 中間沒有真正的資料節點
 ### 🔧 Helper Functions
-#### remove(node)：把 node 從 linked list 拿掉
+#### 3️⃣ remove(node)：把 node 從 linked list 拿掉
 ```python
 def remove(self, node):
-    prev_node = node.prev
-    next_node = node.next
-    prev_node.next = next_node
-    next_node.prev = prev_node
+    prev_node = node.prev  # A
+    next_node = node.next  # B
+    prev_node.next = next_node  # A.next = B
+    next_node.prev = prev_node  # B.prev = A
+```
+假設目前是：
+```text
+A <-> node <-> B
 ```
 
-- 只處理「指標調整」
+- node.prev = A
+- node.next = B
 
-- O(1)
+remove 後要變成：
+```text
+A <-> B
+```
+✅ node 就被「跳過」了（node 自己的 prev/next 沒清掉也沒關係，因為我們不會再靠它走）
 
-- 不碰 cache（dict）
-
-#### add_to_head(node)：插到「最近使用」
+#### 4️⃣ add_to_head(node)：插到「最近使用」
 ```python
 def add_to_head(self, node):
-    node.prev = self.head
-    node.next = self.head.next
-    self.head.next.prev = node
-    self.head.next = node
+    node.prev = self.head          # node.prev 指向 head
+    node.next = self.head.next     # node.next 指向原本的 first
+    self.head.next.prev = node     # 原本 first.prev 改指向 node
+    self.head.next = node          # head.next 改成 node
 ```
 
-- 插入位置：
+- 插入前：
 ```text
-head <-> node <-> 原本 head.next
+head <-> first <-> ... <-> tail
 ```
-#### move_to_head(node)：使用過 → 移到最前面
+
+- 要插成：
+```text
+head <-> node <-> first <-> ... <-> tail
+```
+✅ 插入完成，而且 O(1)。
+#### 5️⃣ move_to_head(node)：使用過 → 移到最前面
 ```python
 def move_to_head(self, node):
     self._remove(node)
     self._add_to_head(node)
 ```
+- 先把 node 從原位置拔掉
 
-- get / put 更新時都會用
+- 再插到 head 後面
 
-- 表示「最近被使用」
-
-#### pop_tail()：移除最久沒用的 node
+- 代表「我剛用過它」
+#### 6️⃣ pop_tail()：移除最久沒用的 node
 ```python
 def pop_tail(self):
     lru = self.tail.prev
     self._remove(lru)
     return lru
 ```
+- 因為你定義：
 
-- tail.prev 永遠是 LRU
+    - tail.prev 永遠是 最久沒用
 
-- 回傳該 node，方便從 dict 刪掉
+    - 所以直接拿 tail.prev 就是 LRU
 
+- 注意：如果只有 head<->tail（空的），那 tail.prev 是 head，但實際不會發生，因為只有超容量時才 pop。
 ### 🚀 主功能 | Main APIs
-#### get(key)
+#### 7️⃣ get(key)
 ```python
 def get(self, key: int) -> int:
     if key not in self.cache:
@@ -239,7 +304,8 @@ def get(self, key: int) -> int:
 
     - 回傳 value
 
-#### put(key, value)
+#### 8️⃣ put(key, value)
+#### 情況 A：key 已存在（更新）
 ```python
 def put(self, key: int, value: int) -> None:
     if key in self.cache:
@@ -254,6 +320,7 @@ def put(self, key: int, value: int) -> None:
     - 更新 value
 
     - 移到最前（最近使用）
+#### 情況 B：key 不存在（插入新 node）
 ```python
 new_node = Node(key, value)
 self.cache[key] = new_node
@@ -265,6 +332,7 @@ self._add_to_head(new_node)
     - 建立 node
 
     - 加到 head（最近使用）
+#### 插入後可能超容量 → eviction
 ```python
 if len(self.cache) > self.capacity:
     lru = self._pop_tail()
@@ -273,9 +341,9 @@ if len(self.cache) > self.capacity:
 
 - 超過容量：
 
-    - 從 linked list 移除 LRU
+    - 從 linked list 移除 LRU（O(1)）
 
-    - 從 dict 同步刪掉
+    - 從 dict 同步刪掉（O(1)）
 
 ---
 
