@@ -202,18 +202,57 @@ class LRUCache:
         self.head.next = self.tail
         self.tail.prev = self.head
 ```
-初始狀態長這樣：
-```text
-head <-> tail
+
+**關鍵點**
+
+- 所有新 Node 一開始就是
+    ```text
+    prev = None
+    next = None
+    ```
+
+- 所以當你寫：
+    ```python
+    self.head = Node(0, 0)
+    self.tail = Node(0, 0)
+    ```
+
+- 此時實際狀態是：
+    ```text
+    head.prev = None
+    head.next = None
+
+    tail.prev = None
+    tail.next = None
+    ```
+
+```python
+self.head.next = self.tail
+self.tail.prev = self.head
 ```
 
-- 此時：
+-  self.head.next = self.tail
 
-    - head.prev = None（不用）
+    - 只設定 head 的 next
 
-    - tail.next = None（不用）
+    - 沒有動到 head.prev
 
-    - 中間沒有真正的資料節點
+    - 所以：
+        ```text
+        head.prev = None   ← 仍然是 None
+        head.next = tail
+        ```
+-  self.tail.prev = self.head
+
+    - 只設定 tail 的 prev
+
+    - 沒有動到 tail.next
+
+    - 所以：
+        ```text
+        tail.prev = head
+        tail.next = None   ← 仍然是 None
+        ```
 ### 🔧 Helper Functions
 #### 3️⃣ remove(node)：把 node 從 linked list 拿掉
 ```python
@@ -245,22 +284,167 @@ def add_to_head(self, node):
     self.head.next.prev = node     # 原本 first.prev 改指向 node
     self.head.next = node          # head.next 改成 node
 ```
+#### 先建立「插入前」的畫面（非常重要）
 
-- 插入前：
+假設目前 linked list 是這樣（最典型的情況）：
 ```text
-head <-> first <-> ... <-> tail
+head <-> first <-> second <-> tail
 ```
 
-- 要插成：
+對應指標關係是：
 ```text
-head <-> node <-> first <-> ... <-> tail
+head.next = first
+first.prev = head
+first.next = second
+second.prev = first
+second.next = tail
+tail.prev = second
 ```
-✅ 插入完成，而且 O(1)。
+
+現在，我們要把 node 插到 head 和 first 中間，變成：
+```text
+head <-> node <-> first <-> second <-> tail
+```
+#### 🔹 第 1 行
+```python
+node.prev = self.head
+```
+意思是：
+
+「先告訴 node：你的前一個是 head」
+
+此時指標變成（只畫有改的）：
+```text
+node.prev → head
+```
+⚠️ 注意：
+
+- 這一行 沒有改任何原本串列的指標
+
+- 現在只是 node 自己「記得」誰在前面
+
+- 串列目前還是：
+```text
+head <-> first <-> second <-> tail
+```
+#### 🔹 第 2 行
+```python
+node.next = self.head.next
+```
+
+因為：
+```python
+self.head.next == first
+```
+
+所以這行等於：
+```python
+node.next = first
+```
+
+現在 node 變成：
+```text
+head <- node -> first
+```
+
+- 但注意 ⚠️
+
+**first 還不知道 node 的存在**
+
+此時的關係是：
+```text
+node.prev = head
+node.next = first
+
+head.next = first
+first.prev = head   # 還沒改！
+```
+#### 🔹 第 3 行（這一行是關鍵轉折點）
+```python
+self.head.next.prev = node
+```
+
+- 拆開來看：
+
+    - self.head.next 是 first
+
+    - 所以這行其實是：
+        ```python
+        first.prev = node
+        ```
+
+現在，first 終於「知道」node 在它前面了。
+
+此時指標狀態：
+```text
+head -> first
+first.prev = node
+node.next = first
+node.prev = head
+```
+
+目前「邏輯上」其實已經像這樣了：
+```text
+head <- node -> first
+```
+
+但還差最後一步。
+
+#### 🔹 第 4 行（正式接上 head）
+```python
+self.head.next = node
+```
+
+- 也就是：
+```python
+head.next = node
+```
+
+現在整條鏈正式變成：
+```text
+head <-> node <-> first <-> second <-> tail
+```
+
+而且每個 prev / next 都是對的。
+
+**為什麼順序一定要這樣寫？**
+❓ 如果你先寫這行會怎樣？
+```python
+self.head.next = node
+```
+
+那 first 就會「暫時消失」：
+```text
+head -> node
+first.prev 還指向 head（錯）
+```
+
+- 接下來你再想補 first.prev，就會：
+
+    - 找不到原本的 first
+
+    - 或造成指標斷裂
+
+👉 Linked list 操作最怕「中途斷鏈」
+
+用一句話記這四行
+
+>>先接 node 自己的 prev / next，再修原本節點的指標，最後才動 head 的 next。
+
+把四行濃縮成「每行的角色」
+| 行數 | 做的事                 | 白話              |
+| -- | ------------------- | --------------- |
+| 1  | `node.prev = head`  | 告訴 node：你前面是誰   |
+| 2  | `node.next = first` | 告訴 node：你後面是誰   |
+| 3  | `first.prev = node` | 告訴 first：你前面換人了 |
+| 4  | `head.next = node`  | 告訴 head：你後面換人了  |
+
+
 #### 5️⃣ move_to_head(node)：使用過 → 移到最前面
 ```python
 def move_to_head(self, node):
-    self._remove(node)
-    self._add_to_head(node)
+    self.remove(node)
+    self.add_to_head(node)
 ```
 - 先把 node 從原位置拔掉
 
@@ -271,7 +455,7 @@ def move_to_head(self, node):
 ```python
 def pop_tail(self):
     lru = self.tail.prev
-    self._remove(lru)
+    self.remove(lru)
     return lru
 ```
 - 因為你定義：
