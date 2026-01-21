@@ -6,7 +6,86 @@ LeetCode Link: https://leetcode.com/problems/longest-substring-without-repeating
 
 EN：Given a string s, find the length of the longest substring without repeating characters.
 
---- 
+---
+
+## 💡 解題思路說明 | Logic Explanation
+
+中文：
+
+1.用雙指標 left 和 right 維持一個「無重複字元」的視窗。
+
+2.若 s[right] 重複，就從左邊開始移除直到合法。
+
+3.每次更新最大長度 right - left + 1。
+
+English:
+
+1.Use two pointers to maintain a sliding window with unique characters.
+
+2.If s[right] is already in the window, shrink it from the left.
+
+3.Update max_len each time with right - left + 1.
+
+---
+
+## ✅ 正確解法：滑動視窗 + Set | Sliding Window + Set
+
+``` python
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        seen = set()
+        left = 0
+        max_len = 0
+
+        for right in range(len(s)):
+            while s[right] in seen:
+                seen.remove(s[left])
+                left += 1
+            seen.add(s[right])
+            max_len = max(max_len, right - left + 1)
+
+        return max_len
+```
+
+```python
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        seen = set()
+        left = 0
+        max_len = 0
+
+        for right, ch in enumerate(s):
+            while ch in seen:
+                seen.remove(s[left])
+                left += 1
+            seen.add(ch)
+            max_len = max(max_len, right - left + 1)
+
+        return max_len
+```
+
+---
+
+## 範例 | Example
+
+s = "abcabcbb"
+
+| right | char | seen        | left | 視窗  | ans |
+| ----- | ---- | ----------- | ---- | --- | --- |
+| 0     | a    | {a}         | 0    | a   | 1   |
+| 1     | b    | {a,b}       | 0    | ab  | 2   |
+| 2     | c    | {a,b,c}     | 0    | abc | 3   |
+| 3     | a    | 重複 → 移 left | 1    | bca | 3   |
+| 4     | b    | 重複 → 移 left | 2    | cab | 3   |
+
+
+## ⏱️ 時間與空間複雜度 | Time & Space Complexity
+
+時間：O(n)，每個字元最多進 set / 出 set 一次
+
+空間：O(min(n, 字元種類數))，最壞情況為整個字串無重複
+
+---
 
 ## ❌ 錯誤版本與問題分析 | Wrong Approach and Explanation
 
@@ -52,51 +131,68 @@ right=5, 'w' ➜ again duplicate → 跳過
 
 🛑 結果錯誤地回傳了 5，原因在於視窗未正確縮小。
 
----
-
-## ✅ 正確解法：滑動視窗 + Set | Sliding Window + Set
-
-``` python
+### 錯誤方法二
+```python
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
+        n = len(s)
         seen = set()
         left = 0
         max_len = 0
-
-        for right in range(len(s)):
-            while s[right] in seen:
+        for right in range(n):
+            if s[right] in seen:
                 seen.remove(s[left])
                 left += 1
             seen.add(s[right])
             max_len = max(max_len, right - left + 1)
-
         return max_len
 ```
-## 💡 解題思路說明 | Logic Explanation
+#### 1️⃣ if 在做什麼？
+```python
+if s[right] in seen:
+    ...
+```
 
-中文：
+- 語意是： 「如果現在違規一次，我就修正一次」
 
-1.用雙指標 left 和 right 維持一個「無重複字元」的視窗。
+👉 不保證修完
 
-2.若 s[right] 重複，就從左邊開始移除直到合法。
+#### 2️⃣ while 在做什麼？
+```python
+while s[right] in seen:
+    ...
+```
 
-3.每次更新最大長度 right - left + 1。
+- 語意是： 「只要還違規，我就一直修，直到合法為止」
 
-English:
+👉 保證修到合法狀態
 
-1.Use two pointers to maintain a sliding window with unique characters.
+#### 3️⃣ Sliding Window 的核心不變量（超重要）
 
-2.If s[right] is already in the window, shrink it from the left.
+>>不變量（Invariant）：
+>>seen 裡的字元，永遠不能有重複
 
-3.Update max_len each time with right - left + 1.
+- while 版本：
 
-## ⏱️ 時間與空間複雜度 | Time & Space Complexity
+    - 每一輪結束後 👉 不變量一定成立
 
-時間：O(n)，每個字元最多進 set / 出 set 一次
+- if 版本：
 
-空間：O(min(n, 字元種類數))，最壞情況為整個字串無重複
+    - 每一輪結束後 👉 不變量「可能還是壞的」
+
+#### 4️⃣ 用一句話記住（這句一定要背）
+
+>>if 是「嘗試修一次」，
+>>while 是「修到條件成立為止」
+
+- 在 sliding window 題目中：
+
+    - 只要你是在「修正違規」
+
+    - 99% 都要用 while
 
 ---
+
 
 ## 📌 額外筆記建議（Extra Notes）| Notes and Takeaways
 
