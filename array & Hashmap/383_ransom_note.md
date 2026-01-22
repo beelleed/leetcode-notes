@@ -30,23 +30,7 @@
 ---
 
 ## 🧠 解法邏輯 | Solution Idea
-
-### 方法一
-- 這題可以拆成 兩個非常清楚的步驟：
-
-    - 先統計每個字元出現的次數
-
-    - 再照原字串順序，找第一個次數為 1 的字元
-
-- 關鍵在於：
-
-    - 「第一個」→ 一定要照原字串順序掃
-
-    - 「出現一次」→ 需要事先知道每個字元的總次數
-
-👉 使用 Counter 可以讓第 1 步非常乾淨。
-
-### 方法二
+### 中文
 運用 **字母頻率計數**（Frequency Counting）快速檢查每個字母是否足夠：
 
 1. 建立一個 HashMap 或長度 26 的陣列 `count`，記錄 `magazine` 每個字母出現的頻率。
@@ -54,132 +38,21 @@
    - 若某次扣減後頻率變為負值，表示 `magazine` 不足以提供該字母 → 直接回傳 `false`。
 3. 完成遍歷後，若都沒有發生匱乏，則回傳 `true`。
 
+### English
+Use Frequency Counting to quickly check whether each letter is sufficient:
+
+1. Build a HashMap or an array of length 26 to record the frequency of each character in magazine.
+
+2. Iterate through ransomNote and check each character one by one:
+
+    - If the frequency of any character becomes negative after decrementing, it means magazine does not have enough of that character → return false immediately.
+
+3. If the loop completes without any shortage, return true.
+
 ---
 
 ## 💻 程式碼範例 | Python Code
-### 方法一
-```python
-from collections import Counter
 
-class Solution:
-    def firstUniqChar(self, s: str) -> int:
-        count = Counter(s)
-
-        for i, c in enumerate(s):
-            if count[c] == 1:
-                return i
-
-        return -1
-```
-### 🔍 程式碼逐段說明 | Line-by-line Explanation
-```python
-count = Counter(s)
-```
-
-- Counter(s) 會統計字串中每個字元出現的次數
-
-- key 是字元，value 是次數
-    例如：
-    ```python
-    s = "leetcode"
-    count = {'l':1, 'e':3, 't':1, 'c':1, 'o':1, 'd':1}
-    ```
-```python
-for i, c in enumerate(s):
-```
-
-- 用 enumerate 同時取得：
-
-    - i：index
-
-    - c：字元
-
-- 確保是「照原字串順序」掃描
-```python
-if count[c] == 1:
-    return i
-```
-
-- 檢查目前字元 c 是否只出現一次
-
-- 第一個符合條件的字元，直接回傳 index
-```python
-return -1
-```
-
-- 如果整個字串掃完都沒有找到
-
-- 代表不存在不重複字元
-
----
-
-## 🧪 範例 | Example Walkthrough
-- Example 1
-```text
-s = "leetcode"
-```
-
-- count = {l:1, e:3, t:1, c:1, o:1, d:1}
-
-- 掃描順序：
-
-    - i=0, c='l' → count['l']=1 ✅
-        
-        → 回傳 0
-
-- Example 2
-```text
-s = "loveleetcode"
-```
-
-- 掃描：
-
-    - l(2), o(2), v(1) ✅
-
-- 回傳 index = 2
-
-- Example 3
-```text
-s = "aabb"
-```
-
-- 所有字元出現次數都 > 1
-
-- 回傳 -1
-
----
-
-## ⏱ 複雜度分析 | Complexity Analysis
-
-- 時間複雜度：
-
-    - Counter(s)：O(n)
-
-    - 再掃一次字串：O(n)
-
-    - 👉 總體 O(n)
-
-- 空間複雜度：
-
-    - Counter 儲存所有不同字元
-
-    - 👉 O(Σ)，Σ 為字元種類數
-
----
-
-## ✍️ 我學到的東西 | What I Learned
-
-- Counter 非常適合用在「字元出現次數統計」的題目
-
-- 題目要求「第一個」時，一定要再掃一次原字串
-
-- 不要把 index 跟字元混在一起當 key
-
-- enumerate 可以讓 index 與字元同時保持清楚
-
----
-
-### 方法二
 ```python
 from collections import Counter
 from typing import List
@@ -284,5 +157,3 @@ counts = Counter({'a': 0, 'b': 0})
 - 不可只檢查是否存在該字母，必須確認數量是否足夠。
 
 - Counter 自帶方便的預設值行為（查不到字母時為 0），非常適合這題型使用。
-
----
