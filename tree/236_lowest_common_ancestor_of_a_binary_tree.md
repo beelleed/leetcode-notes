@@ -201,27 +201,117 @@ if left is not None and right is not None:
 ✅ LCA = 3
 
 ### 🧪 Case 2：p = 5, q = 4
-- 在節點 4：
+#### ▶️ 呼叫 1
+```python
+LCA(root=3, p=5, q=4)
+```
+| 變數   | 值 |
+| ---- | - |
+| root | 3 |
+| p    | 5 |
+| q    | 4 |
 
-    - root == q → 回傳 4
+程式碼檢查
+```python
+root is None ❌
+root == p or q ❌
+```
 
-- 在節點 5：
+👉 繼續往下
+```python
+left = LCA(5, 5, 4)
+right = LCA(1, 5, 4)
+```
+#### ▶️ 呼叫 2（左子樹）
+```python
+LCA(root=5, p=5, q=4)
+```
+| 變數   | 值 |
+| ---- | - |
+| root | 5 |
+| p    | 5 |
+| q    | 4 |
 
-    - 左子樹回 None
+程式碼檢查
+```python
+root == p ✅
+```
 
-    - 右子樹回 4
+👉 直接 return 5
+```python
+return 5
+```
 
-    - 但 root == p，所以直接回 5
+⚠️ 注意：
+- 這一層 不會再跑 left / right
 
-- 在節點 3：
+#### ▶️ 呼叫 3（右子樹）
+```python
+LCA(root=1, p=5, q=4)
+```
+| 變數   | 值 |
+| ---- | - |
+| root | 1 |
+| p    | 5 |
+| q    | 4 |
 
-    - left = 5
+程式碼檢查
+```python
+root == p or q ❌
+```
 
-    - right = None
+👉 繼續
+```python
+left = LCA(0, 5, 4)
+right = LCA(8, 5, 4)
+```
+#### ▶️ 呼叫 4
+```python
+LCA(root=0, p=5, q=4)
+```
 
-    - 回傳 5
+- 0 ≠ p, q
 
-✅ LCA = 5
+- 左右都是 None
+```python
+left = None
+right = None
+return None
+```
+### ▶️ 呼叫 5
+```python
+LCA(root=8, p=5, q=4)
+```
+
+- 8 ≠ p, q
+
+- 左右都是 None
+```python
+return None
+```
+⬆️ 回到呼叫 3（root = 1）
+| 變數    | 值    |
+| ----- | ---- |
+| left  | None |
+| right | None |
+
+
+#### ⬆️ 回到最上層（root = 3）
+現在我們有：
+| 變數    | 值    |
+| ----- | ---- |
+| left  | 5    |
+| right | None |
+
+執行判斷
+```python
+if left is not None and right is not None:
+    ❌
+
+return left if left is not None else right
+```
+
+👉 回傳 5
 
 ### 🧠 為什麼 root == p or root == q 要寫在前面？
 
