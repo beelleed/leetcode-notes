@@ -216,7 +216,7 @@ bucket = [[], [], [], [], ...]
 ```
 
 ```python
-for ch,freq in coun.items():
+for ch,freq in count.items():
     bucket[freq].append(ch)
 ```
 - 將每個字元 ch 根據它的出現次數 freq 加入對應的桶中。
