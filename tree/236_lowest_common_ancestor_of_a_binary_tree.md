@@ -100,7 +100,7 @@ class Solution:
 ```
 
 ### 🔍 程式碼逐段拆解 | Detailed Explanation
-1) Base case：空節點
+#### 1. Base case：空節點
 ```python
 if root is None:
     return None
@@ -108,7 +108,7 @@ if root is None:
 
 - 走到底了，這條路找不到 p 或 q
 
-2) Base case：遇到 p 或 q
+#### 2. Base case：遇到 p 或 q
 ```python
 if root == p or root == q:
     return root
@@ -120,7 +120,7 @@ if root == p or root == q:
 
 - 但它會一路往上回傳，讓祖先做判斷
 
-3) 往左右子樹找
+#### 3. 往左右子樹找
 ```python
 left = self.lowestCommonAncestor(root.left, p, q)
 right = self.lowestCommonAncestor(root.right, p, q)
@@ -130,7 +130,7 @@ right = self.lowestCommonAncestor(root.right, p, q)
 
 - right：同理
 
-4) 左右都找到 → root 是 LCA
+#### 4. 左右都找到 → root 是 LCA
 ```python
 if left is not None and right is not None:
     return root
@@ -142,7 +142,7 @@ if left is not None and right is not None:
 
 - 兩邊都有 → p 和 q 分散在兩側 → 最近交會點就是 root
 
-5) 否則把找到的那邊往上丟
+#### 5. 否則把找到的那邊往上丟
 ```python
 return left if left is not None else right
 ```
