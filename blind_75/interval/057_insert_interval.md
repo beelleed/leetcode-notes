@@ -125,6 +125,21 @@ intervals[i][0] >= newInterval[0]（在進到這個 while 時）
 intervals[i][0] <= newInterval[1]
 ```
 
+### 為甚麼不能寫成while i < n and intervals[i][0] > newInterval[1]:?
+```python
+while i < n and intervals[i][0] > newInterval[1]:
+    result.append(intervals[i])
+    i += 1
+```
+- 這段的意思變成：只把「起點 > newInterval[1]」的區間加進去
+
+- 但在正確演算法中，第二段合併完以後，剩下的所有區間都一定在右邊，你不需要再判斷 > newInterval[1]，直接全部 append 就好。
+
+- 而且用 and intervals[i][0] > newInterval[1] 會造成：
+
+    - 如果後面剛好沒有滿足（或你合併後 newInterval 改變），你可能會直接停止 while，導致右邊區間被漏掉。
+
+
 ---
 
 ## 🧪 範例 | Examples
