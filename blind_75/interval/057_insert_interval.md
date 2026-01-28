@@ -82,6 +82,49 @@ class Solution:
 
 ### [][] 的用法是針對「巢狀 list（list of lists）」的索引。第一個索引取出哪個區間，第二個索引取出區間的起點（[0]）或終點（[1]）。
 
+### 兩個區間什麼時候算重疊？
+- 兩個區間：
+```text
+A = [a_start, a_end]
+B = [b_start, b_end]
+```
+- 它們「沒有重疊」只有兩種可能：
+
+1️⃣ A 在 B 左邊
+```text
+a_end < b_start
+```
+
+2️⃣ A 在 B 右邊
+```text
+a_start > b_end
+```
+- 所以「有重疊」就是「不是上面兩種」
+
+- 也就是：
+```text
+a_end >= b_start  AND  a_start <= b_end
+```
+- 為什麼這題只要檢查一半？
+
+    - 因為在這題中：
+
+        - intervals[i] 是「下一個要處理的區間」
+
+        - newInterval 是「目前正在合併的區間」
+
+        - 而且 intervals 已經按起點排序
+
+👉 所以一定有：
+```python
+intervals[i][0] >= newInterval[0]（在進到這個 while 時）
+```
+
+因此「重疊判斷」只剩下這一個條件需要檢查：
+```python
+intervals[i][0] <= newInterval[1]
+```
+
 ---
 
 ## 🧪 範例 | Examples
