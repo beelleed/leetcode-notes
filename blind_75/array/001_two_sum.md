@@ -120,6 +120,14 @@ Hash Map 是解這種「查找配對」類題目的利器。
 
 *if target - num in hashmap:* 幾乎是模板。
 
+### 在 hashmap 裡，刻意把「數字 → 它出現的 index」存起來了
+
+也就是這一行決定了一切：
+```python
+hashmap[num] = i
+```
+我看過這個數字 num，它出現在陣列的第 i 個位置
+
 ---
 
 ## 範例
@@ -136,6 +144,8 @@ Hash Map 是解這種「查找配對」類題目的利器。
     2. i = 1, num = 7
 
        complete = 9 - 7 = 2
+
+       hashmap[complement] = hashmap[2] = 0
        
        hashmap = {2: 0} → 補數 2 已存在
        
