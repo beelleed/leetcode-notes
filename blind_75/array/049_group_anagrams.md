@@ -198,6 +198,78 @@ group[key].append(s)
 
     - 儲存 hash map 和結果陣列
 
+### Step 1：sorted(s) 的複雜度
+
+- s 的長度是 k
+
+- Python 的排序是 Timsort
+
+- 排序字元的時間複雜度是：O(k log k)
+
+👉 這是整題最貴的操作
+
+### Step 2：''.join(sorted(s)) 的複雜度
+
+- 要把 k 個字元串成字串
+
+- 時間複雜度是：O(k)
+
+### Step 3：dict 操作的複雜度
+```python
+anagrams[key].append(s)
+```
+
+- dict 查找：O(1)（平均）
+
+- list append：O(1)（平均）
+
+👉 幾乎可以忽略不計
+
+### 🔹 單一字串的總時間複雜度
+```text
+O(k log k) + O(k) ≈ O(k log k)
+```
+### 🔹 全部字串的時間複雜度
+
+你對 n 個字串都做一樣的事：
+```text
+O(n × k log k)
+```
+✅ 最終時間複雜度
+```text
+O(n · k log k)
+```
+### 空間複雜度怎麼算？
+#### 1️⃣ defaultdict(list)
+
+- 最多會存 n 個字串
+
+- 所有字串總長度是 n · k
+
+#### 2️⃣ key（排序後的字串）
+
+- 每個 key 長度是 k
+
+- 最壞情況每個字串都是不同 anagram → n 個 key
+
+#### ✅ 空間複雜度
+```text
+O(n · k)
+```
+（不包含輸入本身的話）
+
+### 為什麼很多人會寫錯？
+
+- 常見錯誤 ❌：
+
+    - 「排序一次是 O(n log n)」
+
+- 錯在：
+
+    - 不是排序 n 個字串
+
+    - 是對 每個長度為 k 的字串做排序
+
 ---
 
 ## 📚 我學到了什麼 | What I Learned
