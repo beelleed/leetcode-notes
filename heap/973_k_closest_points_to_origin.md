@@ -17,6 +17,7 @@ Given an array of points where points[i] = [xi, yi], return the k points closest
 - Example 1:
 
     ![](../images/973_closestplane1.jpg)
+    
     - Input: points = [[1,3],[-2,2]], k = 1
     - Output: [[-2,2]]
     - Explanation:
