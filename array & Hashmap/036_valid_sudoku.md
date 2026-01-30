@@ -32,6 +32,7 @@ Only the filled cells need to be validated according to the rules.
     ![](../images/36_Sudoku-by-L2G-20050714.svg.png)
 
     - Input: board = 
+        
         [["5","3",".",".","7",".",".",".","."]
 
         ,["6",".",".","1","9","5",".",".","."]
@@ -54,6 +55,7 @@ Only the filled cells need to be validated according to the rules.
 - Example 2:
 
     - Input: board = 
+        
         [["8","3",".",".","7",".",".",".","."]
 
         ,["6",".",".","1","9","5",".",".","."]
@@ -69,7 +71,7 @@ Only the filled cells need to be validated according to the rules.
         ,[".","6",".",".",".",".","2","8","."]
 
         ,[".",".",".","4","1","9",".",".","5"]
-        
+
         ,[".",".",".",".","8",".",".","7","9"]]
     - Output: false
     - Explanation: Same as Example 1, except with the 5 in the top left corner being modified to 8. Since there are two 8's in the top left 3x3 sub-box, it is invalid.
