@@ -13,6 +13,24 @@
 ### English:
 Given an array of points where points[i] = [xi, yi], return the k points closest to the origin (0,0). The distance between two points is the Euclidean distance. You may return the answer in any order.
 
+### Examples
+- Example 1:
+
+    ![](../images/973_closestplane1.jpg)
+    - Input: points = [[1,3],[-2,2]], k = 1
+    - Output: [[-2,2]]
+    - Explanation:
+        - The distance between (1, 3) and the origin is sqrt(10).
+        - The distance between (-2, 2) and the origin is sqrt(8).
+        - Since sqrt(8) < sqrt(10), (-2, 2) is closer to the origin.
+        - We only want the closest k = 1 points from the origin, so the answer is just [[-2,2]].
+- Example 2:
+
+    - Input: points = [[3,3],[5,-1],[-2,4]], k = 2
+    - Output: [[3,3],[-2,4]]
+    - Explanation: The answer [[-2,4],[3,3]] would also be accepted.
+ 
+
 ---
 
 ## 🧠 解題思路 | Solution Idea（完全對應你的程式碼）
