@@ -262,7 +262,8 @@ self.tweets[user] = [(time1, tweet1), (time2, tweet2), ...]
 ```python
 heapq.heappush(heap, (-t, tid, u, idx))
 ```
-- 每個欄位的意義（一定要記）
+- 每個欄位的意義
+
 | 欄位    | 意義                        |
 | ----- | ------------------------- |
 | `-t`  | 讓 heap 變成「最新優先」（max heap） |
