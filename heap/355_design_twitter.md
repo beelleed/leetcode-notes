@@ -517,18 +517,62 @@ return [6, 3, 5]
 ---
 
 ## ⏱ 複雜度分析 | Complexity Analysis
+### 時間複雜度（Time Complexity）
+#### postTweet
 
-- postTweet: O(1)
+- 每次只做：
 
-- follow / unfollow: O(1)
+    - 全域時間戳 +1
 
-- getNewsFeed:
+    - append 一筆推文到 list
 
-    - heap size ≤ follow 人數 + 1
+- 👉 O(1)
 
-    - pop 最多 10 次
+#### follow / unfollow
 
-    - 👉 O((F + 1) + 10 log(F + 1))
+- 使用 set 新增或刪除元素
+
+- 👉 O(1)（平均情況）
+
+#### getNewsFeed
+
+- 假設使用者追蹤了 F 個人：
+
+    - 1️⃣ 初始化 heap
+
+        - 對「自己 + 所有 follow 的人」
+
+        - 每個人最多放 一則最新推文
+
+        - 👉 O(F)
+
+    - 2️⃣ 從 heap 取出最新推文
+
+        - 最多只需要取 10 次
+
+        - 每次 heappop / heappush 為 O(log F)
+
+    - 3️⃣ 總時間
+
+        - O(F + 10 log F) ≈ O(F)
+
+        - 因為 10 是常數，可忽略
+
+- 👉 時間複雜度與追蹤人數成正比，而非推文總數
+
+### 空間複雜度（Space Complexity）
+
+- tweets：儲存所有推文
+
+- following：儲存追蹤關係
+
+- heap：最多存放 F + 1 筆候選推文
+
+- Space = O(T + F)
+
+    - T：推文總數
+
+    - F：追蹤人數
 
 ---
 
