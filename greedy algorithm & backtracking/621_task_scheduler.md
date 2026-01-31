@@ -179,14 +179,70 @@ maxCount = sum(1 for v in count.values() if v == maxFreq)
 
 - 計算有多少個任務的出現次數等於 maxFreq
 
-- 例如：
+#### 1️⃣ count.values()
+```python
+count = Counter(tasks)
+```
+- 假設：
     ```text
-    A: 3 次
-    B: 3 次
-    C: 1 次
+    tasks = ["A","A","A","B","B","B","C"]
     ```
 
-    → maxFreq = 3，maxCount = 2
+- 那：
+    ```text
+    count = {
+    "A": 3,
+    "B": 3,
+    "C": 1
+    }
+    ```
+
+count.values() 就是：
+```text
+[3, 3, 1]
+```
+#### 2️⃣ v == maxFreq
+
+假設你前面算出：
+```python
+maxFreq = 3
+```
+
+那條件：
+```python
+v == maxFreq
+```
+
+意思是：「 這個任務的出現次數，是不是等於 3？」
+
+#### 3️⃣ 1 for v in count.values() if v == maxFreq
+
+- 這是一個 generator expression，意思是：
+
+    - 每遇到一個 v == maxFreq
+
+    - 就產生一個 1
+
+- 對上面的例子：
+```text
+v = 3  → 產生 1
+v = 3  → 產生 1
+v = 1  → 不產生
+```
+#### 4️⃣ sum(...)
+
+最後：
+```python
+sum(1, 1) = 2
+```
+
+所以：
+```python
+maxCount = 2
+```
+
+👉 表示 有 2 個任務（A 和 B）都出現了最多次 3 次
+
 
 - 這代表在最後一段排程中，需要放入 maxCount 個任務
 ```python
