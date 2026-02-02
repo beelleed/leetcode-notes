@@ -136,7 +136,8 @@ max_area = max(max_area, h * width)
     - 🎯 寬度就是：
 
         ```python
-        i - (stack[-1] + 1) = i - stack[-1] - 1
+        (i - 1) - (stack[-1] + 1) + 1
+ = i - stack[-1] - 1
         ```
 
 - 更新最大面積
