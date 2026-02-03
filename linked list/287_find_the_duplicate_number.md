@@ -166,7 +166,7 @@ return ptr1
 ---
 
 ## 🧪 範例流程 | Example Walkthrough
-### 範例輸入
+### 範例 1
 ```python
 nums = [1, 3, 4, 2, 2]
 ```
@@ -176,7 +176,7 @@ index 對應：
 index:  0  1  2  3  4
 value:  1  3  4  2  2
 ```
-### Phase 1：找 cycle 內的相遇點（slow / fast）
+#### Phase 1：找 cycle 內的相遇點（slow / fast）
 程式碼對應
 ```python
 slow = nums[0]
@@ -207,7 +207,7 @@ fast = 2
 
 → 尚未相遇，繼續
 
-#### 第二次 while 迴圈
+##### 第二次 while 迴圈
 ```python
 slow = nums[slow]
 fast = nums[nums[fast]]
@@ -226,7 +226,7 @@ fast = 2
 
 - ✅ slow == fast，相遇，跳出 Phase 1
 
-### Phase 2：找 cycle 的入口（duplicate number）
+#### Phase 2：找 cycle 的入口（duplicate number）
 程式碼對應
 ```python
 ptr1 = nums[0]
@@ -238,7 +238,7 @@ ptr2 = slow
 ptr1 = 1
 ptr2 = 2
 ```
-#### 第一次 while 迴圈
+##### 第一次 while 迴圈
 ```python
 ptr1 = nums[ptr1]
 ptr2 = nums[ptr2]
@@ -258,7 +258,7 @@ ptr2 = 4
 
 → 尚未相遇
 
-#### 第二次 while 迴圈
+##### 第二次 while 迴圈
 ```python
 ptr1 = nums[ptr1]
 ptr2 = nums[ptr2]
@@ -278,7 +278,7 @@ ptr2 = 2
 
 - ✅ ptr1 == ptr2，相遇
 
-### 🎯 最終結果
+#### 🎯 最終結果
 ```python
 return ptr1
 ```
@@ -286,6 +286,164 @@ return ptr1
 ```text
 2
 ```
+
+---
+
+### 🧪 範例 2
+```python
+nums = [2, 5, 9, 6, 9, 3, 8, 9, 7, 1]
+```
+
+index / value 對照表：
+```text
+index:  0  1  2  3  4  5  6  7  8  9
+value:  2  5  9  6  9  3  8  9  7  1
+```
+
+#### Phase 1：尋找第一次相遇點（逐步 trace）
+初始化
+```python
+slow = nums[0] = 2
+fast = nums[0] = 2
+```
+
+狀態：
+```text
+slow = 2
+fast = 2
+```
+##### 第 1 次 while
+```python
+slow = nums[slow] = nums[2] = 9
+fast = nums[nums[fast]] = nums[nums[2]] = nums[9] = 1
+```
+
+狀態：
+```text
+slow = 9
+fast = 1
+```
+##### 第 2 次 while
+```python
+slow = nums[9] = 1
+fast = nums[nums[1]] = nums[5] = 3
+```
+
+狀態：
+```text
+slow = 1
+fast = 3
+```
+##### 第 3 次 while
+```python
+slow = nums[1] = 5
+fast = nums[nums[3]] = nums[6] = 8
+```
+
+狀態：
+```text
+slow = 5
+fast = 8
+```
+##### 第 4 次 while
+```python
+slow = nums[5] = 3
+fast = nums[nums[8]] = nums[7] = 9
+```
+
+狀態：
+```text
+slow = 3
+fast = 9
+```
+##### 第 5 次 while
+```python
+slow = nums[3] = 6
+fast = nums[nums[9]] = nums[1] = 5
+```
+
+狀態：
+```text
+slow = 6
+fast = 5
+```
+##### 第 6 次 while
+```python
+slow = nums[6] = 8
+fast = nums[nums[5]] = nums[3] = 6
+```
+
+狀態：
+```text
+slow = 8
+fast = 6
+```
+##### 第 7 次 while
+```python
+slow = nums[8] = 7
+fast = nums[nums[6]] = nums[8] = 7
+```
+
+狀態：
+```text
+slow = 7
+fast = 7   ✅ 相遇
+```
+##### ✅ Phase 1 結果
+
+- 第一次相遇點：7
+
+- 意義是：
+
+    - 我已經確定進入 cycle
+
+    - 但我不知道 cycle 的入口在哪
+
+⚠️ 此時 7 不是答案
+
+#### Phase 2：找 cycle 入口（逐步 trace）
+初始化
+```python
+ptr1 = nums[0] = 2
+ptr2 = slow = 7
+```
+
+狀態：
+```text
+ptr1 = 2
+ptr2 = 7
+```
+##### 第 1 次 while
+```python
+ptr1 = nums[2] = 9
+ptr2 = nums[7] = 9
+```
+
+狀態：
+```text
+ptr1 = 9
+ptr2 = 9   ✅ 相遇
+```
+##### 🎯 最終結果
+```python
+return 9
+```
+- 解釋：
+
+    - 9 是 cycle 的入口
+
+    - 也是被兩個不同 index 指到的 value
+
+    - 👉 重複的數字
+
+#### 📝 我的理解（直接可用在筆記）
+
+- 在 Phase 1 中，我第一次相遇在 index = 7，這代表我已經確定站在 cycle 裡的一個位置。
+
+- 但這個位置只是 cycle 中的其中一點，並不是 cycle 的起點。
+
+- 因此我必須進入 Phase 2，讓一個指標從起點出發，
+另一個指標從 cycle 內出發，兩者同速前進，最終相遇的地方才會是 cycle 的入口，也就是題目要求的重複數字。
 
 ---
 
