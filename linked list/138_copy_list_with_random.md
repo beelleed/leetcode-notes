@@ -147,6 +147,52 @@ while cur:
 
     - cur.next 或 cur.random 可能是 None
 
+        - 在 138 題中，題目本來就允許：
+
+            - next 在尾節點時是 None
+
+            - random 可以指向任意節點或 None
+        
+        - ❌ 如果你直接寫（會出錯）
+            ```python
+            old_to_new[cur].next = old_to_new[cur.next]
+            ```
+
+            - 如果：cur.next is None
+
+            - 那這一行會變成：old_to_new[None]
+            
+            - 👉 這會發生什麼？
+
+                - None 不是一個 key
+
+                - Python 會直接丟：KeyError
+
+        - ✅ 用 get() 會怎樣？
+            ```python
+            old_to_new[cur].next = old_to_new.get(cur.next)
+            ```
+
+            - 如果：cur.next is None
+
+            - 那就是：old_to_new.get(None)
+
+            - 👉 結果是：None
+
+            - 為什麼「回傳 None」是正確的？
+
+                - 因為：原本 cur.next = None
+                
+                - 那複製後的節點：new.next = None
+
+                - 這完全符合 deep copy 的要求
+
+                - 同理：
+                    ```python
+                    cur.random = None
+                    → new.random = None
+                    ```
+
 #### 回傳新串列頭
 ```python
 return old_to_new[head]
