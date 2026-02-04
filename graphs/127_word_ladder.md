@@ -155,12 +155,32 @@ for w in wordList:
 queue = deque([(beginWord, 1)])
 visited = set([beginWord])
 ```
-
 - BFS queue 存 (目前單字, 已走步數)
 
 - 初始從 beginWord 開始，步數是 1（包含自己）
 
 - visited 用來避免重複走訪（防止無限循環）
+
+    ```text
+    (beginWord, 1)      → 一筆資料
+    [(beginWord, 1)]    → 裝資料的 list
+    deque( ... )        → 把 list 變成 queue
+    ```
+    - set([beginWord]) 👉 把這個 list 轉成 set
+
+    - 為什麼不能直接寫set(beginWord)？
+
+    - 因為：
+    ```python
+    set("hit")  # {'h', 'i', 't'} ❌
+    ```
+
+    - Python 會把字串當成「可迭代物件」，一個字元一個字元拆。
+
+    所以一定要包成 list：
+    ```python
+    set(["hit"])  # {'hit'} ✅
+    ```
 ```python
 current_word, steps = queue.popleft()
 ```
@@ -188,6 +208,21 @@ for nei in pattern_map.get(pattern, []):
         visited.add(nei)
         queue.append((nei, steps + 1))
 ```
+- 為什麼是 pattern, []？
+
+    - 先看 .get() 的語法：
+        ```python
+        dict.get(key, default)
+        ```
+
+    - 字面意思是：「如果 key 存在，就給我對應的 value；如果不存在，就給我 default」
+
+    - 套到這一行
+    ```python
+    pattern_map.get(pattern, [])
+    ```
+
+    - 字面意思是：「如果這個 pattern 有對應的單字列表，就拿出來；如果沒有，就當作它對應一個空 list」
 
 - 從 pattern 表中取出所有只差一個字母的鄰居
 
