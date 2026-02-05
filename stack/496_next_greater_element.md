@@ -384,7 +384,7 @@ nxt = {
 
 - 空間複雜度：O(n)
 
-    - -stack + hashmap
+    - stack + hashmap
 
 ---
 
