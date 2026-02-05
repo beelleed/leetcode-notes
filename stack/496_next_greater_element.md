@@ -306,6 +306,12 @@ stack.append(num)
 ```python
 return [next_greater.get(x, -1) for x in nums1]
 ```
+- 對 nums1 裡的每一個 x，去字典 nxt 查 x 對應的值，查不到就用 -1，最後把結果組成一個 list 回傳。
+
+- nxt.get(key, default)
+    - 如果 key 在字典裡 → 回傳對應的 value
+
+    - 如果 key 不在字典裡 → 回傳 default
 
 - 如果 x 有在 next_greater：
 
