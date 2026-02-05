@@ -244,12 +244,12 @@ class Solution:
 ### 1️⃣ 初始化 stack 與對照表
 ```python
 stack = []
-next_greater = {}
+nxt = {}
 ```
 
 - stack：存「還沒找到 next greater 的數字」
 
-- next_greater：
+- nxt：
 
     - key：某個數字
 
@@ -266,7 +266,7 @@ for num in nums2:
 ```python
 while stack and num > stack[-1]:
     smaller = stack.pop()
-    next_greater[smaller] = num
+    nxt[smaller] = num
 ```
 - 這個 while 在幹嘛？
 
@@ -304,7 +304,7 @@ stack.append(num)
 
 ### 6️⃣ 最後組答案（nums1）
 ```python
-return [next_greater.get(x, -1) for x in nums1]
+return [nxt.get(x, -1) for x in nums1]
 ```
 - 對 nums1 裡的每一個 x，去字典 nxt 查 x 對應的值，查不到就用 -1，最後把結果組成一個 list 回傳。
 
@@ -313,7 +313,7 @@ return [next_greater.get(x, -1) for x in nums1]
 
     - 如果 key 不在字典裡 → 回傳 default
 
-- 如果 x 有在 next_greater：
+- 如果 x 有在 nxt：
 
     - 回傳對應值
 
@@ -339,14 +339,14 @@ stack = [1]
 #### num = 3
 ```text
 3 > 1 → pop 1
-next_greater[1] = 3
+nxt[1] = 3
 push 3
 stack = [3]
 ```
 #### num = 4
 ```text
 4 > 3 → pop 3
-next_greater[3] = 4
+nxt[3] = 4
 push 4
 stack = [4]
 ```
@@ -358,7 +358,7 @@ stack = [4, 2]
 ```
 #### 結果對照表
 ```text
-next_greater = {
+nxt = {
   1: 3,
   3: 4
 }
