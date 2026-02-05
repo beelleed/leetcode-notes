@@ -107,7 +107,7 @@ for a, b in prerequisites:
     - 並且 a 的入度 +1 → indegree[a] += 1
 
 ```python
-queue = deque([i for in range(numCourses) if indegree[i] == 0])
+queue = deque([i for i in range(numCourses) if indegree[i] == 0])
 ```
 - 將所有「入度為 0」的課程加入 queue：
 
