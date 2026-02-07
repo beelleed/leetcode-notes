@@ -163,26 +163,6 @@ count = Counter(tasks)
     ```text
     任務 → 出現次數
     ```
-
-```python
-maxFreq = max(count.values())
-```
-
-- 找出「出現次數最多」的任務
-
-- maxFreq 代表：任何一個任務最多被執行了幾次
-
-- 這個值決定了排程的最小骨架長度
-```python
-maxCount = sum(1 for v in count.values() if v == maxFreq)
-```
-
-- 計算有多少個任務的出現次數等於 maxFreq
-
-#### 1️⃣ count.values()
-```python
-count = Counter(tasks)
-```
 - 假設：
     ```text
     tasks = ["A","A","A","B","B","B","C"]
@@ -201,7 +181,22 @@ count.values() 就是：
 ```text
 [3, 3, 1]
 ```
-#### 2️⃣ v == maxFreq
+```python
+maxFreq = max(count.values())
+```
+
+- 找出「出現次數最多」的任務
+
+- maxFreq 代表：任何一個任務最多被執行了幾次
+
+- 這個值決定了排程的最小骨架長度
+```python
+maxCount = sum(1 for v in count.values() if v == maxFreq)
+```
+
+- 計算有多少個任務的出現次數等於 maxFreq
+
+#### v == maxFreq
 
 假設你前面算出：
 ```python
@@ -215,7 +210,7 @@ v == maxFreq
 
 意思是：「 這個任務的出現次數，是不是等於 3？」
 
-#### 3️⃣ 1 for v in count.values() if v == maxFreq
+####  1 for v in count.values() if v == maxFreq
 
 - 這是一個 generator expression，意思是：
 
@@ -229,7 +224,7 @@ v = 3  → 產生 1
 v = 3  → 產生 1
 v = 1  → 不產生
 ```
-#### 4️⃣ sum(...)
+#### sum(...)
 
 最後：
 ```python
