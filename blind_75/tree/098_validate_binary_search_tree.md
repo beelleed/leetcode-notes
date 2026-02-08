@@ -281,9 +281,38 @@ if not helper(node.right, val, upper):
 
 ## ⏱️ 時間與空間複雜度 | Time and Space Complexity
 - 時間複雜度：O(n)，其中 n 為節點數，每個節點僅被訪問一次。
+    - n = 樹中節點數
+
+    - 每個節點：
+
+        - 只被拜訪 一次
+
+        - 做的是 O(1) 的比較（lower < val < upper）
+
+- 所以整棵樹走完一次 → O(n)
 
 - 空間複雜度：O(h)，其中 h 為樹的高度，遞迴堆疊的深度。
+    - Worst case: O(n)
+        - 樹退化成一條鏈（像 linked list）
+            
+            例如：
+            ```markdown
+            1
+             \
+              2
+               \
+                3
+                 \
+                  4
+            ```
+        
+        - 遞迴深度 = n
 
+    - Balanced tree: O(log n)
+    
+        - 樹是平衡的
+
+        - 遞迴深度 ≈ 樹高 ≈ log n
 ---
 
 ## 🧠 學到的東西 | What I Learned 
