@@ -2,6 +2,8 @@
 
 🔗 [題目連結 | Problem Link](https://leetcode.com/problems/validate-binary-search-tree/)
 
+---
+
 ## 📘 題目說明 | Problem Description
 
 給定一棵二元樹，請判斷它是否是一棵有效的「二元搜尋樹」（Binary Search Tree, BST）。
@@ -243,7 +245,7 @@ return inorder(root)
 ```python
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
-        def helper(node, lower=float('-inf'), upper=float('inf')):
+        def helper(node, lower, upper):
             if not node:
                 return True
 
@@ -257,7 +259,7 @@ class Solution:
                 return False
             return True
 
-        return helper(root)
+        return helper(root, float('-inf'), float('inf'))
 ```
 ```python
 if val <= lower or val >= upper:
