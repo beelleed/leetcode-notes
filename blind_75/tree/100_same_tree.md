@@ -78,7 +78,7 @@ class Solution:
 | ----------------- | ------------------------------------------------------------------------------ | ------------------------------- |
 | 基底檢查：兩者皆為 None    | `if p is None and q is None: return True`                                      | 如果 `p` 和 `q` 都走到底（空節點），那這部分是一致的 |
 | 基底檢查：一個 None 或值不同 | `if p is None or q is None or p.val != q.val: return False`                    | 結構不同或值不同的情況，直接回傳 False          |
-| 遞迴比較              | `return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)` | 如果當前節點值一樣，就往下比較左子樹 + 右子樹是否也都一樣  |
+| 遞迴比較              | `return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)` | 如果當前節點值一樣，就往下比較左子樹 + 右子樹結構是否也都一樣  |
 
 ```python
 return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
