@@ -74,7 +74,7 @@ Return the length of the shortest clear path from top-left to bottom-right in a 
 
 ---
 
-##💻 程式碼實作 | Code
+## 💻 程式碼實作 | Code
 ```python
 from collections import deque
 from typing import List
