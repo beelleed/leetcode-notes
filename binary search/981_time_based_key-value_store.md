@@ -91,7 +91,7 @@ self.store = defaultdict(list)
 
 - 每個 key 對應一個 list
 
-- defaultdict(list) 的好處：第一次用 store[key] 時自動給空 list，不用先判斷 key 存不存在（你的 set 就吃到這個好處）
+- defaultdict(list) 的好處：第一次用 store[key] 時自動給空 list，不用先判斷 key 存不存在
 
 ### 2️⃣ set：直接 append
 ```python
