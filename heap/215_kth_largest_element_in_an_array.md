@@ -122,13 +122,63 @@ class Solution:
     - 堆中有 k 個最大值，而其中最小的那個 = 排名第 k 的數
 
 #### 📌 例子說明：
-```python
+```text
 nums = [3, 2, 1, 5, 6, 4]
 k = 2
 ```
-- 經過這段程式碼後，heap 中會只剩下 [5, 6]
+### Step 1：num = 3
+```python
+push 3 → heap = [3]
+len(heap)=1 ≤ k → 不 pop
+```
+### Step 2：num = 2
+```python
+push 2 → heap = [2, 3]
+len(heap)=2 == k → 不 pop
+```
 
-- heap[0] = 5 → 就是第 2 大的元素 ✅
+- heap 裡是「目前最大的 2 個嗎？」→ 看過 [3,2]，是的。
+
+### Step 3：num = 1
+```python
+push 1 → heap = [1, 3, 2]
+len(heap)=3 > k → pop
+pop 掉最小的 1
+heap = [2, 3]
+```
+
+👉 1 不可能是第 2 大，所以丟掉
+
+### Step 4：num = 5
+```python
+push 5 → heap = [2, 3, 5]
+len=3 > k → pop
+pop 掉 2
+heap = [3, 5]
+```
+### Step 5：num = 6
+```python
+push 6 → heap = [3, 5, 6]
+len=3 > k → pop
+pop 掉 3
+heap = [5, 6]
+```
+### Step 6：num = 4
+```python
+push 4 → heap = [4, 6, 5]
+len=3 > k → pop
+pop 掉 4
+heap = [5, 6]
+```
+### 最後
+```python
+return heap[0]  # 5
+```
+
+- 👉 heap 裡是 [5,6]
+- 👉 第 2 大 = 最小的那個 = heap[0]
+
+---
 
 ## ⏱️ 時間與空間複雜度 | Time and Space Complexity 
 - Time Complexity（時間複雜度）: O(N log k) – insertion into heap
