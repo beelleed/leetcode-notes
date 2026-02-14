@@ -1,6 +1,6 @@
 # 📍 LeetCode 13 — Roman to Integer
 
-🔗 [題目連結] (https://leetcode.com/problems/roman-to-integer/)
+🔗 [題目連結](https://leetcode.com/problems/roman-to-integer/)
 
 ---
 
