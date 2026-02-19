@@ -106,6 +106,9 @@ if len(path) == len(nums):
 🔹 path[:] 是淺複製，否則後續的變動會影響結果。
 
 🔹 把這個排列加入 res，然後返回（結束這層遞迴）。
+
+🔹 如果不 return，下面的 for-loop 還會繼續跑，變成[1,2,3,???]  ← 多選東西（錯）
+
 ```python
 for i in range(len(nums)):
 ```
