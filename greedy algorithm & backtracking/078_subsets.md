@@ -79,6 +79,7 @@ class Solution:
             res.append(path[:])  # 每一次進入遞迴，就加入當前 path 的副本為一個子集
 ```
 - 這裡的 path[:] 是淺拷貝，表示保留目前子集內容，避免後面遞迴改變 path 時影響之前結果。
+- 沒有終點所以不用寫return，如果寫了反而只會拿到 第一個 subset：空集合，因為一進來就 return，下面 for-loop 永遠不跑。
 ```python
 for i in range(start, len(nums)):
     path.append(nums[i])         # 選擇這個元素
