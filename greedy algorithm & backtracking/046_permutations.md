@@ -175,6 +175,208 @@ Start: path=[], used=[F, F, F]
 
 ---
 
+## Example
+```text
+nums = [1, 2, 3]
+```
+### 🔎 程式的兩個關鍵變數
+- path
+
+👉 現在「已經選好的排列」
+
+- 例如：
+```text
+path = [1,3]
+代表：目前排列做到 1 → 3
+```
+- used
+
+👉 哪些數字已經用過了（不能再用）
+
+例如：
+```text
+used = [True, False, True]
+代表：
+1 用過了
+2 還沒用
+3 用過了
+```
+### 🚀 開始執行
+
+呼叫：
+```python
+backtrack([], [False, False, False])
+```
+
+代表：目前還沒選任何數字
+
+### 🌳 第 1 層遞迴（選第一個位置）
+
+for 迴圈：
+```text
+i = 0 → nums[0] = 1
+```
+
+- 因為 used[0] == False
+- 可以選！
+
+### 👉 選 1
+```python
+used[0] = True
+path.append(1)
+```
+
+現在：
+```python
+path = [1]
+used = [True, False, False]
+```
+
+再往下遞迴：
+```python
+backtrack([1], used)
+```
+### 🌳 第 2 層（選第二個位置）
+
+現在要決定：排列的第二格是誰？
+
+for i again：
+
+#### i = 0 → 1
+```python
+used[0] = True
+```
+
+❌ 已經用過，不能再用！
+
+#### i = 1 → 2
+
+可以用！
+
+### 👉 選 2
+```python
+path = [1,2]
+used = [True, True, False]
+```
+
+呼叫：
+```python
+backtrack([1,2], used)
+```
+### 🌳 第 3 層（選第三個位置）
+
+現在只剩一個能選。
+
+for i:
+```python
+i = 2 → 3
+path = [1,2,3]
+used = [True,True,True]
+```
+### 🎯 達成條件！
+```python
+if len(path) == len(nums):
+```
+
+成立！
+
+加入答案：
+```python
+res.append([1,2,3])
+```
+### 🔁 開始「回溯」！！（最重要）
+
+現在要回去試別條路。
+
+#### 把剛剛選的 3 撤銷
+```python
+path.pop()
+used[2] = False
+```
+
+變回：
+```python
+path = [1,2]
+used = [True,True,False]
+```
+
+這叫：回到選 3 之前的狀態
+
+#### 🔁 繼續第 3 層 for-loop
+
+沒有別的可以選 → return
+
+#### 🔁 回到第 2 層（剛剛選 2 的地方）
+
+撤銷 2：
+```python
+path.pop()
+used[1] = False
+```
+
+現在：
+```python
+path = [1]
+used = [True,False,False]
+```
+#### 繼續 for-loop
+
+下一個：
+```python
+i = 2 → 選 3
+```
+### 👉 選 3
+```python
+path = [1,3]
+used = [True,False,True]
+```
+
+再往下遞迴…
+
+最後得到：
+```python
+[1,3,2]
+```
+### 🔁 再回溯
+
+- 撤銷 3
+- 撤銷 1
+
+### 🌳 換第一個數字！
+
+現在回到最外層：
+
+選：
+```python
+i = 1 → 2 當第一個
+```
+
+就會產生：
+```python
+[2,1,3]
+[2,3,1]
+```
+### 🌳 再選 3 當第一個
+
+產生：
+```python
+[3,1,2]
+[3,2,1]
+```
+### 🧠 為什麼這題「不用 start + 1」？
+
+因為這題是：每一層都可以重新從 0 開始選！
+
+排列允許：
+```text
+1 → 2
+2 → 1   ← 這是不同排列
+```
+
+所以不能限制往後選。
+
+---
+
 ## ⏱ 時間與空間複雜度 | Complexity
 Time 時間複雜度：O(n!)，n 為 nums 的長度，全排列總數為 n!
 
