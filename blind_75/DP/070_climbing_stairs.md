@@ -32,7 +32,7 @@ You are climbing a staircase. It takes `n` steps to reach the top. Each time you
 
 ---
 
-## ✅ 解法：動態規劃（Dynamic Programming）
+## ✅ 解法 1：動態規劃（Dynamic Programming）
 
 ```python
 class Solution:
@@ -81,6 +81,8 @@ return F[4]  # ➜ 5
 
 - 2 + 2
 
+---
+
 ## ✨ 我學到的 | What I Learned
 | 中文學習點                        | English Takeaway                                 |
 | ---------------------------- | ------------------------------------------------ |
@@ -92,4 +94,141 @@ return F[4]  # ➜ 5
 ## ⏱ 複雜度分析 | Time & Space Complexity
 - 時間複雜度：O(n)
 
-- 空間複雜度：O(n)
+- 空間複雜度：O(n) 因為額外開了一個 array。
+
+---
+
+## ✅ 解法 2：動態規劃（Dynamic Programming）優化
+```python
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        if n <= 2:
+            return n
+
+        a, b = 1, 2
+
+        for _ in range(3, n + 1):
+            a, b = b, a + b
+
+        return b
+```
+### 1️⃣ Base Case
+```python
+if n <= 2:
+    return n
+```
+
+- 因為：
+
+    - n=1 → 1 種
+
+    - n=2 → 2 種
+
+### 2️⃣ 初始化前兩個值
+```python
+a, b = 1, 2
+```
+
+- 代表：
+```ini
+a = F(1)
+b = F(2)
+```
+### 3️⃣ 遞推
+```python
+for _ in range(3, n + 1):
+    a, b = b, a + b
+```
+
+- 這行很重要。
+
+- 它其實在做：
+```ini
+new = F(n-1) + F(n-2)
+```
+
+然後：
+```css
+a ← 原本的 b
+b ← new
+```
+### 🔥 為什麼可以這樣同時更新？
+
+Python 的 tuple assignment 是同時更新。
+```python
+a, b = b, a + b
+```
+
+會先計算右邊：
+```css
+(b, a + b)
+```
+
+再一起賦值。
+
+不會出現覆蓋問題。
+
+---
+
+## 🧪 範例流程
+### n = 5
+
+初始：
+```ini
+a = 1
+b = 2
+```
+### i = 3
+```ini
+a, b = 2, 3
+```
+### i = 4
+```ini
+a, b = 3, 5
+```
+### i = 5
+```ini
+a, b = 5, 8
+```
+
+回傳：
+```ini
+8
+```
+
+---
+
+## ⏱ 複雜度分析
+- 時間複雜度
+    - O(n)
+    - 因為跑一次迴圈。
+
+- 空間複雜度
+    - O(1)
+    - 因為只使用兩個變數。
+
+---
+
+## ✍️ 我學到的東西
+
+- Fibonacci 類 DP 通常只需要前兩個狀態
+
+- 可以把 O(n) 空間壓成 O(1)
+
+- tuple assignment 很適合這種狀態轉移
+
+---
+
+## 🧠 一句話總結
+
+The number of ways follows a Fibonacci recurrence, and we can optimize space by keeping only the last two states.
+
+---
+
+## 🎯 面試講法
+
+- The space complexity is O(n) because we use a DP array of size n+1.
+
+- 優化版：
+
+    - The space complexity is O(1) since we only keep track of the previous two states.
