@@ -259,6 +259,110 @@ mapping[右括號] → 對應左括號，比對時比較直覺（只看 stack to
 
 ---
 
+## 📌 範例 | Examples
+- s = "()[]{}"
+### Step 1
+```python
+i = "("
+```
+是左括號 → push
+```python
+stack = ["("]
+```
+### Step 2
+```python
+i = ")"
+```
+是右括號
+
+檢查：
+```python
+stack[-1] == mapping[")"]
+"(" == "("
+```
+成立 → pop
+```python
+stack = []
+```
+### Step 3
+```python
+i = "["
+```
+push
+```python
+stack = ["["]
+```
+### Step 4
+```python
+i = "]"
+```
+檢查：
+```python
+"[" == mapping["]"]
+```
+成立 → pop
+```python
+stack = []
+```
+### Step 5
+```python
+i = "{"
+```
+push
+```python
+stack = ["{"]
+```
+### Step 6
+```python
+i = "}"
+```
+檢查成功 → pop
+```python
+stack = []
+```
+最後
+```python
+return not stack
+```
+stack 是空 → 回傳 True
+
+## 📌 範例 2（錯誤案例）
+- s = "(]"
+
+### Step 1
+```python
+i = "("
+```
+push
+```python
+stack = ["("]
+```
+### Step 2
+```python
+i = "]"
+```
+檢查：
+```python
+stack[-1] == mapping["]"]
+"(" == "["
+```
+不成立 → return False
+
+## 📌 範例 3（多左括號）
+- s = "((("
+
+全部 push：
+```python
+stack = ["(", "(", "("]
+```
+最後：
+```python
+return not stack
+```
+stack 不是空 → False
+
+---
+
 ## ⏱️ 時間複雜度（Time Complexity）
 - O(n)，其中 n 是輸入字串 s 的長度：
 
