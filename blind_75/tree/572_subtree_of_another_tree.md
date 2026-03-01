@@ -95,6 +95,20 @@ class Solution:
 | `if p is None or q is None or p.val != q.val: return False` | 一方為空或值不等 → 不同                     | One null or mismatch → not identical                       |
 | `return isSameTree(...) & isSameTree(...)`                  | 左右子樹都必須相同才算整棵樹相同                  | Both left and right subtrees must match                    |
 
+- 當寫：
+```python
+self.isSameTree(root, subRoot)
+```
+Python 會做：
+```text
+p = root
+q = subRoot
+```
+然後進到：
+```python
+def isSameTree(self, p, q):
+```
+
 ---
 
 ## 🧪 範例設定 | Examples
