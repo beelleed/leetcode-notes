@@ -97,8 +97,28 @@ while current:
     current = current.left
 ```
 - 一直將左子節點壓入 stack，直到沒有左節點。
+    - stack.append(current) 就是在模擬：我等一下還會回來處理這個 node
 
 - 這步確保我們按照 BST 中序順序：從最小值開始走。
+
+- 正常中序遞迴是：
+    ```python
+    def inorder(node):
+    if not node:
+        return
+    inorder(node.left)
+    print(node.val)
+    inorder(node.right)
+    ```
+    - 在去左邊之前：
+
+        - 這個 node 還沒被處理
+
+        - 但你「會回來」
+
+    - 所以：
+
+        - 👉 必須把這個 node 記住
 ### 🎯 拿出 stack 頂端節點（最小）
 ```python
 current = stack.pop()
