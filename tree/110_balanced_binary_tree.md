@@ -162,38 +162,59 @@ return height(root) != -1
 
 ## 🧪 範例流程 | Example Walkthrough
 ```text
-    1
+        1
+       /
+      2
+     /
+    3
    /
-  2
- /
-3
+  4
 ```
 
-### Step 1：算 height(3)
+### Step 1：算 height(4)
 
-- height(None)=0、height(None)=0
+```python
+left_h = 0
+right_h = 0
+abs(0-0)=0 → return 1
+```
 
-- abs(0-0)=0 ≤ 1 → 回傳 1
+### Step 2：算 height(3)
+```python
+left_h = 1   (來自 4)
+right_h = 0
+abs(1-0)=1 → return 2
+```
 
-### Step 2：算 height(2)
+### Step 3：算 height(2)
 
-- left_h = 1（來自 3）
-
-- right_h = 0（None）
-
-- abs(1-0)=1 ≤ 1 → 回傳 2
-
-### Step 3：算 height(1)
-
-- left_h = 2（來自 2）
-
-- right_h = 0（None）
-
-- abs(2-0)=2 > 1 → 回傳 -1
-
+```python
+left_h = 2   (來自 3)
+right_h = 0
+abs(2-0)=2  ❌ > 1
+```
+所以：
+```python
+return -1
+```
 ### 最後：
 
-- height(root) != -1 → False
+現在回到 height(1)
+
+它做：
+```python
+left_h = height(2)
+```
+但我們剛剛算出：
+```python
+height(2) = -1
+```
+所以：
+```python
+if left_h == -1:
+    return -1
+```
+👉 這行被觸發！
 
 ---
 
