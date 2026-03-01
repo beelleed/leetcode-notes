@@ -185,7 +185,6 @@ wd.addWord("mad")
 wd.search("bad")   # → True
 wd.search(".ad")   # → True
 wd.search("b..")   # → True
-wd.search("b.d")   # → False
 wd.search("pad")   # → False
 ```
 
@@ -282,26 +281,6 @@ return self.END in node
     - i=3 時檢查 END → 如果該分支有 True → 回傳 True
 
 - 這樣就成功匹配 "bad" 這條路。
-
-### ➤ wd.search("b.d")
-
-- 呼叫 Search("b.d")：
-
-    - i=0: b 有分支 → 走進 root['b']
-
-    - i=1: . → 遍歷 b 分支下的子鍵（可能 'a' 這條）
-
-        - 若走到 'a'：dfs(node['a'], i=2), word[2] = 'd'
-
-            - 檢查子鍵 'd' 是否存在 → 在 'a' 那層有 'd'
-
-            - dfs(node['a']['d'], i=3) → 檢查 END
-
-                - 如果該節點有 END → 回傳 True
-
-            - 但在你的插入結構中，可能該節點沒有 END，或不在路徑 → 回傳 False
-
-- 若沒有任何分支能最終通過 END 標記 → 整體 search("b.d") 回傳 False
 
 ### ➤ wd.search("pad")
 
