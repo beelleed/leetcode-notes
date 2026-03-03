@@ -135,6 +135,10 @@ board[r][c] = '#'
     )
 ```
 - 對四個方向進行遞迴搜尋，如果其中任一條路成功（回傳 True），則整體為 True。
+- 如果不是寫 or 是寫 , 的話這樣 found 會是一個 tuple，例如 (False, False, True, False)。在 Python 裡，非空 tuple 的布林值永遠是 True，就算裡面全是 False：
+    ```python
+    bool((False, False))  # True
+    ```
 ### ③ 撤銷決定（回溯）
 ```python
 board[r][c] = temp
