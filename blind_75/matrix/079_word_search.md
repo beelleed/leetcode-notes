@@ -114,6 +114,20 @@ if r < 0 or c < 0 or r >= rows or c >= cols:
 ```
 - 越界保護，當前位置超出 board 邊界就回傳 False。
 
+- 不能寫成
+```python
+if r > 0 and c > 0 and 0 <= r < rows and 0 <= c < cols:
+    return True
+```
+- 因為
+    - 即使改成合法範圍，它也只是在說：r, c 沒出界（而且還排除了第 0 列/行）
+
+    - 但 沒出界 ≠ 找到 word。
+
+- DFS 的 True 必須代表：
+
+    - ✅ 「從這裡開始，真的能把剩下的字都匹配完」而不是「這格子合法」。
+
 ```python
 if board[r][c] != word[i]:
     return False
@@ -134,6 +148,7 @@ board[r][c] = '#'
         dfs(r, c-1, i+1)
     )
 ```
+- () 只是 把整個 or 表達式包起來，讓它變成一個完整的布林運算。
 - 對四個方向進行遞迴搜尋，如果其中任一條路成功（回傳 True），則整體為 True。
 - 如果不是寫 or 是寫 , 的話這樣 found 會是一個 tuple，例如 (False, False, True, False)。在 Python 裡，非空 tuple 的布林值永遠是 True，就算裡面全是 False：
     ```python
