@@ -124,8 +124,6 @@ for i in range(n - 2, -1, -1):
 
 - 所以它自己的「右邊最大值」就是自己 ➜ right_max[n-1] = height[n-1]
 
----
-
 💡 右邊一格一格往左更新，為什麼用 i + 1？
 
 - 是因為雖然我們從右往左走（i = n-2 → 0），但我們在用 i + 1 拿「右邊一格」的資訊來幫助計算目前 i 的最大值。
@@ -160,7 +158,7 @@ right_max = [5, 5, 5, 3]
 ```python
 total_water = 0
 for i in range(n):
-    total_water += min(left_max[i], right_max[i] - height[i])
+    total_water += min(left_max[i], right_max[i]) - height[i]
 ```
 - 計算每個位置可以接住多少水：
 
