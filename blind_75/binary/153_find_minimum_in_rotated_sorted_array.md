@@ -68,6 +68,38 @@ if nums[mid] > nums[right]:
     - 因為右半邊才會包含轉折點（小數字）
 
 - 所以排除掉 mid 本身，往右邊搜尋。
+
+### 如果寫 if nums[left] < nums[mid]:
+- 這只能判斷：左半邊是不是升序並不能保證 最小值在右邊
+- ex: nums = [3,4,5,1,2]
+    
+    - 第一次：
+    ```python
+    left=0 right=4
+    mid=2
+    nums[left]=3
+    nums[mid]=5
+    ```
+    - 判斷：
+    ```python
+    3 < 5 → True
+    left = 3
+    ```
+    - 現在：
+    ```python
+    left=3 right=4
+    ```
+    - mid=3
+    ```python
+    nums[left]=1
+    nums[mid]=1
+    ```
+    - 條件：
+    ```python
+    1 < 1 → False
+    right = mid
+    ```
+    - 這時邏輯開始變得不穩定，很多 case 會錯。
 ```python
 else:
     right = mid
