@@ -145,6 +145,11 @@ if right - left < min_len:
     min_len = right - left
 ```
 - 若目前視窗比之前記錄的更短，就更新最短範圍。
+- 這裡的 right 是 開區間右邊界，不是視窗內最後一個 index。
+    - 對於區間：s[left:right]
+    - 長度就是：right - left 不需要再 +1
+        - 假設：left = 2, right = 5
+            - 那視窗是：s[2:5] 包含 index 2, 3, 4
 
 ### ✂️ 移除左邊字元並更新狀態
 ```python
