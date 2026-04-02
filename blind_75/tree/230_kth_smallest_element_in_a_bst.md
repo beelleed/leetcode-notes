@@ -185,3 +185,39 @@ current = current.right
 - 可以提早停止（當 k == 0），不必完整遍歷整棵樹，提高效率
 
 - 面試時講這題要強調 BST 的特性 + 中序遍歷 + 提早退出 + 複雜度分析
+
+---
+
+## Recursion
+```python
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        self.ans = None
+        self.count = 0
+        def dfs(node):
+            if self.ans is not None:
+                return
+            if not node:
+                return
+            
+            # 左
+            dfs(node.left)
+            if self.ans is not None:
+                return
+            
+            # 中（這裡會 count += 1）
+            self.count += 1
+            if self.count == k:
+                self.ans = node.val
+
+            # 右
+            dfs(node.right)
+        dfs(root)
+        return self.ans
+```
+## Complexity
+- Time: O(n)
+    - 如果有 early stop，可以說最壞 O(n)，常見可視為到 O(k + h)，但面試講最壞 O(n) 就可以
+- Space: O(h)
+    - 平衡樹是 O(log n)
+    - 最壞偏斜樹是 O(n)
