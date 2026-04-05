@@ -392,3 +392,27 @@ class Solution:
 因為「一個節點也可以是自己的祖先」
 
 - 遞迴法更短、更直覺；parent map 更像通用圖論做法但更吃空間
+
+---
+
+## Code
+
+```python
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        def dfs(node):
+            if not node:
+                return None
+            if node == p:
+                return p
+            if node == q:
+                return q
+            left = dfs(node.left)
+            right = dfs(node.right)
+            if left and right:
+                return node
+            return left or right
+        return dfs(root)
+```
+- Time complexity is O(N) since we visit each node once.
+- Space complexity is O(H) due to recursion stack, where H is the height of the tree.
