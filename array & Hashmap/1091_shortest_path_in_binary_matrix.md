@@ -413,3 +413,154 @@ if r == n-1 and c == n-1:
 ## 🧠 一句話總結
 
 I use BFS starting from (0,0), exploring 8-direction neighbors level by level; the first time we pop the destination cell, its distance is guaranteed to be the shortest path length.
+
+---
+
+## Code
+```python
+from collections import deque
+
+class Solution:
+    def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
+        rows, cols = len(grid), len(grid[0])
+
+        # 起點不能走
+        if grid[0][0] != 0:
+            return -1
+
+        queue = deque([(0, 0)])
+        grid[0][0] = 1  # visited
+        steps = 1
+
+        directions = [
+            (0,1),(0,-1),(1,0),(-1,0),
+            (1,1),(1,-1),(-1,1),(-1,-1)
+        ]
+
+        while queue:
+            for _ in range(len(queue)):  # 🔥 layer
+                r, c = queue.popleft()
+
+                if r == rows - 1 and c == cols - 1:
+                    return steps
+
+                for dr, dc in directions:
+                    nr, nc = r + dr, c + dc
+
+                    if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] == 0:
+                        grid[nr][nc] = 1
+                        queue.append((nr, nc))
+
+            steps += 1  # 🔥 一層結束
+
+        return -1
+```
+
+---
+
+## Example
+```text
+grid =
+0 0 0
+1 1 0
+1 1 0
+```
+
+### 🧠 初始化
+```python
+queue = deque([(0, 0)])
+steps = 1
+```
+👉 現在 queue：[(0,0)]
+
+### 🔥 Layer 1（steps = 1）
+
+👉 進 while 前：queue = [(0,0)]
+
+👉 這一層的大小：
+```python
+len(queue) = 1
+```
+👉 開始這一層
+
+處理 (0,0)：
+
+可以走到：
+```text
+(0,1) ✅
+(1,0) ❌
+(1,1) ❌
+```
+👉 queue 變成：[(0,1)]
+
+👉 這一層結束：
+```python
+queue = [(0,1)]
+steps = 2
+```
+### 🟡 Layer 2（steps = 2）
+
+👉 進 while：queue = [(0,1)]
+
+👉 這一層大小：
+```python
+len(queue) = 1
+```
+👉 處理 (0,1)
+
+可以走到：
+```text
+(0,2) ✅
+(1,2) ✅
+```
+👉 queue 變成：
+```text
+[(0,2), (1,2)]
+```
+👉 這一層結束：
+```python
+queue = [(0,2), (1,2)]
+steps = 3
+```
+### 🔵 Layer 3（steps = 3）
+
+👉 進 while：queue = [(0,2), (1,2)]
+
+👉 這一層大小：
+```python
+len(queue) = 2   # 🔥 這層有兩個點！
+```
+👉 處理 (0,2)
+
+可能走到：
+```text
+(1,2)（但已訪問）
+```
+👉 處理 (1,2)
+
+可以走到：
+```text
+(2,2) ✅（終點）
+```
+👉 queue 變成：
+```text
+[(2,2)]
+```
+👉 這一層結束：
+```python
+queue = [(2,2)]
+steps = 4
+```
+### 🟣 Layer 4（steps = 4）
+
+👉 queue：[(2,2)]
+
+👉 這就是終點 → return
+
+### 🎯 超關鍵總結
+```python
+Layer 1: [(0,0)]
+Layer 2: [(0,1)]
+Layer 3: [(0,2), (1,2)]
+Layer 4: [(2,2)]
+```
