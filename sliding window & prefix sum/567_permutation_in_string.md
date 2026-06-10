@@ -273,3 +273,24 @@ Return False if no match found
 - Maintaining a fixed-size window avoids unnecessary recomputation.
 
 - Always manage the window size to match the length of s1.
+
+---
+
+## Code
+
+```python
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        need = Counter(s1)
+        window = Counter()
+        l = 0
+        for r in range(len(s2)):
+            window[s2[r]] += 1
+            while window[s2[r]] > need[s2[r]]:
+                window[s2[l]] -= 1
+                l += 1
+            if window == need:
+                return True
+        return False
+
+```
