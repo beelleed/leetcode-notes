@@ -31,7 +31,7 @@
 
 我們可以用 **動態規劃（雙向預計算）** 或 **雙指針優化**：
 
-### 動態規劃（DP）版本：
+### 方法一：動態規劃（DP）版本：
 - **中文:** 
     1. 構建兩個陣列 `left_max` 和 `right_max`，分別記錄每個位置左邊（含自身）和右邊（含自身）的最大高度值。  
     2. 雨水高度 = `min(left_max[i], right_max[i]) - height[i]`。  
@@ -45,6 +45,26 @@
 ### 雙指針優化版本：
 
 從左右兩端往中間進行收縮，追蹤左／右最大高度並累計可託水量，效率更高（O(n)、O(1) 空間）。
+
+公式： water[i] = min(left_max, right_max) - height[i]
+
+但如果對每個位置都重新找左邊最高、右邊最高，會很慢。
+
+所以我們用 two pointers：
+
+- left 從左邊開始
+- right 從右邊開始
+- left_max 記錄左邊目前最高
+- right_max 記錄右邊目前最高
+
+### 🔑 核心判斷
+```python
+if left_max < right_max:
+```
+
+- 意思是：左邊比較矮，所以目前 left 位置能裝多少水，只由 left_max 決定。因為右邊已經有一個比左邊高的牆，所以水位一定卡在左邊。
+
+- 反過來：表示右邊比較矮，處理 right。
 
 ---
 
@@ -278,3 +298,322 @@ for i in range(n):
 - 精準找出每個位置可儲水的高度 = min(左右最大值) - 本身高度。
 
 - 時間和空間都能保持在線性級別。
+
+---
+
+## 💻 程式碼 | Code
+```python
+from typing import List
+
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        if not height:
+            return 0
+
+        left, right = 0, len(height) - 1
+        left_max = height[left]
+        right_max = height[right]
+        water = 0
+
+        while left < right:
+            if left_max < right_max:
+                left += 1
+                left_max = max(left_max, height[left])
+                water += left_max - height[left]
+            else:
+                right -= 1
+                right_max = max(right_max, height[right])
+                water += right_max - height[right]
+
+        return water
+```
+### 🧾 程式碼詳細解釋 | Code Explanation
+
+### 1️⃣ 空陣列處理
+```python
+if not height:
+    return 0
+```
+- 如果沒有柱子，當然不能接水。
+
+### 2️⃣ 初始化雙指針
+```python
+left, right = 0, len(height) - 1
+```
+- left 從最左邊開始
+- right 從最右邊開始
+### 3️⃣ 初始化左右最高牆
+```python
+left_max = height[left]
+right_max = height[right]
+left_max：從左到目前為止最高的柱子
+right_max：從右到目前為止最高的柱子
+```
+### 4️⃣ 累積水量
+```python
+water = 0
+```
+最後要回傳的總接水量。
+
+### 🔁 while 迴圈
+```python
+while left < right:
+```
+只要左右指針還沒相遇，就繼續處理。
+
+### 情況一：左邊比較矮
+```python
+if left_max < right_max:
+```
+- 代表：左邊最高牆比較低
+
+- 此時水位由左邊限制，所以處理左指針。
+```python
+left += 1
+```
+- 左指針往右走一步。
+```python
+left_max = max(left_max, height[left])
+```
+- 更新目前左邊最高牆。
+```python
+water += left_max - height[left]
+```
+- 如果目前柱子比 left_max 低，就能裝水。
+
+- 如果目前柱子比 left_max 高：
+
+    - left_max 會被更新成它自己
+    - 所以 left_max - height[left] = 0
+
+- 不會加到負數。
+
+### 情況二：右邊比較矮
+```python
+else:
+```
+- 代表：右邊最高牆比較低或相等
+
+- 此時水位由右邊限制，所以處理右指針。
+```python
+right -= 1
+```
+- 右指針往左走一步。
+```python
+right_max = max(right_max, height[right])
+```
+- 更新目前右邊最高牆。
+```python
+water += right_max - height[right]
+```
+- 計算目前右邊位置能裝多少水。
+
+---
+
+### 🧪 根據程式碼跑範例 | Example Walkthrough
+### Input
+```python
+height = [0,1,0,2,1,0,1,3,2,1,2,1]
+```
+- 初始：
+    ```python
+    left = 0, right = 11
+    left_max = 0
+    right_max = 1
+    water = 0
+    ```
+### Step 1
+```python
+left_max < right_max
+0 < 1 ✅
+```
+處理左邊：
+```python
+left += 1  → left = 1
+left_max = max(0, height[1]) = 1
+water += 1 - 1 = 0
+```
+### Step 2
+```python
+left = 1, right = 11
+left_max = 1, right_max = 1
+left_max < right_max
+1 < 1 ❌
+```
+處理右邊：
+```python
+right -= 1 → right = 10
+right_max = max(1, height[10]) = 2
+water += 2 - 2 = 0
+```
+### Step 3
+```python
+left = 1, right = 10
+left_max = 1, right_max = 2
+1 < 2 ✅
+```
+處理左邊：
+```python
+left = 2
+left_max = max(1, height[2]) = 1
+water += 1 - 0 = 1
+```
+目前：
+```python
+water = 1
+```
+### Step 4
+```python
+left = 2, right = 10
+left_max = 1, right_max = 2
+```
+處理左邊：
+```python
+left = 3
+left_max = max(1, height[3]) = 2
+water += 2 - 2 = 0
+```
+目前：
+```python
+water = 1
+```
+### Step 5
+```python
+left = 3, right = 10
+left_max = 2, right_max = 2
+2 < 2 ❌
+```
+處理右邊：
+```python
+right = 9
+right_max = max(2, height[9]) = 2
+water += 2 - 1 = 1
+```
+目前：
+```python
+water = 2
+```
+### Step 6
+left = 3, right = 9
+left_max = 2, right_max = 2
+
+處理右邊：
+```python
+right = 8
+right_max = max(2, height[8]) = 2
+water += 2 - 2 = 0
+```
+目前：
+```python
+water = 2
+```
+### Step 7
+```python
+left = 3, right = 8
+left_max = 2, right_max = 2
+```
+處理右邊：
+```python
+right = 7
+right_max = max(2, height[7]) = 3
+water += 3 - 3 = 0
+```
+目前：
+```python
+water = 2
+```
+### Step 8
+```python
+left = 3, right = 7
+left_max = 2, right_max = 3
+```
+處理左邊：
+```python
+left = 4
+left_max = max(2, height[4]) = 2
+water += 2 - 1 = 1
+```
+目前：
+```python
+water = 3
+```
+### Step 9
+```python
+left = 4, right = 7
+left_max = 2, right_max = 3
+```
+處理左邊：
+```python
+left = 5
+left_max = max(2, height[5]) = 2
+water += 2 - 0 = 2
+```
+目前：
+```python
+water = 5
+```
+### Step 10
+```python
+left = 5, right = 7
+left_max = 2, right_max = 3
+```
+處理左邊：
+```python
+left = 6
+left_max = max(2, height[6]) = 2
+water += 2 - 1 = 1
+```
+目前：
+```python
+water = 6
+```
+### Step 11
+```python
+left = 6, right = 7
+left_max = 2, right_max = 3
+```
+處理左邊：
+```python
+left = 7
+left_max = max(2, height[7]) = 3
+water += 3 - 3 = 0
+```
+結束：
+```python
+left == right
+```
+### ✅ 最終答案
+```python
+return 6
+```
+
+---
+
+## ⏱️ 複雜度分析 | Complexity Analysis
+- 時間複雜度：O(n)
+
+    - 因為：left 和 right 每次都會移動，每個位置最多被處理一次
+- 空間複雜度：O(1)
+
+    - 因為只用了幾個變數：
+        - left
+        - right
+        - left_max
+        - right_max
+        - water
+
+---
+
+## ✍️ 我學到的東西 | What I Learned
+- 每個位置能接多少水，取決於左右最高牆中較矮的一邊。
+- Two pointer 的核心是：
+    - 左邊限制水位，就處理左邊
+    - 右邊限制水位，就處理右邊
+- left_max < right_max 時，可以確定目前左邊位置的水量。
+- 不需要額外陣列記錄每個位置的 left max / right max，因此空間是 O(1)。
+
+---
+
+## 🧠 一句話總結
+
+- 每次處理較矮邊，因為水位永遠由較矮的邊決定。
