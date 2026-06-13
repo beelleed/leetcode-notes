@@ -1,482 +1,730 @@
 # 📍 LeetCode 287 — Find the Duplicate Number
 
-🔗 [題目連結](https://leetcode.com/problems/find-the-duplicate-number/)
+🔗 https://leetcode.com/problems/find-the-duplicate-number/
 
 ---
 
-## 📄 題目說明 | Problem Description
-### 中文：
+# 📄 題目說明 | Problem Description
 
-- 給定一個長度為 n + 1 的整數陣列 nums，
-- 其中每個數字都在 1 ~ n 的範圍內。
+## 中文
 
-    - 只有 一個數字重複（可能出現多次）
+給定一個長度為：
 
-    - 不能修改陣列
-
-    - 只允許使用 O(1) 額外空間
-
-- 請找出那個重複的數字。
-
-### English:
-
-Given an array containing n + 1 integers where each integer is between 1 and n inclusive, find the duplicate number without modifying the array and using only constant extra space.
-
-### Examples
-- Example 1:
-
-    - Input: nums = [1,3,4,2,2]
-    - Output: 2
-- Example 2:
-
-    - Input: nums = [3,1,3,4,2]
-    - Output: 3
-- Example 3:
-
-    - Input: nums = [3,3,3,3,3]
-    - Output: 3
-
----
-
-## 🧠 解題核心轉換 | Key Insight
-- 關鍵轉換（超重要）
-
-    - 把陣列視為一個 linked list：
-
-        - index 當作節點
-
-        - nums[i] 當作 next 指標
 ```text
+n + 1
+```
+
+的陣列 `nums`。
+
+其中：
+
+* 每個數字都介於 `1 ~ n`
+* 只有一個數字重複（可能出現多次）
+* 不可以修改陣列
+* 只能使用 `O(1)` 額外空間
+
+請找出重複的數字。
+
+---
+
+## English
+
+Given an array containing `n + 1` integers where each integer is between `1` and `n` inclusive, return the duplicate number.
+
+Constraints:
+
+* Do not modify the array.
+* Use only constant extra space.
+
+---
+
+# 🧠 核心觀念 | Key Insight
+
+這題不要把它想成：
+
+```text
+Array Problem
+```
+
+而要轉換成：
+
+```text
+Linked List Cycle Problem
+```
+
+---
+
+# 🔄 陣列轉 Linked List
+
+把：
+
+```python
+nums[i]
+```
+
+看成：
+
+```text
+next pointer
+```
+
+也就是：
+
+```python
 next(i) = nums[i]
 ```
 
-- 為什麼一定會有 cycle？
-
-    - index 範圍：0 ~ n（n+1 個節點）
-
-    - value 範圍：1 ~ n（n 個可能的 next）
-
-- 👉 依照 抽屜原理（Pigeonhole Principle）一定有兩個 index 指向同一個 value → 形成 cycle
-
-### 關鍵結論
-
-- 重複的數字 = cycle 的入口（cycle entry）
-
-- 這和 hasCycle 找 cycle entry 的邏輯完全一樣。
-
 ---
 
-## 🧠 對照 hasCycle 的解題流程
-- hasCycle 的兩個階段
+例如：
 
-    - 1️⃣ 快慢指標在 cycle 中相遇
-    - 2️⃣ 找出 cycle 的入口
-
-- 👉 287 完全照這兩步做
-
----
-
-## 💻 程式碼實作 | Code (Python)
 ```python
-from typing import List
+nums = [1,3,4,2,2]
+```
 
+Index：
+
+```text
+0 1 2 3 4
+```
+
+Value：
+
+```text
+1 3 4 2 2
+```
+
+可以畫成：
+
+```text
+0 → 1
+    ↓
+    3
+    ↓
+    2
+    ↓
+    4
+    ↑
+    └───
+```
+
+形成一個 Cycle。
+
+---
+
+# ❓ 為什麼一定有 Cycle？
+
+Index 數量：
+
+```text
+0 ~ n
+```
+
+共有：
+
+```text
+n + 1
+```
+
+個位置。
+
+---
+
+Value 數量：
+
+```text
+1 ~ n
+```
+
+只有：
+
+```text
+n
+```
+
+個可能。
+
+---
+
+依據：
+
+```text
+Pigeonhole Principle
+抽屜原理
+```
+
+一定有：
+
+```text
+兩個 index 指向同一個 value
+```
+
+因此：
+
+```text
+一定形成 Cycle
+```
+
+---
+
+# 🎯 最重要結論
+
+```text
+Duplicate Number
+=
+Cycle Entrance
+```
+
+重複數字就是環的入口。
+
+---
+
+# 🐢🐇 Floyd Cycle Detection
+
+又稱：
+
+```text
+Tortoise and Hare Algorithm
+龜兔賽跑演算法
+```
+
+---
+
+# Phase 1️⃣ 找相遇點
+
+初始化：
+
+```python
+slow, fast = 0, 0
+```
+
+---
+
+Slow 每次走一步：
+
+```python
+slow = nums[slow]
+```
+
+---
+
+Fast 每次走兩步：
+
+```python
+fast = nums[nums[fast]]
+```
+
+---
+
+程式碼：
+
+```python
+while True:
+    slow = nums[slow]
+    fast = nums[nums[fast]]
+
+    if slow == fast:
+        break
+```
+
+---
+
+# ❓ 為什麼一定會相遇？
+
+進入環後：
+
+```text
+slow 每輪 +1
+
+fast 每輪 +2
+```
+
+所以：
+
+```text
+fast 每輪都比 slow 多走 1 格
+```
+
+距離會一直縮小。
+
+最終：
+
+```text
+一定在環裡相遇
+```
+
+就像操場跑步：
+
+```text
+跑比較快的人
+一定會追上
+跑比較慢的人
+```
+
+---
+
+# ⚠️ 相遇點不是答案
+
+例如：
+
+```python
+nums = [1,3,4,2,2]
+```
+
+第一次相遇：
+
+```text
+index = 4
+```
+
+但答案：
+
+```text
+duplicate = 2
+```
+
+所以：
+
+```text
+Phase 1
+只是確認已經進入 Cycle
+```
+
+還不知道入口在哪。
+
+---
+
+# Phase 2️⃣ 找 Cycle Entrance
+
+建立：
+
+```python
+slow2 = 0
+```
+
+---
+
+兩個指標同速前進：
+
+```python
+while True:
+    slow = nums[slow]
+    slow2 = nums[slow2]
+
+    if slow == slow2:
+        return slow
+```
+
+---
+
+# ❓ 為什麼這樣能找到入口？
+
+設：
+
+```text
+a = 起點到入口距離
+
+b = 入口到相遇點距離
+
+c = 相遇點到入口距離
+```
+
+```text
+          b
+      ┌──────● 相遇點
+      │      │
+入口 ●       │
+      │      │
+      └──────┘
+          c
+```
+
+---
+
+當 slow 和 fast 相遇時：
+
+```text
+slow 走了：
+
+a + b
+```
+
+---
+
+```text
+fast 走了：
+
+a + b + n(b+c)
+```
+
+---
+
+因為：
+
+```text
+fast = 2 × slow
+```
+
+推導可得：
+
+```text
+a = c
+```
+
+---
+
+# 🎯 超重要結論
+
+```text
+起點 → 入口距離
+
+=
+
+相遇點 → 入口距離
+```
+
+---
+
+因此：
+
+一個從：
+
+```text
+0
+```
+
+出發。
+
+另一個從：
+
+```text
+相遇點
+```
+
+出發。
+
+---
+
+兩人：
+
+```text
+每次走一步
+```
+
+最後一定在：
+
+```text
+Cycle Entrance
+```
+
+相遇。
+
+---
+
+而入口就是：
+
+```text
+Duplicate Number
+```
+
+---
+
+# 💻 程式碼
+
+```python
 class Solution:
     def findDuplicate(self, nums: List[int]) -> int:
-        # Phase 1: Find intersection point inside the cycle
-        slow = nums[0]
-        fast = nums[0]
 
+        slow, fast = 0, 0
+
+        # Phase 1
         while True:
             slow = nums[slow]
             fast = nums[nums[fast]]
+
             if slow == fast:
                 break
 
-        # Phase 2: Find the entrance of the cycle (duplicate number) 
-        ptr1 = nums[0] # ptr1 = pointer 1
-        ptr2 = slow
+        # Phase 2
+        slow2 = 0
 
-        while ptr1 != ptr2:
-            ptr1 = nums[ptr1]
-            ptr2 = nums[ptr2]
+        while True:
+            slow = nums[slow]
+            slow2 = nums[slow2]
 
-        return ptr1
-```
-### 🔍 程式碼逐段說明 | Line-by-line Explanation
-### Phase 1：找 cycle 內的相遇點
-```python
-slow = nums[0]
-fast = nums[0]
-```
-
-- 兩個指標都從 index 0 出發
-
-- 對應到 linked list 的 head
-```python
-slow = nums[slow]
-```
-
-- slow 每次走 一步
-
-- 等價於 slow = slow.next
-```python
-fast = nums[nums[fast]]
-```
-
-- fast 每次走 兩步
-
-- 等價於 fast = fast.next.next
-```python
-if slow == fast:
-    break
-```
-
-- 只要在 cycle 中相遇
-
-- 就結束第一階段
-
-### Phase 2：找 cycle 入口（duplicate）
-```python
-ptr1 = nums[0]
-ptr2 = slow
-```
-
-- ptr1：從起點重新出發
-
-- ptr2：停在 cycle 內的相遇點
-```python
-while ptr1 != ptr2:
-    ptr1 = nums[ptr1]
-    ptr2 = nums[ptr2]
-```
-
-- 兩個指標 同速前進
-
-- 再次相遇的地方
-
-- 就是 cycle 的入口
-```python
-return ptr1
-```
-
-- 回傳 cycle 入口的值
-
-- 也就是 重複的數字
-
----
-
-## 🧪 範例流程 | Example Walkthrough
-### 範例 1
-```python
-nums = [1, 3, 4, 2, 2]
-```
-
-index 對應：
-```text
-index:  0  1  2  3  4
-value:  1  3  4  2  2
-```
-#### Phase 1：找 cycle 內的相遇點（slow / fast）
-程式碼對應
-```python
-slow = nums[0]
-fast = nums[0]
-```
-初始化
-```text
-slow = 1
-fast = 1
-```
-第一次 while 迴圈
-```python
-slow = nums[slow]
-fast = nums[nums[fast]]
-```
-
-計算：
-```text
-slow = nums[1] = 3
-fast = nums[nums[1]] = nums[3] = 2
-```
-
-狀態：
-```text
-slow = 3
-fast = 2
-```
-
-→ 尚未相遇，繼續
-
-##### 第二次 while 迴圈
-```python
-slow = nums[slow]
-fast = nums[nums[fast]]
-```
-計算：
-```text
-slow = nums[3] = 2
-fast = nums[nums[2]] = nums[4] = 2
-```
-
-狀態：
-```text
-slow = 2
-fast = 2
-```
-
-- ✅ slow == fast，相遇，跳出 Phase 1
-
-#### Phase 2：找 cycle 的入口（duplicate number）
-程式碼對應
-```python
-ptr1 = nums[0]
-ptr2 = slow
-```
-
-初始化：
-```text
-ptr1 = 1
-ptr2 = 2
-```
-##### 第一次 while 迴圈
-```python
-ptr1 = nums[ptr1]
-ptr2 = nums[ptr2]
-```
-
-計算：
-```text
-ptr1 = nums[1] = 3
-ptr2 = nums[2] = 4
-```
-
-狀態：
-```text
-ptr1 = 3
-ptr2 = 4
-```
-
-→ 尚未相遇
-
-##### 第二次 while 迴圈
-```python
-ptr1 = nums[ptr1]
-ptr2 = nums[ptr2]
-```
-
-計算：
-```text
-ptr1 = nums[3] = 2
-ptr2 = nums[4] = 2
-```
-
-狀態：
-```text
-ptr1 = 2
-ptr2 = 2
-```
-
-- ✅ ptr1 == ptr2，相遇
-
-#### 🎯 最終結果
-```python
-return ptr1
-```
-回傳：
-```text
-2
+            if slow == slow2:
+                return slow
 ```
 
 ---
 
-### 🧪 範例 2
+# 🧪 Example Trace
+
+## Input
+
 ```python
-nums = [2, 5, 9, 6, 9, 3, 8, 9, 7, 1]
+nums = [1,3,4,2,2]
 ```
 
-index / value 對照表：
+---
+
+### 初始化
+
 ```text
-index:  0  1  2  3  4  5  6  7  8  9
-value:  2  5  9  6  9  3  8  9  7  1
+slow = 0
+fast = 0
 ```
 
-#### Phase 1：尋找第一次相遇點（逐步 trace）
-初始化
+---
+
+## Phase 1
+
+### Round 1
+
 ```python
-slow = nums[0] = 2
-fast = nums[0] = 2
+slow = nums[0] = 1
+
+fast = nums[nums[0]]
+     = nums[1]
+     = 3
 ```
 
-狀態：
-```text
-slow = 2
-fast = 2
-```
-##### 第 1 次 while
-```python
-slow = nums[slow] = nums[2] = 9
-fast = nums[nums[fast]] = nums[nums[2]] = nums[9] = 1
-```
-
-狀態：
-```text
-slow = 9
-fast = 1
-```
-##### 第 2 次 while
-```python
-slow = nums[9] = 1
-fast = nums[nums[1]] = nums[5] = 3
-```
-
-狀態：
 ```text
 slow = 1
 fast = 3
 ```
-##### 第 3 次 while
+
+---
+
+### Round 2
+
 ```python
-slow = nums[1] = 5
-fast = nums[nums[3]] = nums[6] = 8
+slow = nums[1] = 3
+
+fast = nums[nums[3]]
+     = nums[2]
+     = 4
 ```
 
-狀態：
-```text
-slow = 5
-fast = 8
-```
-##### 第 4 次 while
-```python
-slow = nums[5] = 3
-fast = nums[nums[8]] = nums[7] = 9
-```
-
-狀態：
 ```text
 slow = 3
-fast = 9
+fast = 4
 ```
-##### 第 5 次 while
-```python
-slow = nums[3] = 6
-fast = nums[nums[9]] = nums[1] = 5
-```
-
-狀態：
-```text
-slow = 6
-fast = 5
-```
-##### 第 6 次 while
-```python
-slow = nums[6] = 8
-fast = nums[nums[5]] = nums[3] = 6
-```
-
-狀態：
-```text
-slow = 8
-fast = 6
-```
-##### 第 7 次 while
-```python
-slow = nums[8] = 7
-fast = nums[nums[6]] = nums[8] = 7
-```
-
-狀態：
-```text
-slow = 7
-fast = 7   ✅ 相遇
-```
-##### ✅ Phase 1 結果
-
-- 第一次相遇點：7
-
-- 意義是：
-
-    - 我已經確定進入 cycle
-
-    - 但我不知道 cycle 的入口在哪
-
-⚠️ 此時 7 不是答案
-
-#### Phase 2：找 cycle 入口（逐步 trace）
-初始化
-```python
-ptr1 = nums[0] = 2
-ptr2 = slow = 7
-```
-
-狀態：
-```text
-ptr1 = 2
-ptr2 = 7
-```
-##### 第 1 次 while
-```python
-ptr1 = nums[2] = 9
-ptr2 = nums[7] = 9
-```
-
-狀態：
-```text
-ptr1 = 9
-ptr2 = 9   ✅ 相遇
-```
-##### 🎯 最終結果
-```python
-return 9
-```
-- 解釋：
-
-    - 9 是 cycle 的入口
-
-    - 也是被兩個不同 index 指到的 value
-
-    - 👉 重複的數字
-
-#### 📝 我的理解（直接可用在筆記）
-
-- 在 Phase 1 中，我第一次相遇在 index = 7，這代表我已經確定站在 cycle 裡的一個位置。
-
-- 但這個位置只是 cycle 中的其中一點，並不是 cycle 的起點。
-
-- 因此我必須進入 Phase 2，讓一個指標從起點出發，
-另一個指標從 cycle 內出發，兩者同速前進，最終相遇的地方才會是 cycle 的入口，也就是題目要求的重複數字。
 
 ---
 
-## ⏱ 複雜度分析 | Complexity Analysis
+### Round 3
 
-- 時間複雜度：
+```python
+slow = nums[3] = 2
 
-    - Phase 1 + Phase 2 都是 O(n)
+fast = nums[nums[4]]
+     = nums[2]
+     = 4
+```
 
-    - 👉 總計 O(n)
-
-- 空間複雜度：
-
-    - 只使用常數個指標
-
-    - 👉 O(1)
-
----
-
-## ✍️ 我學到的東西 | What I Learned
-
-- 287 不是 frequency 題
-
-- Counter / heap 方向是錯的
-
-- 正確模型是 linked list cycle
-
-- duplicate number = cycle entry
-
-- 可以直接套用 hasCycle 的兩階段模板
+```text
+slow = 2
+fast = 4
+```
 
 ---
 
-## 🧠 一句話總結
+### Round 4
 
-Treat the array as a linked list where the duplicate number is the entry point of the cycle.
+```python
+slow = nums[2] = 4
+
+fast = nums[nums[4]]
+     = nums[2]
+     = 4
+```
+
+```text
+slow = 4
+fast = 4
+```
+
+✅ 相遇
+
+---
+
+# Phase 2
+
+初始化：
+
+```python
+slow2 = 0
+```
+
+---
+
+### Round 1
+
+```python
+slow = nums[4] = 2
+
+slow2 = nums[0] = 1
+```
+
+```text
+slow = 2
+slow2 = 1
+```
+
+---
+
+### Round 2
+
+```python
+slow = nums[2] = 4
+
+slow2 = nums[1] = 3
+```
+
+```text
+slow = 4
+slow2 = 3
+```
+
+---
+
+### Round 3
+
+```python
+slow = nums[4] = 2
+
+slow2 = nums[3] = 2
+```
+
+```text
+slow = 2
+slow2 = 2
+```
+
+✅ 相遇
+
+---
+
+# 🎯 最終答案
+
+```python
+return 2
+```
+
+---
+
+# ⏱ Complexity Analysis
+
+## Time Complexity
+
+Phase 1：
+
+```text
+O(n)
+```
+
+Phase 2：
+
+```text
+O(n)
+```
+
+總計：
+
+```text
+O(n)
+```
+
+---
+
+## Space Complexity
+
+只用了：
+
+```python
+slow
+fast
+slow2
+```
+
+因此：
+
+```text
+O(1)
+```
+
+---
+
+# 🎯 Interview Takeaways
+
+看到：
+
+```text
+Length = n + 1
+
+Values = 1 ~ n
+
+Cannot modify array
+
+O(1) extra space
+```
+
+立刻想到：
+
+```text
+Linked List Cycle
+
+Floyd Cycle Detection
+
+Tortoise and Hare
+
+Cycle Entrance
+```
+
+---
+
+# ✍️ 我學到的東西
+
+* 287 不是 Frequency 題
+* Counter 方向錯
+* Heap 方向錯
+* Sort 不能用
+* Duplicate Number = Cycle Entrance
+* Floyd 分成兩階段
+* Phase 1 找相遇點
+* Phase 2 找入口
+
+---
+
+# 🏆 Cheat Sheet
+
+```text
+287
+
+nums[i]
+↓
+next pointer
+
+Duplicate
+↓
+Cycle Entrance
+
+Phase 1
+Find Meeting Point
+
+Phase 2
+Find Entrance
+
+Answer
+=
+Duplicate Number
+```
+
+---
+
+# 🌟 One Sentence Summary
+
+> Treat the array as a linked list, use Floyd's Cycle Detection to find the cycle entrance, and that entrance is the duplicate number.
+
+> 將陣列視為 Linked List，利用龜兔賽跑找到 Cycle 的入口，而入口就是重複數字。
