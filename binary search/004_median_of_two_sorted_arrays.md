@@ -446,6 +446,7 @@ Aleft = A[i - 1] if i > 0 else float('-inf')
 ```
 
 * 取得 `A` 左半邊的最大值。
+* i - 1是A左半邊最大值的index。
 * 如果 `i == 0`，代表 `A` 左邊沒有元素。
 * 所以用 `float('-inf')`。
 * 這樣可以避免 index out of range。
@@ -470,6 +471,7 @@ Bleft = B[j - 1] if j > 0 else float('-inf')
 ```
 
 * 取得 `B` 左半邊的最大值。
+* j - 1是B左半邊最大值的index。
 * 如果 `j == 0`，代表 `B` 左邊沒有元素。
 * 所以用 `float('-inf')`。
 
