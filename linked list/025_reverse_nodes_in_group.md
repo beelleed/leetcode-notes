@@ -4,9 +4,9 @@
 
 ---
 
-# 📄 題目說明 | Problem Description
+## 📄 題目說明 | Problem Description
 
-## 中文
+### 中文
 
 給定一個 Linked List：
 
@@ -29,17 +29,13 @@ k
 直接保留原樣
 ```
 
----
-
-## English
+### English
 
 Given the head of a linked list, reverse the nodes of the list k at a time and return the modified list.
 
 If the number of nodes remaining is less than k, leave them as-is.
 
----
-
-## 🧪 Example 1
+### 🧪 Example 1
 
 ```text
 Input:
@@ -55,9 +51,9 @@ Output:
 2 → 1 → 4 → 3 → 5
 ```
 
----
+![](../images/25_reverse_ex1.jpg)
 
-## 🧪 Example 2
+### 🧪 Example 2
 
 ```text
 Input:
@@ -73,9 +69,11 @@ Output:
 3 → 2 → 1 → 4 → 5
 ```
 
+![](../images/25_reverse_ex2.jpg)
+
 ---
 
-# 🧠 核心觀念 | Key Insight
+## 🧠 核心觀念 | Key Insight
 
 這題本質其實是：
 
@@ -85,8 +83,6 @@ Reverse Linked List
 分組處理
 ```
 
----
-
 不是一次反轉整條鏈結串列。
 
 而是：
@@ -95,8 +91,6 @@ Reverse Linked List
 每 k 個節點
 反轉一次
 ```
-
----
 
 例如：
 
@@ -120,7 +114,7 @@ k = 3
 
 ---
 
-# 🎯 解題流程
+## 🎯 解題流程
 
 每輪做四件事：
 
@@ -138,8 +132,6 @@ dummy → 1 → 2 → 3 → 4 → 5
 kth
 ```
 
----
-
 ### ② 確認有沒有 k 個
 
 如果：
@@ -156,7 +148,6 @@ kth == None
 
 直接結束。
 
----
 
 ### ③ 反轉這一組
 
@@ -172,8 +163,6 @@ kth == None
 3 → 2 → 1
 ```
 
----
-
 ### ④ 接回原本鏈表
 
 反轉前：
@@ -188,9 +177,7 @@ dummy → 1 → 2 → 3 → 4
 dummy → 3 → 2 → 1 → 4
 ```
 
----
-
-# 🔑 Dummy Node
+## 🔑 Dummy Node
 
 建立：
 
@@ -198,8 +185,6 @@ dummy → 3 → 2 → 1 → 4
 dummy = ListNode(0)
 dummy.next = head
 ```
-
----
 
 作用：
 
@@ -219,7 +204,7 @@ head 可能改變
 
 ---
 
-# 💻 Code
+## 💻 Code
 
 ```python
 class Solution:
@@ -262,13 +247,10 @@ class Solution:
             groupPrev = temp
 ```
 
----
+## 🧠 變數解釋
 
-# 🧠 變數解釋
 
----
-
-## dummy
+### dummy
 
 ```python
 dummy = ListNode(0)
@@ -280,9 +262,7 @@ dummy = ListNode(0)
 永遠指向整條 linked list 開頭
 ```
 
----
-
-## groupPrev
+### groupPrev
 
 指向：
 
@@ -298,9 +278,7 @@ dummy → 1 → 2 → 3 → 4
 groupPrev
 ```
 
----
-
-## kth
+### kth
 
 找到：
 
@@ -308,9 +286,7 @@ groupPrev
 第 k 個節點
 ```
 
----
-
-## groupNext
+### groupNext
 
 記錄：
 
@@ -328,9 +304,9 @@ kth = 3
 groupNext = 4
 ```
 
-# 🧾 程式碼逐行解釋 | Line-by-line Explanation
+## 🧾 程式碼逐行解釋 | Line-by-line Explanation
 
-## 建立 Dummy Node
+### 建立 Dummy Node
 
 ```python
 dummy = ListNode(0)
@@ -360,8 +336,6 @@ head 已經從 1 變成 2。
 
 如果沒有 dummy，處理會很麻煩。
 
----
-
 ```python
 dummy.next = head
 ```
@@ -374,7 +348,6 @@ dummy.next = head
 dummy → 1 → 2 → 3 → 4 → 5
 ```
 
----
 
 ```python
 groupPrev = dummy
@@ -398,9 +371,7 @@ groupPrev
 dummy → 1 → 2 → 3 → 4 → 5
 ```
 
----
-
-## 開始處理每一組
+### 開始處理每一組
 
 ```python
 while True:
@@ -417,9 +388,7 @@ while True:
 
 直到不足 k 個為止。
 
----
-
-# Step 1：找到 kth
+### Step 1：找到 kth
 
 ```python
 kth = groupPrev
@@ -435,7 +404,6 @@ groupPrev
 dummy → 1 → 2 → 3 → 4 → 5
 ```
 
----
 
 ```python
 for _ in range(k):
@@ -449,7 +417,6 @@ for _ in range(k):
 這一組最後一個節點
 ```
 
----
 
 ```python
 kth = kth.next
@@ -476,8 +443,6 @@ kth = 1
 ```text
 kth = 2
 ```
-
----
 
 ```python
 if not kth:
@@ -514,9 +479,7 @@ return dummy.next
 
 直接回傳。
 
----
-
-# Step 2：記錄下一組位置
+### Step 2：記錄下一組位置
 
 ```python
 groupNext = kth.next
@@ -538,8 +501,6 @@ dummy → 1 → 2 → 3 → 4 → 5
 groupNext = 3
 ```
 
----
-
 之後反轉：
 
 ```text
@@ -552,9 +513,7 @@ groupNext = 3
 3 → 4 → 5
 ```
 
----
-
-# Step 3：初始化反轉
+### Step 3：初始化反轉
 
 ```python
 prev = groupNext
@@ -570,7 +529,6 @@ prev = None
 
 但這題不能。
 
----
 
 例如：
 
@@ -592,7 +550,6 @@ k = 3
 4
 ```
 
----
 
 所以：
 
@@ -608,8 +565,6 @@ prev = 4
 
 自動接回去。
 
----
-
 ```python
 curr = groupPrev.next
 ```
@@ -624,9 +579,7 @@ dummy → 1 → 2 → 3 → 4
        curr
 ```
 
----
-
-# Step 4：反轉這一組
+### Step 4：反轉這一組
 
 ```python
 while curr != groupNext:
@@ -644,9 +597,7 @@ while curr != groupNext:
 groupNext
 ```
 
----
-
-## Round 1
+#### Round 1
 
 ```python
 temp = curr.next
@@ -665,8 +616,6 @@ temp = curr.next
 ```text
 temp = 2
 ```
-
----
 
 ```python
 curr.next = prev
@@ -692,8 +641,6 @@ curr.next = prev
 prev = groupNext
 ```
 
----
-
 ```python
 prev = curr
 ```
@@ -705,8 +652,6 @@ prev = curr
 ```text
 prev = 1
 ```
-
----
 
 ```python
 curr = temp
@@ -720,9 +665,7 @@ curr = temp
 curr = 2
 ```
 
----
-
-## Round 2
+#### Round 2
 
 原本：
 
@@ -730,15 +673,12 @@ curr = 2
 2 → 3
 ```
 
----
-
 保存：
 
 ```python
 temp = 3
 ```
 
----
 
 反轉：
 
@@ -752,7 +692,6 @@ curr.next = prev
 2 → 1 → 3
 ```
 
----
 
 更新：
 
@@ -761,7 +700,6 @@ prev = 2
 curr = 3
 ```
 
----
 
 停止：
 
@@ -769,7 +707,6 @@ curr = 3
 curr == groupNext
 ```
 
----
 
 反轉結果：
 
@@ -777,9 +714,8 @@ curr == groupNext
 2 → 1 → 3
 ```
 
----
 
-# Step 5：接回 Linked List
+### Step 5：接回 Linked List
 
 此時：
 
@@ -794,8 +730,6 @@ dummy → 1 → 3
 ```
 
 是分離的。
-
----
 
 ```python
 temp = groupPrev.next
@@ -813,8 +747,6 @@ temp = groupPrev.next
 1
 ```
 
----
-
 因為反轉後：
 
 ```text
@@ -827,7 +759,6 @@ temp = groupPrev.next
 這組最後一個節點
 ```
 
----
 
 ```python
 groupPrev.next = kth
@@ -847,7 +778,6 @@ dummy → 1 → 2
 dummy → 2 → 1
 ```
 
----
 
 ```python
 groupPrev = temp
@@ -879,7 +809,7 @@ groupPrev = 1
 
 ---
 
-# 🔍 完整流程圖
+## 🔍 完整流程圖
 
 ```text
 dummy → 1 → 2 → 3 → 4 → 5
@@ -907,7 +837,7 @@ groupPrev = 1
 
 ---
 
-# 🧠 核心記憶
+## 🧠 核心記憶
 
 這題其實就是：
 
@@ -935,12 +865,11 @@ Group Processing
 ⑦ 下一組
 ```
 
-
 ---
 
-# 🔍 Example Walkthrough
+## 🔍 Example Walkthrough
 
-## Input
+### Input
 
 ```text
 1 → 2 → 3 → 4 → 5
@@ -948,9 +877,7 @@ Group Processing
 k = 2
 ```
 
----
-
-## 初始化
+### 初始化
 
 ```text
 dummy → 1 → 2 → 3 → 4 → 5
@@ -958,13 +885,10 @@ dummy → 1 → 2 → 3 → 4 → 5
 groupPrev = dummy
 ```
 
----
+### 第一組
 
-# 第一組
 
----
-
-## 找 kth
+#### 找 kth
 
 ```text
 groupPrev
@@ -978,17 +902,14 @@ dummy → 1 → 2 → 3 → 4 → 5
 kth = 2
 ```
 
----
-
-## groupNext
+#### groupNext
 
 ```text
 groupNext = 3
 ```
 
----
 
-## 開始反轉
+### 開始反轉
 
 初始化：
 
@@ -996,8 +917,6 @@ groupNext = 3
 prev = 3
 curr = 1
 ```
-
----
 
 ### Round 1
 
@@ -1013,16 +932,12 @@ curr.next = prev
 1 → 3
 ```
 
----
-
 更新：
 
 ```python
 prev = 1
 curr = 2
 ```
-
----
 
 ### Round 2
 
@@ -1038,8 +953,6 @@ curr.next = prev
 2 → 1 → 3
 ```
 
----
-
 更新：
 
 ```python
@@ -1047,15 +960,12 @@ prev = 2
 curr = 3
 ```
 
----
-
 停止：
 
 ```python
 curr == groupNext
 ```
 
----
 
 結果：
 
@@ -1063,9 +973,7 @@ curr == groupNext
 2 → 1 → 3
 ```
 
----
-
-## 接回去
+#### 接回去
 
 原本：
 
@@ -1078,8 +986,6 @@ dummy → 1 → 2 → 3
 ```text
 dummy → 2 → 1 → 3
 ```
-
----
 
 更新：
 
@@ -1095,9 +1001,8 @@ groupPrev = 1
 
 變成這組最後一個節點。
 
----
 
-# 第二組
+### 第二組
 
 原本：
 
@@ -1105,15 +1010,12 @@ groupPrev = 1
 2 → 1 → 3 → 4 → 5
 ```
 
----
-
 找到：
 
 ```text
 kth = 4
 ```
 
----
 
 反轉：
 
@@ -1127,17 +1029,13 @@ kth = 4
 4 → 3
 ```
 
----
-
 接回：
 
 ```text
 2 → 1 → 4 → 3 → 5
 ```
 
----
-
-# 第三組
+### 第三組
 
 剩下：
 
@@ -1145,15 +1043,11 @@ kth = 4
 5
 ```
 
----
-
 不足：
 
 ```text
 k = 2
 ```
-
----
 
 停止：
 
@@ -1161,17 +1055,13 @@ k = 2
 return dummy.next
 ```
 
----
-
-# 🎯 為什麼這樣反轉？
+## 🎯 為什麼這樣反轉？
 
 關鍵：
 
 ```python
 prev = groupNext
 ```
-
----
 
 例如：
 
@@ -1181,7 +1071,6 @@ prev = groupNext
 groupNext = 4
 ```
 
----
 
 反轉時：
 
@@ -1191,7 +1080,6 @@ groupNext = 4
           4
 ```
 
----
 
 所以：
 
@@ -1203,9 +1091,9 @@ groupNext = 4
 
 ---
 
-# ⏱ Complexity Analysis
+## ⏱ Complexity Analysis
 
-## Time Complexity
+### Time Complexity
 
 每個節點最多走一次：
 
@@ -1213,9 +1101,7 @@ groupNext = 4
 O(n)
 ```
 
----
-
-## Space Complexity
+### Space Complexity
 
 只用幾個指標：
 
@@ -1223,9 +1109,7 @@ O(n)
 O(1)
 ```
 
----
-
-# 🎯 Interview Takeaways
+## 🎯 Interview Takeaways
 
 看到：
 
@@ -1245,7 +1129,7 @@ Group Processing
 
 ---
 
-# ✍️ 我學到的東西
+## ✍️ 我學到的東西
 
 * Dummy 可以簡化 head 改變問題
 * Reverse Linked List 是這題核心
@@ -1256,7 +1140,7 @@ Group Processing
 
 ---
 
-# 🏆 Cheat Sheet
+## 🏆 Cheat Sheet
 
 ```text
 25
@@ -1280,7 +1164,7 @@ groupPrev
 
 ---
 
-# 🌟 One Sentence Summary
+## 🌟 One Sentence Summary
 
 > Reverse every k nodes using the standard linked list reversal technique and reconnect each reversed group back into the list.
 
