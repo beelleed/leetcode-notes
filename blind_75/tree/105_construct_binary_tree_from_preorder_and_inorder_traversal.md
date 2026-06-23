@@ -408,3 +408,117 @@ helper(pre_start=4, in_start=4, size=1)
 - 用一個 map (value → index) 可以避免在 inorder 中重複進行線性搜尋。
 
 - index 切分的方式（preorder 與 inorder 的對應片段計算）是這題容易錯的地方，一定要確認左子樹與右子樹的起點與大小算對。
+
+---
+
+## Code
+```python
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        if not preorder or not inorder:
+            return None
+        
+        root = TreeNode(preorder[0])
+        mid = inorder.index(preorder[0])
+        root.left = self.buildTree(preorder[1:mid + 1], inorder[:mid])
+        root.right = self.buildTree(preorder[mid + 1:], inorder[mid + 1:])
+        return root
+```
+
+## Complexity
+### 時間複雜度
+
+每次遞迴：
+
+1. inorder.index()
+```python
+mid = inorder.index(preorder[0])
+```
+要掃整個 inorder。
+
+成本：O(k)
+
+其中 k 是目前子樹大小。
+
+2. slicing
+```python
+preorder[1:mid+1]
+preorder[mid+1:]
+inorder[:mid]
+inorder[mid+1:]
+```
+每個 slice 都要複製新陣列。
+
+總成本：O(k)
+
+所以每層遞迴成本：O(k)
+
+假設樹平衡：
+```python
+n
+├─ n/2
+├─ n/2
+```
+則：
+```python
+T(n) = 2T(n/2)+O(n)
+```
+根據 Master Theorem：
+```python
+O(n log n)
+```
+但最壞情況：
+```python
+1
+ \
+  2
+   \
+    3
+     \
+      4
+```
+每次：
+```python
+index -> O(n)
+slice -> O(n)
+```
+而且遞迴：
+```python
+n + (n-1) + (n-2) + ...
+```
+所以：
+```python
+O(n²)
+```
+### 空間複雜度
+
+兩部分：
+
+#### 遞迴棧
+
+平衡樹：O(log n)
+
+退化樹：O(n)
+
+#### Slicing
+
+例如：
+```python
+preorder[1:mid+1]
+```
+會建立新 list。
+
+總共會複製很多元素。
+
+最壞情況：
+```python
+n + (n-1) + (n-2) + ... = O(n²)
+```
+額外記憶體。
+
+所以這個版本：
+
+| Complexity | Value            |
+| ---------- | ---------------- |
+| Time       | O(n²) worst case |
+| Space      | O(n²) worst case |
