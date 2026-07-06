@@ -1,4 +1,4 @@
-# 📍 LeetCode 684 — Redundant Connection | 多餘的連線（依我剛剛給你的 DSU 範例程式碼）
+# 📍 LeetCode 684 — Redundant Connection | 多餘的連線
 
 🔗 [題目連結](https://leetcode.com/problems/redundant-connection/)
 
@@ -64,7 +64,7 @@ from typing import List
 class Solution:
     def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:
         n = len(edges)
-        parent = list(range(n + 1))
+        parent = [i for i in range(n + 1)]
         rank = [0] * (n + 1)
 
         def find(x: int) -> int:
@@ -92,7 +92,6 @@ class Solution:
             if not union(u, v):
                 return [u, v]
 
-        return []
 ```
 
 ### DSU 初始化
