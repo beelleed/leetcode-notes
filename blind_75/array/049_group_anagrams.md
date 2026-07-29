@@ -279,3 +279,746 @@ O(n · k)
 - 使用 defaultdict(list) 可快速建立資料結構。
 
 - 字串處理與雜湊技巧結合是經典「群組」型問題做法。
+
+---
+
+## Code (freq)
+
+```python
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        anagrams = defaultdict(list)
+        for word in strs:
+            freq = [0] * 26
+            for ch in word:
+                freq[ord(ch) - ord('a')] += 1
+            key = tuple(freq)
+            anagrams[key].append(word)
+        return list(anagrams.values())
+```
+
+## 程式碼（逐行解釋）
+
+```python
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+```
+
+建立 `Solution` 類別。
+
+---
+
+```python
+anagrams = defaultdict(list)
+```
+
+建立 HashMap。
+
+- Key：每個字串的 frequency tuple
+- Value：所有屬於同一組 Anagram 的字串
+
+例如：
+
+```text
+{
+    (1,0,...,1): ["eat","tea","ate"]
+}
+```
+
+---
+
+```python
+for word in strs:
+```
+
+依序處理每一個字串。
+
+例如：
+
+```
+eat
+tea
+tan
+ate
+```
+
+---
+
+```python
+freq = [0] * 26
+```
+
+建立長度 26 的 frequency array。
+
+代表：
+
+```
+index 0 -> a
+index 1 -> b
+...
+index 25 -> z
+```
+
+每個新字串都重新建立一次。
+
+---
+
+```python
+for ch in word:
+```
+
+逐一走訪字串中的每個字元。
+
+例如：
+
+```
+word = "eat"
+
+↓
+
+e
+a
+t
+```
+
+---
+
+```python
+freq[ord(ch) - ord('a')] += 1
+```
+
+利用 ASCII 計算字母的位置。
+
+例如：
+
+```
+'e'
+
+↓
+
+ord('e') - ord('a')
+
+↓
+
+4
+```
+
+更新 frequency。
+
+例如：
+
+```
+eat
+
+↓
+
+a = 1
+e = 1
+t = 1
+```
+
+---
+
+```python
+key = tuple(freq)
+```
+
+將 List 轉成 Tuple。
+
+因為：
+
+```
+List
+```
+
+不能作為 Dictionary Key。
+
+所以改成：
+
+```
+Tuple
+```
+
+例如：
+
+```
+[1,0,0,0,1,...]
+
+↓
+
+(1,0,0,0,1,...)
+```
+
+---
+
+```python
+anagrams[key].append(word)
+```
+
+將目前字串加入對應的 Anagram 群組。
+
+例如：
+
+```
+key
+
+↓
+
+["eat"]
+
+↓
+
+["eat","tea"]
+
+↓
+
+["eat","tea","ate"]
+```
+
+---
+
+```python
+return list(anagrams.values())
+```
+
+回傳所有群組。
+
+例如：
+
+```
+[
+    ["eat","tea","ate"],
+    ["tan","nat"],
+    ["bat"]
+]
+```
+
+---
+
+### Time Complexity
+
+假設：
+
+```
+n = 字串數量
+k = 每個字串平均長度
+```
+
+每個字串：
+
+```
+建立 frequency
+```
+
+需要：
+
+```
+O(26)
+```
+
+掃描字元：
+
+```
+O(k)
+```
+
+因此每個字串：
+
+```
+O(26 + k)
+```
+
+因為：
+
+```
+26 是常數
+```
+
+所以化簡成：
+
+```
+O(k)
+```
+
+總時間：
+
+```
+O(n × k)
+```
+
+### Space Complexity
+
+HashMap：
+
+儲存所有字串：
+
+```
+O(n)
+```
+
+Frequency Array：
+
+```
+26
+```
+
+固定大小：
+
+```
+O(1)
+```
+
+總空間：
+
+```
+O(n)
+```
+
+---
+
+## 程式碼(Counter)
+
+```python
+from collections import defaultdict, Counter
+
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        anagrams = defaultdict(list)
+
+        for word in strs:
+            count = Counter(word)
+            key = tuple(sorted(count.items()))
+            anagrams[key].append(word)
+
+        return list(anagrams.values())
+```
+
+---
+
+## 程式碼逐行解釋
+
+```python
+from collections import defaultdict, Counter
+```
+
+匯入：
+
+- `defaultdict`：自動建立空的 `list`
+- `Counter`：統計每個字元出現的次數
+
+---
+
+```python
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+```
+
+建立題目要求的函式。
+
+輸入：
+
+```text
+List[str]
+```
+
+輸出：
+
+```text
+List[List[str]]
+```
+
+---
+
+```python
+anagrams = defaultdict(list)
+```
+
+建立 HashMap：
+
+- `key`：字串的字元頻率
+- `value`：具有相同字元頻率的字串群組
+
+例如：
+
+```text
+{
+    (('a', 1), ('e', 1), ('t', 1)):
+    ["eat", "tea", "ate"]
+}
+```
+
+---
+
+```python
+for word in strs:
+```
+
+依序處理每一個字串。
+
+例如：
+
+```text
+["eat", "tea", "tan"]
+```
+
+會依序處理：
+
+```text
+"eat"
+"tea"
+"tan"
+```
+
+---
+
+```python
+count = Counter(word)
+```
+
+計算目前字串中，每個字元出現的次數。
+
+例如：
+
+```python
+word = "eat"
+```
+
+得到：
+
+```python
+Counter({
+    'e': 1,
+    'a': 1,
+    't': 1
+})
+```
+
+如果：
+
+```python
+word = "aab"
+```
+
+得到：
+
+```python
+Counter({
+    'a': 2,
+    'b': 1
+})
+```
+
+---
+
+```python
+count.items()
+```
+
+取得每個字元與出現次數。
+
+例如：
+
+```python
+Counter("eat").items()
+```
+
+內容類似：
+
+```text
+('e', 1)
+('a', 1)
+('t', 1)
+```
+
+---
+
+```python
+sorted(count.items())
+```
+
+按照字元排序。
+
+例如：
+
+```text
+[('e', 1), ('a', 1), ('t', 1)]
+```
+
+排序後：
+
+```text
+[('a', 1), ('e', 1), ('t', 1)]
+```
+
+必須排序，因為不同字串建立 `Counter` 時，字元的插入順序可能不同。
+
+例如：
+
+```text
+"eat" → e, a, t
+"tea" → t, e, a
+```
+
+排序後兩者才會產生相同順序。
+
+---
+
+```python
+key = tuple(sorted(count.items()))
+```
+
+將排序後的 List 轉成 Tuple。
+
+例如：
+
+```text
+[('a', 1), ('e', 1), ('t', 1)]
+```
+
+轉成：
+
+```text
+(('a', 1), ('e', 1), ('t', 1))
+```
+
+因為：
+
+```text
+List 是 mutable
+```
+
+不能當作 Dictionary Key。
+
+而：
+
+```text
+Tuple 是 immutable
+```
+
+可以當作 Dictionary Key。
+
+---
+
+```python
+anagrams[key].append(word)
+```
+
+將目前字串放進對應的 Anagram 群組。
+
+例如：
+
+```text
+"eat"
+```
+
+加入後：
+
+```text
+key → ["eat"]
+```
+
+接著處理 `"tea"`，因為它產生相同的 key：
+
+```text
+key → ["eat", "tea"]
+```
+
+再處理 `"ate"`：
+
+```text
+key → ["eat", "tea", "ate"]
+```
+
+---
+
+```python
+return list(anagrams.values())
+```
+
+取得 HashMap 中的所有群組，並轉成 List 回傳。
+
+例如：
+
+```text
+[
+    ["eat", "tea", "ate"],
+    ["tan", "nat"],
+    ["bat"]
+]
+```
+
+---
+
+## 為什麼 Anagram 會有相同的 Key？
+
+例如：
+
+```text
+"eat"
+"tea"
+"ate"
+```
+
+三個字串都有：
+
+```text
+a：1 次
+e：1 次
+t：1 次
+```
+
+因此排序後的 Counter items 都是：
+
+```text
+(('a', 1), ('e', 1), ('t', 1))
+```
+
+所以會被放進同一個 HashMap 群組。
+
+### Time Complexity
+
+假設：
+
+```text
+n = 字串數量
+k = 每個字串的平均長度
+m = 每個字串中不同字元的數量
+```
+
+### 建立 Counter
+
+```python
+count = Counter(word)
+```
+
+需要掃過字串中的每個字元：
+
+```text
+O(k)
+```
+
+### 排序不同字元
+
+```python
+sorted(count.items())
+```
+
+`Counter` 中共有 `m` 個不同字元，因此排序需要：
+
+```text
+O(m log m)
+```
+
+
+#### 每個字串
+
+```text
+O(k + m log m)
+```
+
+#### 所有字串
+
+```text
+O(n × (k + m log m))
+```
+
+其中：
+
+```text
+m ≤ k
+```
+
+最差情況下，每個字元都不相同：
+
+```text
+m = k
+```
+
+因此最差時間複雜度可以寫成：
+
+```text
+O(n × k log k)
+```
+
+如果字串很長，但只有少數不同字元：
+
+```text
+m << k
+```
+
+Counter 版本可能接近：
+
+```text
+O(n × k)
+```
+
+### Space Complexity
+
+### 回傳結果與 HashMap
+
+所有輸入字串都會被存入群組中：
+
+```text
+O(nk)
+```
+
+#### Counter
+
+每個字串最多儲存 `m` 個不同字元：
+
+```text
+O(m)
+```
+
+#### Key
+
+每個 key 包含 `m` 組：
+
+```text
+(character, count)
+```
+
+所有字串最差可能產生不同的 key，因此額外空間最差為：
+
+```text
+O(nm)
+```
+
+整體空間複雜度可寫成：
+
+```text
+O(nk)
+```
+
+因為輸出本身就需要保存所有字串。
+
+---
+
+## 三種方法比較
+
+```text
+排序字串：
+
+key = ''.join(sorted(word))
+
+Time：O(n × k log k)
+適合：最簡單、支援 Unicode
+```
+
+```text
+26 字母 Frequency Array：
+
+freq = [0] * 26
+
+Time：O(n × k)
+適合：題目限定小寫英文字母
+```
+
+```text
+Counter：
+
+key = tuple(sorted(Counter(word).items()))
+
+Time：O(n × (k + m log m))
+適合：支援 Unicode，且不同字元種類 m 可能遠小於字串長度 k
+```
